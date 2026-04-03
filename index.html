@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Seoul Moon🌙 Pro</title>
+    <title>Seoul Moon🌙 Final Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
         :root { --sailor-pink: #FF99CC; --sailor-purple: #B19CD9; --sailor-blue: #5D9CEC; --sailor-gold: #FFD700; --deep-pink: #FF6699; --glow: rgba(255, 182, 193, 0.4); --naver-green: #03C75A; --brown: #4D3B3B; --light-purple: #E6E0F8; --high-school-blue: #3A8DFF; }
         * { box-sizing: border-box; font-family: 'PingFang SC', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: linear-gradient(135deg, #FFF5F9 0%, #F0F4FF 100%); margin: 0; padding: env(safe-area-inset-top) 15px 60px 15px; min-height: 100vh; overflow-x: hidden; }
+        body { background: linear-gradient(135deg, #FFF5F9 0%, #F0F4FF 100%); margin: 0; padding: env(safe-area-inset-top) 15px 80px 15px; min-height: 100vh; overflow-x: hidden; }
         .hidden { display: none !important; }
         .sm-title { font-family: 'Dancing Script', cursive; font-size: 42px; color: var(--deep-pink); text-align: center; margin: 15px 0; text-shadow: 2px 2px 0 white; }
         .dash-board { background: rgba(255, 255, 255, 0.7); border: 2px solid white; border-radius: 30px; padding: 18px; box-shadow: 0 8px 25px var(--glow); backdrop-filter: blur(10px); margin-bottom: 20px; }
@@ -24,7 +24,7 @@
         .tag { padding: 4px 8px; border-radius: 6px; font-size: 9px; font-weight: 900; }
         .nav-stack { display: flex; flex-direction: column; gap: 15px; }
         .nav-row-half { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .nav-btn { border-radius: 22px; padding: 22px; text-align: center; box-shadow: 0 6px 15px var(--glow); cursor: pointer; }
+        .nav-btn { border-radius: 22px; padding: 22px; text-align: center; box-shadow: 0 6px 15px var(--glow); cursor: pointer; transition: 0.2s; }
         .nav-btn h2 { margin: 0; font-size: 18px; font-weight: 900; }
         .nav-pink { background: linear-gradient(135deg, var(--sailor-pink), var(--deep-pink)); color: white; }
         .nav-white { background: white; border: 2.5px solid #FFE4E1; color: var(--brown); }
@@ -36,8 +36,8 @@
         .ticket-circle-top { top: -13px; } .ticket-circle-bot { bottom: -13px; }
         .plan-row { display: flex; gap: 12px; margin-bottom: 18px; position: relative; }
         .plan-time { width: 45px; text-align: right; font-weight: 900; color: var(--deep-pink); font-size: 13px; padding-top: 5px; }
-        .plan-line { width: 2px; background: var(--sailor-pink); position: relative; opacity: 0.6; }
-        .plan-dot { position: absolute; top: 0; left: -4px; width: 10px; height: 10px; border-radius: 50%; background: var(--sailor-pink); border: 2px solid white; box-shadow: 0 0 8px var(--sailor-pink); }
+        .plan-line { width: 2px; background: var(--sailor-pink); opacity: 0.6; }
+        .plan-dot { position: absolute; top: 0; left: -4px; width: 10px; height: 10px; border-radius: 50%; background: var(--sailor-pink); border: 2px solid white; }
         .item-card { background: white; border: 2px solid #FFF0F5; border-radius: 22px; padding: 15px; display: flex; align-items: center; gap: 12px; margin-bottom: 12px; position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.05); flex: 1; }
         .card-pic { width: 60px; height: 60px; background: #F8F9FA; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; overflow: hidden; border: 1px solid #EEE; flex-shrink: 0; }
         .card-pic img { width: 100%; height: 100%; object-fit: cover; }
@@ -53,7 +53,7 @@
         .selector-item { flex: 1; padding: 12px 0; border: 1.5px solid #EEE; border-radius: 15px; text-align: center; font-size: 11px; cursor: pointer; font-weight: 900; background: white; color: #666; }
         .selector-item.active { background: var(--brown); color: white; border-color: var(--brown); }
         .btn-main { background: linear-gradient(90deg, var(--sailor-pink), var(--deep-pink)); color: white; width: 100%; padding: 18px; border-radius: 40px; border: none; font-weight: 900; font-size: 16px; margin-top: 15px; cursor: pointer; }
-        .naver-btn { background: var(--naver-green); color: white; padding: 5px 12px; border-radius: 10px; font-size: 11px; font-weight: 900; cursor: pointer; text-decoration: none; }
+        .naver-btn { background: var(--naver-green); color: white; padding: 4px 10px; border-radius: 8px; font-size: 10px; font-weight: 900; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -61,14 +61,10 @@
         <h1 class="sm-title">Seoul Moon🌙</h1>
         <div class="dash-board">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span id="live-date" style="font-family:'Dancing Script'; font-size:28px; color:var(--deep-pink)">Seoul 04.29</span>
+                <span id="live-date" style="font-family:'Dancing Script'; font-size:28px; color:var(--deep-pink)">Seoul --.--</span>
                 <span id="live-rate" style="background:var(--sailor-pink); color:white; padding:5px 15px; border-radius:20px; font-size:11px; font-weight:900;">¥1 ≈ ₩获取中</span>
             </div>
-            <div class="weather-scroll" id="w-axis">同步首尔天气中...</div>
-        </div>
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding:0 5px;">
-            <b style="color:var(--sailor-blue); font-size:14px;">🌙 FLIGHTS 行程单</b>
-            <span onclick="openEdit('flight', -1)" style="color:var(--sailor-blue); font-size:11px; font-weight:900; background:#F0F7FF; padding:4px 12px; border-radius:12px; cursor:pointer;">＋ 识图导入</span>
+            <div class="weather-scroll" id="w-axis">正在同步天气...</div>
         </div>
         <div id="flight-list" class="flight-container"></div>
         <div class="nav-stack">
@@ -126,19 +122,25 @@
         wish: [], fin: []
     };
 
-    function init() { updateWeather(); updateExchangeRate(); renderFlights(); document.getElementById('live-date').innerText = `Seoul 04.29`; }
-    function updateWalletUI() { const t = document.getElementById('val-Toss'); if(t) { t.innerText='₩'+wallet.Toss.toLocaleString(); document.getElementById('val-Namane').innerText='₩'+wallet.Namane.toLocaleString(); document.getElementById('val-TripPass').innerText='₩'+wallet.TripPass.toLocaleString(); } }
-    function modifyWallet(type) { const v = prompt(`修改 ${type} 余额:`, wallet[type]); if(v!==null){ wallet[type]=Number(v); updateWalletUI(); } }
-    async function updateWeather() {
-        try {
-            const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=37.5665&longitude=126.9780&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Asia%2FSeoul`);
-            const data = await res.json();
-            document.getElementById('w-axis').innerHTML = data.daily.time.slice(0, 7).map((date, idx) => `<div class="w-item ${idx === 0 ? 'active' : ''}"><small>${date.split('-').slice(1).join('.')}</small><div style="font-size:22px;margin:4px 0;">${data.daily.weathercode[idx]>50?'🌧️':'⛅'}</div><b>${Math.round(data.daily.temperature_2m_min[idx])}°/ ${Math.round(data.daily.temperature_2m_max[idx])}°</b></div>`).join('');
-        } catch(e){}
+    function init() { 
+        try { 
+            // 实时日期核心逻辑
+            const now = new Date();
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const dd = String(now.getDate()).padStart(2, '0');
+            document.getElementById('live-date').innerText = `Seoul ${mm}.${dd}`;
+
+            updateWeather(); 
+            updateExchangeRate(); 
+            renderFlights(); 
+        } catch(e){} 
     }
+
+    function updateWalletUI() { const t = document.getElementById('val-Toss'); if(t) { t.innerText='₩'+wallet.Toss.toLocaleString(); document.getElementById('val-Namane').innerText='₩'+wallet.Namane.toLocaleString(); document.getElementById('val-TripPass').innerText='₩'+wallet.TripPass.toLocaleString(); } }
+    function modifyWallet(type) { const v = prompt(`修改 ${type} 初始余额:`, wallet[type]); if(v!==null){ wallet[type]=Number(v); updateWalletUI(); } }
+    async function updateWeather() { try { const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=37.5665&longitude=126.9780&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Asia%2FSeoul`); const data = await res.json(); document.getElementById('w-axis').innerHTML = data.daily.time.slice(0, 7).map((date, idx) => `<div class="w-item ${idx === 0 ? 'active' : ''}"><small>${date.split('-').slice(1).join('.')}</small><div style="font-size:22px;margin:4px 0;">${data.daily.weathercode[idx]>50?'🌧️':'⛅'}</div><b>${Math.round(data.daily.temperature_2m_min[idx])}°/ ${Math.round(data.daily.temperature_2m_max[idx])}°</b></div>`).join(''); } catch(e){} }
     async function updateExchangeRate() { try { const res = await fetch('https://open.er-api.com/v6/latest/CNY'); const data = await res.json(); RATE = data.rates.KRW; document.getElementById('live-rate').innerText = `¥1 ≈ ₩${RATE.toFixed(1)}`; } catch(e){} }
     
-    // 航班卡片倒计时精准修复
     function renderFlights() {
         const box = document.getElementById('flight-list'); if(!box) return;
         const now = new Date(); const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -150,19 +152,18 @@
         }).join('');
     }
 
-    // 地图协议增强逻辑
-    function openMap(url) { if(!url) return; window.open(url, '_blank'); }
-
     function nav(v) { curView = v; document.getElementById('v-home').className = (v==='home'?'':'hidden'); document.getElementById('v-sub').className = (v==='home'?'hidden':''); document.getElementById('ledger-extra').className = (v==='fin'?'':'hidden'); renderList(); updateWalletUI(); }
     
     function renderList() {
         const box = document.getElementById('list-container'); const header = document.getElementById('sub-header'); if(!box) return; box.innerHTML = ''; header.innerHTML = '';
         if(curView === 'plan' || curView === 'fin') {
-            const dates = ['04.29','04.30','05.01','05.02','05.03'];
-            header.innerHTML = '<div style="display:flex;gap:8px;overflow-x:auto;margin-bottom:15px;">' + dates.map(d => `<div onclick="curDate='${d}';renderList();" style="padding:10px 18px;background:${curDate===d?'var(--sailor-pink)':'#F8F9FA'};color:${curDate===d?'white':'#666'};border-radius:15px;font-size:12px;font-weight:900;flex-shrink:0;">${d}</div>`).join('') + '</div>';
+            let baseDates = ['04.29','04.30','05.01','05.02','05.03'];
+            let customDates = store[curView].map(it => it.date);
+            let allDates = [...new Set([...baseDates, ...customDates])].sort();
+            header.innerHTML = '<div style="display:flex;gap:8px;overflow-x:auto;margin-bottom:15px;">' + allDates.map(d => `<div onclick="curDate='${d}';renderList();" style="padding:10px 18px;background:${curDate===d?'var(--sailor-pink)':'#F8F9FA'};color:${curDate===d?'white':'#666'};border-radius:15px;font-size:12px;font-weight:900;flex-shrink:0;">${d}</div>`).join('') + '</div>';
             store[curView].filter(it => it.date === curDate).forEach((it) => {
                 const idx = store[curView].indexOf(it);
-                box.innerHTML += (curView === 'plan') ? `<div class="plan-row" onclick="openEdit('plan', ${idx})"><div class="plan-time">${it.time||'--'}</div><div class="plan-line"><div class="plan-dot"></div></div><div class="item-card"><div class="del-btn" onclick="delItem(event, 'plan', ${idx})">×</div><div style="flex:1"><b>${it.name}</b><br><small style="color:#999">${it.note||''}</small></div>${it.link?`<div class="naver-btn" onclick="event.stopPropagation();openMap('${it.link}')">Map</div>`:''}</div></div>` : `<div class="item-card" onclick="openEdit('fin', ${idx})"><div class="del-btn" onclick="delItem(event, 'fin', ${idx})">×</div><div class="card-pic">${it.img?`<img src="${it.img}">`:'💰'}</div><div style="flex:1"><div style="display:flex; justify-content:space-between"><b>${it.name}</b><b style="color:var(--deep-pink)">₩${Number(it.price).toLocaleString()}</b></div><small>${it.subPay||it.pay}</small></div></div>`;
+                box.innerHTML += (curView === 'plan') ? `<div class="plan-row" onclick="openEdit('plan', ${idx})"><div class="plan-time">${it.time||'--'}</div><div class="plan-line"><div class="plan-dot"></div></div><div class="item-card"><div class="del-btn" onclick="delItem(event, 'plan', ${idx})">×</div><div style="flex:1"><b>${it.name}</b><br><small style="color:#999">${it.note||''}</small></div>${it.link?`<div class="naver-btn" onclick="event.stopPropagation();window.open('${it.link}')">Map</div>`:''}</div></div>` : `<div class="item-card" onclick="openEdit('fin', ${idx})"><div class="del-btn" onclick="delItem(event, 'fin', ${idx})">×</div><div class="card-pic">${it.img?`<img src="${it.img}">`:'💰'}</div><div style="flex:1"><div style="display:flex; justify-content:space-between"><b>${it.name}</b><b style="color:var(--deep-pink)">₩${Number(it.price).toLocaleString()}</b></div><small>${it.subPay||it.pay}</small></div></div>`;
             });
         } else if(curView === 'ticket') {
             store.ticket.forEach((it, i) => { box.innerHTML += `<div class="ticket-stub" onclick="openEdit('ticket', ${i})"><div class="ticket-circle-top"></div><div class="ticket-circle-bot"></div><div class="ticket-main"><div class="card-pic">${it.img?`<img src="${it.img}">`:'🎓'}</div><div style="flex:1"><b style="color:var(--brown);font-size:15px;">${it.name}</b><br><small style="color:var(--high-school-blue);font-weight:900;">${it.date} • ${it.venue}</small></div></div><div class="ticket-side"><small style="color:#999;font-size:8px;">SEAT</small><b style="color:var(--high-school-blue);font-size:10px;">${it.area||''}区${it.row||''}排${it.num||''}号</b></div><div class="del-btn" onclick="delItem(event, 'ticket', ${i})">×</div></div>`; });
@@ -174,7 +175,6 @@
     function delItem(e, type, i) { e.stopPropagation(); if(confirm('确认删除？')){ const it = store[type][i]; if(type==='fin' && it.subPay) wallet[it.subPay]+=Number(it.price); store[type].splice(i,1); renderList(); updateWalletUI(); } }
     function delWish(e, i) { e.stopPropagation(); store.wish.splice(i, 1); renderList(); }
 
-    // 性能优化：Canvas 图片自动压缩引擎
     function handleFileWithCompression(input) {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -209,7 +209,7 @@
             form.innerHTML = `<label class="f-label">商品名称</label><input id="f-name" class="f-input" value="${item.name||''}">
                 <label class="f-label">单价 (₩)</label><input id="f-price" class="f-input" type="number" value="${item.price||''}">
                 <label class="f-label">链接</label><input id="f-link" class="f-input" value="${item.link||''}">`;
-            if(idx > -1) sync.innerHTML = `<button class="btn-main" style="background:#FFF0F6; color:var(--deep-pink); border:2.5px solid var(--sailor-pink);" onclick="syncToFin(${idx})">💸 同步至账本</button>`;
+            if(idx > -1) sync.innerHTML = `<button class="btn-main" style="background:#FFF0F6; color:var(--deep-pink); border:2.5px solid var(--sailor-pink); border-radius:15px; padding:12px; width:100%; margin-top:10px; font-weight:900;" onclick="syncToFin(${idx})">💸 同步至账本</button>`;
         } else if(view === 'ticket') {
             form.innerHTML = `<label class="f-label">活动名</label><input id="f-name" class="f-input" value="${item.name||''}">
                 <div class="selector-group"><div><label class="f-label">日期</label><input id="f-date-t" class="f-input" value="${item.date||'05.01'}"></div><div><label class="f-label">场馆</label><input id="f-venue" class="f-input" value="${item.venue||''}"></div></div>
