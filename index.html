@@ -109,7 +109,7 @@
 
 <script>
     // 1. 云端配置
-    const SYNC_KEY = "KC_Wang_0411_SeoulMoon_99"; 
+    const SYNC_KEY = "KaichenWang_950411_Seoul_Secret_Magic_Box"; 
     const CLOUD_URL = `https://kvbins.com/api/v1/bins/${SYNC_KEY}`;
 
     // 2. 基础变量（初始值，加载云端后会被覆盖）
@@ -134,7 +134,7 @@
         if(dateEl) dateEl.innerText = `Seoul ${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
         
         try {
-            const res = await fetch(CLOUD_URL);
+            const res = await fetch(CLOUD_URL + '?nocache=' + Date.now());
             const cloudData = await res.json();
             // 关键：如果云端有 data 字段，全量覆盖本地变量
             if(cloudData && cloudData.data) {
