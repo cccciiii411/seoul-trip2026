@@ -108,40 +108,53 @@
     </div>
 
 <script>
-    // 【新增位置 1】：云端同步配置
-    const SYNC_KEY = "KC_Wang_0411_SeoulMoon_99"; // 建议换成你自己的专属暗号
+    // 1. 云端配置
+    const SYNC_KEY = "KC_Wang_0411_SeoulMoon_99"; 
     const CLOUD_URL = `https://kvbins.com/api/v1/bins/${SYNC_KEY}`;
 
+    // 2. 基础变量（初始值，加载云端后会被覆盖）
     let curView = 'home', curIdx = -1, curDate = '04.29', RATE = 191.0, tempImg = '';
-    // ... 后面的代码保持不变
     let wallet = { Toss: 100000, Namane: 50000, TripPass: 30000 };
     let flights = [{ air: "韩亚航空", no: "OZ3635", date: "2026-04-29", t1: "11:10", t2: "14:00", from: "PVG", to: "GMP", c1: "K区", g1: "T2-G", s1: "12A" }];
-    let store = { plan: [
-        { date: '04.29', time: "14:00", name: "金浦降落", note: "OZ3635航班", link: "" },
-        { date: '04.29', time: "16:00", name: "预约做指甲", note: "네일하리", link: "https://naver.me/xs3KmFEH" },
-        { date: '05.02', time: "12:00", name: "午餐 몽탄", note: "Day 4", link: "https://naver.me/GALRPbOp" }
-    ], ticket: [{ name: "REPLY HIGH SCHOOL FM", date: "05.01", venue: "Olympic Hall", area: "B", row: "12", num: "18", img: "" }], wish: [], fin: [] };
+    let store = { 
+        plan: [
+            { date: '04.29', time: "14:00", name: "金浦降落", note: "OZ3635航班", link: "" },
+            { date: '04.29', time: "16:00", name: "预约做指甲", note: "네일하리", link: "https://naver.me/xs3KmFEH" },
+            { date: '05.02', time: "12:00", name: "午餐 몽탄", note: "Day 4", link: "https://naver.me/GALRPbOp" }
+        ], 
+        ticket: [{ name: "REPLY HIGH SCHOOL FM", date: "05.01", venue: "Olympic Hall", area: "B", row: "12", num: "18", img: "" }], 
+        wish: [], 
+        fin: [] 
+    };
 
-// 【新增位置 2】：替换原本的 init 函数
+    // 3. 初始同步函数
     async function init() { 
         const now = new Date();
-        document.getElementById('live-date').innerText = `Seoul ${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
+        const dateEl = document.getElementById('live-date');
+        if(dateEl) dateEl.innerText = `Seoul ${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
         
-        // 云端获取数据逻辑
         try {
             const res = await fetch(CLOUD_URL);
             const cloudData = await res.json();
+            // 关键：如果云端有 data 字段，全量覆盖本地变量
             if(cloudData && cloudData.data) {
                 store = cloudData.data.store;
                 flights = cloudData.data.flights;
                 wallet = cloudData.data.wallet;
+                console.log("✅ 云端数据加载成功");
             }
-        } catch(e) { console.log("云端同步中..."); }
+        } catch(e) { console.log("☁️ 云端连接中..."); }
 
         updateWeather(); updateExchangeRate(); renderFlights(); updateWalletUI(); 
     }
-    function updateWalletUI() { document.getElementById('val-Toss').innerText='₩'+wallet.Toss.toLocaleString(); document.getElementById('val-Namane').innerText='₩'+wallet.Namane.toLocaleString(); document.getElementById('val-TripPass').innerText='₩'+wallet.TripPass.toLocaleString(); }
-    function modifyWallet(type) { const v = prompt(`修改 ${type} 余额:`, wallet[type]); if(v!==null){ wallet[type]=Number(v); updateWalletUI(); } }
+
+    // 4. 其余辅助功能（保持不变）
+    function updateWalletUI() { 
+        document.getElementById('val-Toss').innerText='₩'+wallet.Toss.toLocaleString(); 
+        document.getElementById('val-Namane').innerText='₩'+wallet.Namane.toLocaleString(); 
+        document.getElementById('val-TripPass').innerText='₩'+wallet.TripPass.toLocaleString(); 
+    }
+    function modifyWallet(type) { const v = prompt(`修改 ${type} 余额:`, wallet[type]); if(v!==null){ wallet[type]=Number(v); updateWalletUI(); masterSave(); } }
     async function updateWeather() { try { const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=37.5665&longitude=126.9780&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Asia%2FSeoul`); const data = await res.json(); document.getElementById('w-axis').innerHTML = data.daily.time.slice(0, 7).map((date, idx) => `<div class="w-item ${idx === 0 ? 'active' : ''}"><small>${date.split('-').slice(1).join('.')}</small><div style="font-size:22px;margin:4px 0;">${data.daily.weathercode[idx]>50?'🌧️':'⛅'}</div><b>${Math.round(data.daily.temperature_2m_min[idx])}°/${Math.round(data.daily.temperature_2m_max[idx])}°</b></div>`).join(''); } catch(e){} }
     async function updateExchangeRate() { try { const res = await fetch('https://open.er-api.com/v6/latest/CNY'); const data = await res.json(); RATE = data.rates.KRW; document.getElementById('live-rate').innerText = `¥1 ≈ ₩${RATE.toFixed(1)}`; } catch(e){} }
     function renderFlights() {
@@ -157,6 +170,7 @@
         }).join('');
     }
     function nav(v) { curView = v; document.getElementById('v-home').className = (v==='home'?'':'hidden'); document.getElementById('v-sub').className = (v==='home'?'hidden':''); document.getElementById('ledger-extra').className = (v==='fin'?'':'hidden'); renderList(); updateWalletUI(); }
+    
     function renderList() {
         const box = document.getElementById('list-container'); const header = document.getElementById('sub-header'); if(!box) return; box.innerHTML = ''; header.innerHTML = '';
         if(curView === 'plan' || curView === 'fin') {
@@ -172,6 +186,7 @@
             store.wish.forEach((it, i) => { box.innerHTML += `<div class="item-card" onclick="openEdit('wish', ${i})"><div class="del-btn" onclick="delWish(event, ${i})">×</div><div class="card-pic">${it.img?`<img src="${it.img}">`:'🛍️'}</div><div style="flex:1"><div style="display:flex;justify-content:space-between"><b>${it.name}</b><b style="color:var(--deep-pink)">₩${Number(it.price).toLocaleString()}</b></div><small style="color:#999">≈ ¥${(it.price/RATE).toFixed(0)}</small></div></div>`; });
         }
     }
+
     function handleFileWithCompression(input) {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -212,7 +227,6 @@
             form.innerHTML = `<label class="f-label">项目</label><input id="f-name" class="f-input" value="${it.name||''}">
                 <div class="selector-group"><div><label class="f-label">日期</label><input id="f-date-p" class="f-input" type="date" value="${dVal}"></div><div><label class="f-label">时间</label><input id="f-time" class="f-input" type="time" value="${it.time||'12:00'}"></div></div><label class="f-label">链接</label><input id="f-link" class="f-input" value="${it.link||''}">`;
         } else if(view === 'flight') {
-            // 修正：补回航班起飞与到达时间选择
             form.innerHTML = `<label class="f-label">航司</label><input id="f-air" class="f-input" value="${it.air||''}">
                 <div class="selector-group"><div><label class="f-label">航班</label><input id="f-no" class="f-input" value="${it.no||''}"></div><div><label class="f-label">日期</label><input id="f-date-fl" class="f-input" type="date" value="${dVal}"></div></div>
                 <div class="selector-group"><div><label class="f-label">起飞时间</label><input id="f-t1" class="f-input" type="time" value="${it.t1||'11:10'}"></div><div><label class="f-label">到达时间</label><input id="f-t2" class="f-input" type="time" value="${it.t2||'14:00'}"></div></div>
@@ -222,13 +236,18 @@
     function selectBtn(el) { el.parentNode.querySelectorAll('.selector-item').forEach(b => b.classList.remove('active')); el.classList.add('active'); }
     function selectPay(el) { selectBtn(el); document.getElementById('sub-pay-area').className = (el.innerText === '韩币支付' ? '' : 'hidden'); }
     function closeDrawer() { document.getElementById('drawer').classList.remove('active'); }
-    function delItem(e, type, i) { e.stopPropagation(); if(confirm('删除？')){ const it = store[type][i]; if(type==='fin' && it.subPay) wallet[it.subPay]+=Number(it.price); store[type].splice(i,1); renderList(); updateWalletUI(); } }
-    function delWish(e, i) { e.stopPropagation(); store.wish.splice(i, 1); renderList(); }
-    function syncToFin(i) { const it = store.wish[i]; store.fin.unshift({ date: curDate, name: it.name, price: it.price, pay: '信用卡', img: it.img }); alert('已同步'); closeDrawer(); nav('fin'); }
+    function delItem(e, type, i) { e.stopPropagation(); if(confirm('删除？')){ const it = store[type][i]; if(type==='fin' && it.subPay) wallet[it.subPay]+=Number(it.price); store[type].splice(i,1); renderList(); updateWalletUI(); masterSave(); } }
+    function delWish(e, i) { e.stopPropagation(); store.wish.splice(i, 1); renderList(); masterSave(); }
+    function syncToFin(i) { const it = store.wish[i]; store.fin.unshift({ date: curDate, name: it.name, price: it.price, pay: '信用卡', img: it.img }); alert('已同步'); closeDrawer(); nav('fin'); masterSave(); }
+    
+    // 5. 核心保存并同步函数
     function masterSave() {
         const d = document, nameVal = d.getElementById('f-name')?d.getElementById('f-name').value:'', pr = Number(d.getElementById('f-price')?d.getElementById('f-price').value:0);
         if(curView === 'fin') {
-            const pay = d.querySelector('#pay-sel .active').innerText, subPay = (pay === '韩币支付') ? d.querySelector('#sub-pay-sel .active').innerText : '';
+            const payEl = d.querySelector('#pay-sel .active');
+            const pay = payEl ? payEl.innerText : '信用卡';
+            const subPayEl = d.querySelector('#sub-pay-sel .active');
+            const subPay = (pay === '韩币支付' && subPayEl) ? subPayEl.innerText : '';
             const finalDate = formatDateToShort(d.getElementById('f-date').value);
             const obj = { date: finalDate, name: nameVal, price: pr, pay: pay, subPay: subPay, img: tempImg || (curIdx > -1 ? store.fin[curIdx].img : '') };
             if(curIdx > -1) { const old = store.fin[curIdx]; if(old.subPay) wallet[old.subPay]+=Number(old.price); if(subPay) wallet[subPay]-=pr; store.fin[curIdx] = obj; }
@@ -237,14 +256,18 @@
         else if(curView === 'ticket') { const obj = { name: nameVal, date: formatDateToShort(d.getElementById('f-date-t').value), venue: d.getElementById('f-venue').value, area: d.getElementById('f-area').value, row: d.getElementById('f-row').value, num: d.getElementById('f-num').value, img: tempImg || (curIdx > -1 ? store.ticket[curIdx].img : '') }; if(curIdx > -1) store.ticket[curIdx] = obj; else store.ticket.push(obj); }
         else if(curView === 'plan') { const obj = { name: nameVal, date: formatDateToShort(d.getElementById('f-date-p').value), time: d.getElementById('f-time').value, link: d.getElementById('f-link')?d.getElementById('f-link').value:'' }; if(curIdx > -1) store.plan[curIdx] = obj; else store.plan.push(obj); }
         else if(curView === 'flight') { flights[curIdx] = { air: d.getElementById('f-air').value, no: d.getElementById('f-no').value, date: formatDateToShort(d.getElementById('f-date-fl').value), t1:d.getElementById('f-t1').value, t2:d.getElementById('f-t2').value, c1:d.getElementById('f-c1').value, g1:d.getElementById('f-g1').value, s1:d.getElementById('f-s1').value }; renderFlights(); }
+        
         renderList(); updateWalletUI(); closeDrawer();
-      // 自动同步到云端
-    fetch(CLOUD_URL, { 
-        method: 'POST', 
-        headers: {'Content-Type': 'application/json'}, 
-        body: JSON.stringify({ data: {store, flights, wallet} }) 
-    });
+
+        // 打包所有数据发送到云端
+        fetch(CLOUD_URL, { 
+            method: 'POST', 
+            headers: {'Content-Type': 'application/json'}, 
+            body: JSON.stringify({ data: {store, flights, wallet} }) 
+        }).then(() => console.log("🚀 全量数据已同步至云端"));
     }
+
+    // 执行启动
     init();
 </script>
 </body>
