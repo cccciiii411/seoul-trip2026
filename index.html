@@ -108,7 +108,12 @@
     </div>
 
 <script>
+    // 【新增位置 1】：云端同步配置
+    const SYNC_KEY = "KC_Wang_0411_SeoulMoon_99"; // 建议换成你自己的专属暗号
+    const CLOUD_URL = `https://kvbins.com/api/v1/bins/${SYNC_KEY}`;
+
     let curView = 'home', curIdx = -1, curDate = '04.29', RATE = 191.0, tempImg = '';
+    // ... 后面的代码保持不变
     let wallet = { Toss: 100000, Namane: 50000, TripPass: 30000 };
     let flights = [{ air: "韩亚航空", no: "OZ3635", date: "2026-04-29", t1: "11:10", t2: "14:00", from: "PVG", to: "GMP", c1: "K区", g1: "T2-G", s1: "12A" }];
     let store = { plan: [
@@ -117,9 +122,22 @@
         { date: '05.02', time: "12:00", name: "午餐 몽탄", note: "Day 4", link: "https://naver.me/GALRPbOp" }
     ], ticket: [{ name: "REPLY HIGH SCHOOL FM", date: "05.01", venue: "Olympic Hall", area: "B", row: "12", num: "18", img: "" }], wish: [], fin: [] };
 
-    function init() { 
+// 【新增位置 2】：替换原本的 init 函数
+    async function init() { 
         const now = new Date();
         document.getElementById('live-date').innerText = `Seoul ${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
+        
+        // 云端获取数据逻辑
+        try {
+            const res = await fetch(CLOUD_URL);
+            const cloudData = await res.json();
+            if(cloudData && cloudData.data) {
+                store = cloudData.data.store;
+                flights = cloudData.data.flights;
+                wallet = cloudData.data.wallet;
+            }
+        } catch(e) { console.log("云端同步中..."); }
+
         updateWeather(); updateExchangeRate(); renderFlights(); updateWalletUI(); 
     }
     function updateWalletUI() { document.getElementById('val-Toss').innerText='₩'+wallet.Toss.toLocaleString(); document.getElementById('val-Namane').innerText='₩'+wallet.Namane.toLocaleString(); document.getElementById('val-TripPass').innerText='₩'+wallet.TripPass.toLocaleString(); }
@@ -220,6 +238,12 @@
         else if(curView === 'plan') { const obj = { name: nameVal, date: formatDateToShort(d.getElementById('f-date-p').value), time: d.getElementById('f-time').value, link: d.getElementById('f-link')?d.getElementById('f-link').value:'' }; if(curIdx > -1) store.plan[curIdx] = obj; else store.plan.push(obj); }
         else if(curView === 'flight') { flights[curIdx] = { air: d.getElementById('f-air').value, no: d.getElementById('f-no').value, date: formatDateToShort(d.getElementById('f-date-fl').value), t1:d.getElementById('f-t1').value, t2:d.getElementById('f-t2').value, c1:d.getElementById('f-c1').value, g1:d.getElementById('f-g1').value, s1:d.getElementById('f-s1').value }; renderFlights(); }
         renderList(); updateWalletUI(); closeDrawer();
+      // 自动同步到云端
+    fetch(CLOUD_URL, { 
+        method: 'POST', 
+        headers: {'Content-Type': 'application/json'}, 
+        body: JSON.stringify({ data: {store, flights, wallet} }) 
+    });
     }
     init();
 </script>
