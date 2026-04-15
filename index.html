@@ -12,7 +12,7 @@
         * { box-sizing: border-box; font-family: 'PingFang SC', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: linear-gradient(135deg, #FFF5F9 0%, #F0F4FF 100%); margin: 0; padding: env(safe-area-inset-top) 15px 80px 15px; min-height: 100vh; overflow-x: hidden; }
         .hidden { display: none !important; }
-        .sm-title { font-family: 'Dancing Script', cursive; font-size: 42px; color: var(--deep-pink); text-align: center; margin: 15px 0; text-shadow: 2px 2px 0 white; position: relative; }
+        .sm-title { font-family: 'Dancing Script', cursive; font-size: 42px; color: var(--deep-pink); text-align: center; margin: 15px 0; text-shadow: 2px 2px 0 white; position: relative; cursor: pointer; }
         .sm-title::after { content: '⭐'; position: absolute; font-size: 12px; animation: meteor 4s linear infinite; opacity: 0; }
         @keyframes meteor { 0% { top: -10px; right: 20%; opacity: 1; } 30% { top: 20px; right: 80%; opacity: 0; } 100% { opacity: 0; } }
         .dash-board { background: rgba(255, 255, 255, 0.7); border: 2px solid white; border-radius: 30px; padding: 18px; box-shadow: 0 8px 25px var(--glow); backdrop-filter: blur(10px); margin-bottom: 20px; }
@@ -61,7 +61,7 @@
 </head>
 <body>
     <div id="v-home">
-        <h1 class="sm-title">Seoul Moon🌙</h1>
+        <h1 class="sm-title" onclick="init()">Seoul Moon🌙</h1>
         <div class="dash-board">
             <div style="display:flex; justify-content:space-between; align-items:center;">
                 <span id="live-date" style="font-family:'Dancing Script'; font-size:28px; color:var(--deep-pink)">Seoul --.--</span>
@@ -108,12 +108,11 @@
     </div>
 
 <script>
-    // 1. 云端配置
-    const SYNC_KEY = "Kaichen_Seoul_2026_950411_MagicBox_v3";
-    const CLOUD_URL = `https://kvbins.com/api/v1/bins/${SYNC_KEY}`;
+    // 1. 云端配置 (MyJson 稳定接口)
+    const CLOUD_URL = "https://api.myjson.online/v1/records/06ec3391-496f-4613-8106-7e3f656574f0"; 
 
-    // 2. 基础变量（初始值，加载云端后会被覆盖）
-    let curView = 'home', curIdx = -1, curDate = '04.29', RATE = 191.0, tempImg = '';
+    // 2. 基础变量
+    let curView = 'home', curIdx = -1, curDate = '04.15', RATE = 191.0, tempImg = '';
     let wallet = { Toss: 100000, Namane: 50000, TripPass: 30000 };
     let flights = [{ air: "韩亚航空", no: "OZ3635", date: "2026-04-29", t1: "11:10", t2: "14:00", from: "PVG", to: "GMP", c1: "K区", g1: "T2-G", s1: "12A" }];
     let store = { 
@@ -127,7 +126,7 @@
         fin: [] 
     };
 
-    // 3. 初始同步函数
+    // 3. 初始同步逻辑
     async function init() { 
         const now = new Date();
         const dateEl = document.getElementById('live-date');
@@ -135,28 +134,34 @@
         
         try {
             const res = await fetch(CLOUD_URL + '?nocache=' + Date.now());
-            const cloudData = await res.json();
-            // 关键：如果云端有 data 字段，全量覆盖本地变量
-            if(cloudData && cloudData.data) {
-                store = cloudData.data.store;
-                flights = cloudData.data.flights;
-                wallet = cloudData.data.wallet;
-                console.log("✅ 云端数据加载成功");
+            const result = await res.json();
+            const cloudData = result.data || result; 
+            if(cloudData && cloudData.store) {
+                store = cloudData.store;
+                flights = cloudData.flights;
+                wallet = cloudData.wallet;
+                console.log("✅ 云端同步成功");
             }
-        } catch(e) { console.log("☁️ 云端连接中..."); }
+        } catch(e) { console.log("☁️ 初次运行，加载本地默认值"); }
 
-        updateWeather(); updateExchangeRate(); renderFlights(); updateWalletUI(); 
+        updateWeather(); 
+        updateExchangeRate(); 
+        renderFlights(); 
+        updateWalletUI(); 
     }
 
-    // 4. 其余辅助功能（保持不变）
     function updateWalletUI() { 
         document.getElementById('val-Toss').innerText='₩'+wallet.Toss.toLocaleString(); 
         document.getElementById('val-Namane').innerText='₩'+wallet.Namane.toLocaleString(); 
         document.getElementById('val-TripPass').innerText='₩'+wallet.TripPass.toLocaleString(); 
     }
+
     function modifyWallet(type) { const v = prompt(`修改 ${type} 余额:`, wallet[type]); if(v!==null){ wallet[type]=Number(v); updateWalletUI(); masterSave(); } }
+
     async function updateWeather() { try { const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=37.5665&longitude=126.9780&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Asia%2FSeoul`); const data = await res.json(); document.getElementById('w-axis').innerHTML = data.daily.time.slice(0, 7).map((date, idx) => `<div class="w-item ${idx === 0 ? 'active' : ''}"><small>${date.split('-').slice(1).join('.')}</small><div style="font-size:22px;margin:4px 0;">${data.daily.weathercode[idx]>50?'🌧️':'⛅'}</div><b>${Math.round(data.daily.temperature_2m_min[idx])}°/${Math.round(data.daily.temperature_2m_max[idx])}°</b></div>`).join(''); } catch(e){} }
+
     async function updateExchangeRate() { try { const res = await fetch('https://open.er-api.com/v6/latest/CNY'); const data = await res.json(); RATE = data.rates.KRW; document.getElementById('live-rate').innerText = `¥1 ≈ ₩${RATE.toFixed(1)}`; } catch(e){} }
+
     function renderFlights() {
         const today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
         document.getElementById('flight-list').innerHTML = flights.map((f, i) => {
@@ -169,8 +174,9 @@
             </div>`;
         }).join('');
     }
+
     function nav(v) { curView = v; document.getElementById('v-home').className = (v==='home'?'':'hidden'); document.getElementById('v-sub').className = (v==='home'?'hidden':''); document.getElementById('ledger-extra').className = (v==='fin'?'':'hidden'); renderList(); updateWalletUI(); }
-    
+
     function renderList() {
         const box = document.getElementById('list-container'); const header = document.getElementById('sub-header'); if(!box) return; box.innerHTML = ''; header.innerHTML = '';
         if(curView === 'plan' || curView === 'fin') {
@@ -202,13 +208,15 @@
         };
         reader.readAsDataURL(input.files[0]);
     }
+
     function formatDateToShort(dateStr) { if(!dateStr) return curDate; const parts = dateStr.split('-'); return `${parts[1]}.${parts[2]}`; }
+
     function openEdit(view, idx) {
         curView = view; curIdx = idx; tempImg = ''; const form = document.getElementById('d-form'); const sync = document.getElementById('sync-area');
         document.getElementById('preview-text').innerHTML = '📸 点击识图/上传凭证'; document.getElementById('drawer').classList.add('active'); sync.innerHTML = '';
         const it = idx > -1 ? (view==='flight'?flights[idx]:store[view][idx]) : {};
         if(it.img) { tempImg = it.img; document.getElementById('preview-text').innerHTML = `<img src="${tempImg}" style="max-width:100%; border-radius:10px;">`; }
-        const dVal = it.date ? `2026-${it.date.replace('.','-')}` : '2026-04-29';
+        const dVal = it.date ? `2026-${it.date.replace('.','-')}` : '2026-04-15';
         if(view === 'fin') {
             form.innerHTML = `<label class="f-label">日期</label><input id="f-date" class="f-input" type="date" value="${dVal}">
                 <label class="f-label">项目</label><input id="f-name" class="f-input" value="${it.name||''}">
@@ -233,14 +241,14 @@
                 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;"><div><label class="f-label">柜台</label><input id="f-c1" class="f-input" value="${it.c1||''}"></div><div><label class="f-label">登机</label><input id="f-g1" class="f-input" value="${it.g1||''}"></div><div><label class="f-label">座位</label><input id="f-s1" class="f-input" value="${it.s1||''}"></div></div>`;
         }
     }
+
     function selectBtn(el) { el.parentNode.querySelectorAll('.selector-item').forEach(b => b.classList.remove('active')); el.classList.add('active'); }
     function selectPay(el) { selectBtn(el); document.getElementById('sub-pay-area').className = (el.innerText === '韩币支付' ? '' : 'hidden'); }
     function closeDrawer() { document.getElementById('drawer').classList.remove('active'); }
     function delItem(e, type, i) { e.stopPropagation(); if(confirm('删除？')){ const it = store[type][i]; if(type==='fin' && it.subPay) wallet[it.subPay]+=Number(it.price); store[type].splice(i,1); renderList(); updateWalletUI(); masterSave(); } }
     function delWish(e, i) { e.stopPropagation(); store.wish.splice(i, 1); renderList(); masterSave(); }
     function syncToFin(i) { const it = store.wish[i]; store.fin.unshift({ date: curDate, name: it.name, price: it.price, pay: '信用卡', img: it.img }); alert('已同步'); closeDrawer(); nav('fin'); masterSave(); }
-    
-    // 5. 核心保存并同步函数
+
     async function masterSave() {
         const d = document, nameVal = d.getElementById('f-name')?d.getElementById('f-name').value:'', pr = Number(d.getElementById('f-price')?d.getElementById('f-price').value:0);
         if(curView === 'fin') {
@@ -258,21 +266,16 @@
         else if(curView === 'flight') { flights[curIdx] = { air: d.getElementById('f-air').value, no: d.getElementById('f-no').value, date: formatDateToShort(d.getElementById('f-date-fl').value), t1:d.getElementById('f-t1').value, t2:d.getElementById('f-t2').value, c1:d.getElementById('f-c1').value, g1:d.getElementById('f-g1').value, s1:d.getElementById('f-s1').value }; renderFlights(); }
         
         renderList(); updateWalletUI(); closeDrawer();
-
-        // --- 核心同步：务必保留这一段 ---
         try {
             await fetch(CLOUD_URL, { 
-                method: 'POST', 
+                method: 'PUT', mode: 'cors',
                 headers: {'Content-Type': 'application/json'}, 
                 body: JSON.stringify({ data: {store, flights, wallet} }) 
             });
-            console.log("🚀 全量数据已同步至云端");
-        } catch(e) {
-            console.error("同步失败", e);
-        }
+            console.log("🚀 同步成功");
+        } catch(e) { console.error("同步失败", e); }
     }
 
-    // 执行启动
     init();
 </script>
 </body>
