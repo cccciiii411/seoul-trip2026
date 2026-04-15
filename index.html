@@ -109,7 +109,7 @@
 
 <script>
     // 1. 云端配置
-    const SYNC_KEY = "KaichenWang_950411_Seoul_Secret_Magic_Box"; 
+    const SYNC_KEY = "Kaichen_Seoul_2026_950411_MagicBox_v3";
     const CLOUD_URL = `https://kvbins.com/api/v1/bins/${SYNC_KEY}`;
 
     // 2. 基础变量（初始值，加载云端后会被覆盖）
@@ -241,7 +241,7 @@
     function syncToFin(i) { const it = store.wish[i]; store.fin.unshift({ date: curDate, name: it.name, price: it.price, pay: '信用卡', img: it.img }); alert('已同步'); closeDrawer(); nav('fin'); masterSave(); }
     
     // 5. 核心保存并同步函数
-    function masterSave() {
+    async function masterSave() {
         const d = document, nameVal = d.getElementById('f-name')?d.getElementById('f-name').value:'', pr = Number(d.getElementById('f-price')?d.getElementById('f-price').value:0);
         if(curView === 'fin') {
             const payEl = d.querySelector('#pay-sel .active');
@@ -259,12 +259,17 @@
         
         renderList(); updateWalletUI(); closeDrawer();
 
-        // 打包所有数据发送到云端
-        fetch(CLOUD_URL, { 
-            method: 'POST', 
-            headers: {'Content-Type': 'application/json'}, 
-            body: JSON.stringify({ data: {store, flights, wallet} }) 
-        }).then(() => console.log("🚀 全量数据已同步至云端"));
+        // --- 核心同步：务必保留这一段 ---
+        try {
+            await fetch(CLOUD_URL, { 
+                method: 'POST', 
+                headers: {'Content-Type': 'application/json'}, 
+                body: JSON.stringify({ data: {store, flights, wallet} }) 
+            });
+            console.log("🚀 全量数据已同步至云端");
+        } catch(e) {
+            console.error("同步失败", e);
+        }
     }
 
     // 执行启动
