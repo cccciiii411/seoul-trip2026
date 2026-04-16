@@ -20,7 +20,6 @@
         .flight-container { display: flex; overflow-x: auto; gap: 15px; padding: 10px 5px 20px; scrollbar-width: none; scroll-snap-type: x mandatory; min-height: 120px; }
         .flight-card { flex: 0 0 88%; background: white; border: 3px solid var(--sailor-blue); border-radius: 25px; padding: 20px; box-shadow: 8px 8px 0px var(--sailor-blue); position: relative; scroll-snap-align: center; }
         .add-flight-card { flex: 0 0 88%; border: 2px dashed var(--sailor-blue); border-radius: 25px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.4); cursor: pointer; scroll-snap-align: center; }
-        .d-day-badge { position: absolute; top: 15px; right: 15px; background: var(--sailor-gold); color: var(--brown); padding: 4px 10px; border-radius: 10px; font-size: 11px; font-weight: 900; box-shadow: 2px 2px 0 var(--brown); }
         .tag-row { display: flex; gap: 6px; margin-top: 15px; border-top: 1px dashed #DDD; padding-top: 15px; }
         .tag { flex: 1; padding: 6px 4px; border-radius: 8px; font-size: 10px; font-weight: 900; text-align: center; }
         .nav-stack { display: flex; flex-direction: column; gap: 15px; }
@@ -47,6 +46,33 @@
         .naver-btn { background: var(--naver-green); color: white; padding: 6px 12px; border-radius: 10px; font-size: 11px; font-weight: 900; cursor: pointer; }
         .cny-hint { font-size: 11px; color: var(--sailor-purple); margin-top: 6px; font-weight: 900; }
         .del-btn { position: absolute; top: -8px; right: -8px; background: var(--deep-pink); color: white; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 10; border: 2px solid white; cursor: pointer; }
+   /* --- 强制修正：粉紫果冻 D-Day --- */
+.d-day-badge { 
+    background: linear-gradient(135deg, #FF99CC, #D1B3FF) !important; /* 强制换色 */
+    color: white !important;
+    padding: 5px 12px !important; 
+    border-radius: 12px !important; 
+    font-size: 11px !important; 
+    font-weight: 900 !important;
+    border: 2px solid white !important; /* 白边更清爽 */
+    box-shadow: 0 4px 15px rgba(255, 153, 204, 0.4) !important; /* 换成粉色发光 */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+    animation: pulseSoftGlow 3s infinite !important;
+    letter-spacing: 0.5px !important;
+    right: 15px !important;
+    top: 15px !important;
+}
+
+@keyframes pulseSoftGlow {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(255, 153, 204, 0.4); 
+    }
+    50% { 
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(209, 179, 255, 0.6); 
+    }
+}
     </style>
 </head>
 <body>
