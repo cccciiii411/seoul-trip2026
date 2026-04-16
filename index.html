@@ -46,32 +46,28 @@
         .naver-btn { background: var(--naver-green); color: white; padding: 6px 12px; border-radius: 10px; font-size: 11px; font-weight: 900; cursor: pointer; }
         .cny-hint { font-size: 11px; color: var(--sailor-purple); margin-top: 6px; font-weight: 900; }
         .del-btn { position: absolute; top: -8px; right: -8px; background: var(--deep-pink); color: white; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 10; border: 2px solid white; cursor: pointer; }
-   /* --- 强制修正：粉紫果冻 D-Day --- */
+/* --- 精致小巧版 D-Day --- */
 .d-day-badge { 
-    background: linear-gradient(135deg, #FF99CC, #D1B3FF) !important; /* 强制换色 */
+    position: absolute !important;
+    top: 15px !important;
+    right: 15px !important;
+    width: auto !important;
+    display: inline-block !important;
+    background: linear-gradient(135deg, #FF99CC, #D1B3FF) !important; 
     color: white !important;
-    padding: 5px 12px !important; 
-    border-radius: 12px !important; 
+    padding: 4px 10px !important; 
+    border-radius: 10px !important; 
     font-size: 11px !important; 
     font-weight: 900 !important;
-    border: 2px solid white !important; /* 白边更清爽 */
-    box-shadow: 0 4px 15px rgba(255, 153, 204, 0.4) !important; /* 换成粉色发光 */
-    text-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+    border: 1.5px solid white !important; 
+    box-shadow: 0 4px 12px rgba(255, 153, 204, 0.3) !important; 
     animation: pulseSoftGlow 3s infinite !important;
-    letter-spacing: 0.5px !important;
-    right: 15px !important;
-    top: 15px !important;
+    z-index: 100 !important;
 }
 
 @keyframes pulseSoftGlow {
-    0%, 100% { 
-        transform: scale(1);
-        box-shadow: 0 4px 15px rgba(255, 153, 204, 0.4); 
-    }
-    50% { 
-        transform: scale(1.05);
-        box-shadow: 0 0 20px rgba(209, 179, 255, 0.6); 
-    }
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
 }
     </style>
 </head>
