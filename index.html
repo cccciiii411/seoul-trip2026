@@ -46,47 +46,43 @@
         .naver-btn { background: var(--naver-green); color: white; padding: 6px 12px; border-radius: 10px; font-size: 11px; font-weight: 900; cursor: pointer; }
         .cny-hint { font-size: 11px; color: var(--sailor-purple); margin-top: 6px; font-weight: 900; }
         .del-btn { position: absolute; top: -8px; right: -8px; background: var(--deep-pink); color: white; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 10; border: 2px solid white; cursor: pointer; }
-/* --- Pro 级 Y2K 果冻呼吸 D-Day (修正定位+强化动效) --- */
+/* --- 49行开始：Pro 级 Y2K 果冻呼吸 D-Day --- */
 .d-day-badge { 
-    /* 1. 精准定位 (不挡字) */
     position: absolute !important;
     top: 15px !important;
     right: 15px !important;
-    width: auto !important; /* 强制不撑满 */
-    display: inline-block !important; /* 让它像个标签 */
+    width: auto !important;
+    display: inline-block !important;
     z-index: 100 !important;
-    line-height: 1 !important;
 
-    /* 2. 果冻质感 (粉紫渐变) */
-    background: linear-gradient(135deg, #FFB2D6, #D1B3FF) !important; 
+    /* 颜色与质感 */
+    background: linear-gradient(135deg, #FF99CC, #D1B3FF) !important; 
     color: white !important;
     padding: 5px 12px !important; 
     border-radius: 12px !important; 
     font-size: 11px !important; 
     font-weight: 900 !important;
-    border: 1.5px solid rgba(255, 255, 255, 0.8) !important; /* 精致白边 */
-    text-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
-    letter-spacing: 0.5px !important;
+    border: 2px solid white !important; 
+    box-shadow: 0 4px 15px rgba(255, 153, 204, 0.4) !important; 
 
-    /* 3. 核心动效：果冻呼吸 + 流光发光 */
-    box-shadow: 0 4px 15px rgba(255, 153, 204, 0.3) !important; /* 初始粉色光 */
-    animation: jellyGlow 2.5s ease-in-out infinite !important; /* 换成更丝滑的动画 */
-    transform-origin: center center !important; /* 确保原点缩放 */
+    /* 启动动效 */
+    animation: jellyGlow 2.5s ease-in-out infinite !important;
+    transform-origin: center center;
 }
 
-/* 重新设计的“旷野流光”呼吸动画 */
+/* 核心动画定义 */
 @keyframes jellyGlow {
     0%, 100% { 
-        transform: scale(1);
-        box-shadow: 0 4px 15px rgba(255, 153, 204, 0.3); /* 初始粉光 */
-        background: linear-gradient(135deg, #FFB2D6, #D1B3FF) !important;
+        transform: scale(1); 
+        filter: brightness(1);
     }
     50% { 
-        transform: scale(1.06) rotate(-1deg); /* 微微缩放+侧倾，更生动 */
-        box-shadow: 0 0 25px rgba(209, 179, 255, 0.7); /* 扩散出紫色光晕 */
-        background: linear-gradient(135deg, #FF99CC, #C49BFF) !important; /* 颜色微变 */
+        transform: scale(1.1); /* 明显的放大感 */
+        filter: brightness(1.1); /* 呼吸时微微变亮 */
+        box-shadow: 0 0 20px rgba(255, 153, 204, 0.8); /* 光晕扩散 */
     }
 }
+/* --- 89行结束 --- */
     </style>
 </head>
 <body>
