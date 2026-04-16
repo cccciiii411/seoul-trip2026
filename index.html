@@ -8,57 +8,159 @@
     <title>Seoul Moon🌙 Final Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
-        :root { --sailor-pink: #FF99CC; --sailor-purple: #B19CD9; --sailor-blue: #5D9CEC; --sailor-gold: #FFD700; --deep-pink: #FF6699; --glow: rgba(255, 182, 193, 0.4); --naver-green: #03C75A; --brown: #4D3B3B; --light-purple: #E6E0F8; --high-school-blue: #3A8DFF; }
-        * { box-sizing: border-box; font-family: 'PingFang SC', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: linear-gradient(135deg, #FFF5F9 0%, #F0F4FF 100%); margin: 0; padding: env(safe-area-inset-top) 15px 80px 15px; min-height: 100vh; overflow-x: hidden; }
-        .hidden { display: none !important; }
-        .sm-title { font-family: 'Dancing Script', cursive; font-size: 42px; color: var(--deep-pink); text-align: center; margin: 15px 0; text-shadow: 2px 2px 0 white; position: relative; cursor: pointer; }
-        .dash-board { background: rgba(255, 255, 255, 0.7); border: 2px solid white; border-radius: 30px; padding: 18px; box-shadow: 0 8px 25px var(--glow); backdrop-filter: blur(10px); margin-bottom: 20px; }
-        .weather-scroll { display: flex; overflow-x: auto; gap: 12px; padding: 10px 0; scrollbar-width: none; }
-        .w-item { min-width: 75px; text-align: center; background: white; padding: 12px 5px; border-radius: 20px; border: 1.5px solid #FFE4E1; flex-shrink: 0; }
-        .w-item b { font-size: 11px; display: block; margin-top: 4px; color: var(--deep-pink); }
-        .flight-container { display: flex; overflow-x: auto; gap: 15px; padding: 10px 5px 20px; scrollbar-width: none; scroll-snap-type: x mandatory; min-height: 120px; }
-        .flight-card { flex: 0 0 88%; background: white; border: 3px solid var(--sailor-blue); border-radius: 25px; padding: 20px; box-shadow: 8px 8px 0px var(--sailor-blue); position: relative; scroll-snap-align: center; }
-        .add-flight-card { flex: 0 0 88%; border: 2px dashed var(--sailor-blue); border-radius: 25px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.4); cursor: pointer; scroll-snap-align: center; }
-        .tag-row { display: flex; gap: 6px; margin-top: 15px; border-top: 1px dashed #DDD; padding-top: 15px; }
-        .tag { flex: 1; padding: 6px 4px; border-radius: 8px; font-size: 10px; font-weight: 900; text-align: center; }
-        .nav-stack { display: flex; flex-direction: column; gap: 15px; }
-        .nav-row-half { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .nav-btn { border-radius: 22px; padding: 22px; text-align: center; box-shadow: 0 6px 15px var(--glow); cursor: pointer; transition: 0.2s; }
-        .nav-btn h2 { margin: 0; font-size: 18px; font-weight: 900; }
-        .nav-pink { background: linear-gradient(135deg, var(--sailor-pink), var(--deep-pink)); color: white; }
-        .nav-white { background: white; border: 2.5px solid #FFE4E1; color: var(--brown); }
-        .ticket-stub { background: white; border: 2px solid var(--high-school-blue); border-radius: 15px; display: flex; overflow: hidden; margin-bottom: 15px; position: relative; cursor: pointer; }
-        .ticket-main { flex: 1; padding: 15px; border-right: 2.5px dashed var(--high-school-blue); display: flex; align-items: center; gap: 12px; }
-        .ticket-side { width: 100px; background: #f0f7ff; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .item-card { background: white; border: 2px solid #FFF0F5; border-radius: 22px; padding: 15px; display: flex; align-items: center; gap: 12px; margin-bottom: 12px; position: relative; }
-        .card-pic { width: 60px; height: 60px; background: #F8F9FA; border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; font-size: 24px; }
-        .card-pic img { width: 100%; height: 100%; object-fit: cover; }
-        .drawer { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); display: none; align-items: flex-end; z-index: 5000; }
-        .drawer.active { display: flex; }
-        .drawer-content { background: white; width: 100%; padding: 25px; border-radius: 35px 35px 0 0; max-height: 92vh; overflow-y: auto; padding-bottom: env(safe-area-inset-bottom); }
-        .f-label { font-size: 13px; font-weight: 900; color: var(--brown); margin: 12px 0 6px; display: block; }
-        .f-input { width: 100%; padding: 14px; background: #F8F9FA; border: 1.5px solid #EEE; border-radius: 15px; outline: none; font-size: 14px; }
-        .selector-group { display: flex; gap: 8px; margin-bottom: 10px; width: 100%; }
-        .selector-item { flex: 1; padding: 12px 0; border: 1.5px solid #EEE; border-radius: 15px; text-align: center; font-size: 11px; cursor: pointer; font-weight: 900; background: white; }
-        .selector-item.active { background: var(--brown); color: white; border-color: var(--brown); }
-        .btn-main { background: linear-gradient(90deg, var(--sailor-pink), var(--deep-pink)); color: white; width: 100%; padding: 18px; border-radius: 40px; border: none; font-weight: 900; font-size: 16px; margin-top: 15px; cursor: pointer; }
-        .naver-btn { background: var(--naver-green); color: white; padding: 6px 12px; border-radius: 10px; font-size: 11px; font-weight: 900; cursor: pointer; }
-        .cny-hint { font-size: 11px; color: var(--sailor-purple); margin-top: 6px; font-weight: 900; }
-        .del-btn { position: absolute; top: -8px; right: -8px; background: var(--deep-pink); color: white; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 10; border: 2px solid white; cursor: pointer; }
-/* --- 终极通电版：粉紫果冻 D-Day --- */
+       :root { 
+    --sailor-pink: #FF99CC; 
+    --sailor-purple: #D1B3FF; 
+    --sailor-blue: #A2D2FF; 
+    --sailor-gold: #FFD700; 
+    --neon-pink: #FF007A; 
+    --y2k-gradient: linear-gradient(45deg, #FF99CC, #D1B3FF, #A2D2FF, #FF99CC);
+    --glow: rgba(255, 0, 122, 0.1); 
+    --brown: #4D3B3B; 
+}
+
+* { box-sizing: border-box; font-family: 'PingFang SC', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+/* 1. 全局流体背景 */
+body { 
+    background: linear-gradient(-45deg, #FFF5F9, #F0F4FF, #EBF0FF, #FFF5F9);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    margin: 0; padding: env(safe-area-inset-top) 15px 80px 15px; 
+    min-height: 100vh; overflow-x: hidden; 
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 2. 标题流光 */
+.sm-title { 
+    font-family: 'Dancing Script', cursive; font-size: 46px; 
+    background: var(--y2k-gradient); background-size: 200% auto;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    animation: shine 5s linear infinite; text-align: center; margin: 25px 0 15px; 
+}
+
+@keyframes shine { to { background-position: 200% center; } }
+
+/* --- 强制修正：粉紫果冻 D-Day --- */
 .d-day-badge { 
-    /* 1. 核心修复：必须是 inline-block 才能缩放 */
+    background: linear-gradient(135deg, #FF99CC, #D1B3FF) !important; /* 强制换色 */
+    color: white !important;
+    padding: 5px 12px !important; 
+    border-radius: 12px !important; 
+    font-size: 11px !important; 
+    font-weight: 900 !important;
+    border: 2px solid white !important; /* 白边更清爽 */
+    box-shadow: 0 4px 15px rgba(255, 153, 204, 0.4) !important; /* 换成粉色发光 */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+    animation: pulseSoftGlow 3s infinite !important;
+    letter-spacing: 0.5px !important;
+    right: 15px !important;
+    top: 15px !important;
+}
+
+@keyframes pulseSoftGlow {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(255, 153, 204, 0.4); 
+    }
+    50% { 
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(209, 179, 255, 0.6); 
+    }
+}
+
+/* 4. 时间轴逻辑 (Timeline) */
+#list-container {
+    position: relative;
+    padding-left: 20px; /* 为时间轴留出空间 */
+    margin-top: 10px;
+}
+
+/* 时间轴长线 */
+#list-container::before {
+    content: '';
+    position: absolute;
+    left: 5px; top: 10px; bottom: 50px;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--sailor-pink), var(--sailor-blue));
+    border-radius: 3px;
+    opacity: 0.5;
+}
+
+/* 每一个行程卡片的圆点 */
+.item-card::before {
+    content: '';
+    position: absolute;
+    left: -20px; top: 50%;
+    transform: translateY(-50%);
+    width: 10px; height: 10px;
+    background: white;
+    border: 3px solid var(--sailor-pink);
+    border-radius: 50%;
+    z-index: 2;
+    box-shadow: 0 0 8px var(--sailor-pink);
+}
+
+/* 5. 卡片与按钮 */
+.dash-board, .flight-card, .item-card, .nav-btn { 
+    background: rgba(255, 255, 255, 0.65) !important; 
+    backdrop-filter: blur(12px); 
+    border: 1px solid rgba(255, 255, 255, 0.8) !important;
+    border-radius: 28px;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+/* 6. 拟物票夹 */
+.ticket-stub {
+    position: relative;
+    background: rgba(255, 255, 255, 0.9) !important;
+    border: 1.5px solid var(--high-school-blue) !important;
+    overflow: visible !important;
+}
+.ticket-stub::before, .ticket-stub::after {
+    content: ''; position: absolute; left: calc(100% - 105px); 
+    width: 20px; height: 20px; background: #F6F8FF; border-radius: 50%; z-index: 10;
+}
+.ticket-stub::before { top: -11px; border-bottom: 1.5px solid var(--high-school-blue); }
+.ticket-stub::after { bottom: -11px; border-top: 1.5px solid var(--high-school-blue); }
+
+/* 7. 瀑布流动画 */
+.item-card {
+    animation: bounceIn 0.5s ease-out forwards;
+    opacity: 0;
+}
+@keyframes bounceIn {
+    from { opacity: 0; transform: translateY(10px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.item-card:nth-child(1) { animation-delay: 0.1s; }
+.item-card:nth-child(2) { animation-delay: 0.2s; }
+.item-card:nth-child(3) { animation-delay: 0.3s; }
+
+/* 8. 底部主按钮 */
+.btn-main {
+    background: var(--y2k-gradient); background-size: 200% 200%;
+    animation: gradientBG 5s ease infinite;
+    border: 2px solid white; border-radius: 40px;
+    box-shadow: 0 10px 20px rgba(255, 153, 204, 0.3);
+}
+
+.nav-pink { background: linear-gradient(135deg, #FFB2D6, #FF85B8) !important; color: white; }
+/* --- 5. D-Day 终极通电版 (确保缩放和定位) --- */
+.d-day-badge { 
     display: inline-block !important; 
     position: absolute !important; 
     z-index: 100 !important;
-
-    /* 2. 精准定位 */
     right: 15px !important;
     top: 15px !important;
     width: auto !important;
-
-    /* 3. 视觉效果 */
     background: linear-gradient(135deg, #FF99CC, #D1B3FF) !important; 
     color: white !important;
     padding: 5px 12px !important; 
@@ -67,22 +169,17 @@
     font-weight: 900 !important;
     border: 2px solid white !important; 
     box-shadow: 0 4px 15px rgba(255, 153, 204, 0.4) !important; 
-    text-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
-    letter-spacing: 0.5px !important;
-
-    /* 4. 动画调用 */
     animation: pulseSoftGlow 3s infinite ease-in-out !important;
-    transform-origin: center center; /* 确保从中心呼吸 */
+    transform-origin: center center;
 }
 
-/* 5. 动画定义 */
 @keyframes pulseSoftGlow {
     0%, 100% { 
-        transform: scale(1);
+        transform: scale(1); 
         box-shadow: 0 4px 15px rgba(255, 153, 204, 0.4); 
     }
     50% { 
-        transform: scale(1.1); /* 稍微加大一点缩放，让你一眼看出来在动 */
+        transform: scale(1.1); 
         box-shadow: 0 0 20px rgba(209, 179, 255, 0.7); 
     }
 }
