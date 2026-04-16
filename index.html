@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Seoul Moon🌙 Final Perfect Timeline</title>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Seoul Moon">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23FFF5F9%22/><text y=%22.9em%22 font-size=%2280%22 x=%2210%22>🌙</text></svg>">
+    <title>Seoul Moon🌙 Ultimate Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     <style>
         :root { --sailor-pink: #FF99CC; --sailor-purple: #B19CD9; --sailor-blue: #5D9CEC; --sailor-gold: #FFD700; --deep-pink: #FF6699; --glow: rgba(255, 182, 193, 0.4); --naver-green: #03C75A; --brown: #4D3B3B; --light-purple: #E6E0F8; --high-school-blue: #3A8DFF; }
         * { box-sizing: border-box; font-family: 'PingFang SC', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: linear-gradient(135deg, #FFF5F9 0%, #F0F4FF 100%); margin: 0; padding: env(safe-area-inset-top) 15px 80px 15px; min-height: 100vh; overflow-x: hidden; }
+        body { background: linear-gradient(135deg, #FFF5F9 0%, #F0F4FF 100%); margin: 0; padding: env(safe-area-inset-top) 15px calc(env(safe-area-inset-bottom) + 80px) 15px; min-height: 100vh; overflow-x: hidden; }
 
-        /* 1. 标题动效 */
         .sm-logo-wrap { position: relative; text-align: center; margin: 15px 0; }
         .sm-title { font-family: 'Dancing Script', cursive; font-size: 52px; color: #FFFFFF; text-shadow: -3px 3px 0px rgba(209, 179, 255, 0.8), 3px -1px 0px rgba(255, 153, 204, 0.7), 0 0 15px rgba(255, 255, 255, 0.5); position: relative; z-index: 2; display: inline-block; animation: titleBreath 3s ease-in-out infinite alternate; }
         @keyframes titleBreath { from { transform: scale(1); } to { transform: scale(1.03); } }
@@ -22,12 +25,10 @@
         .hidden { display: none !important; }
         .dash-board { background: rgba(255, 255, 255, 0.7); border: 2.5px solid white; border-radius: 30px; padding: 18px; box-shadow: 0 8px 25px var(--glow); backdrop-filter: blur(10px); margin-bottom: 25px; }
         
-        /* 2. 天气轴入场动效 */
         .weather-scroll { display: flex; overflow-x: auto; gap: 10px; padding: 10px 0; scrollbar-width: none; }
         .w-item { min-width: 72px; text-align: center; background: white; padding: 12px 5px; border-radius: 20px; border: 1.5px solid #FFE4E1; flex-shrink: 0; animation: slideUpIn 0.5s backwards; }
         @keyframes slideUpIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 3. 首页导航按钮 */
         .nav-stack { display: flex; flex-direction: column; gap: 15px; }
         .nav-btn { border-radius: 25px; padding: 22px; text-align: center; box-shadow: 0 6px 15px var(--glow); cursor: pointer; transition: 0.2s; font-weight: 900; display: flex; align-items: center; justify-content: center; }
         .nav-btn:active { transform: scale(0.96); }
@@ -36,7 +37,6 @@
         .nav-white-btn { background: white !important; border: 1.5px solid #FFE4E1 !important; color: var(--brown); gap: 8px; }
         .nav-ticket-box { background: white !important; border: 2.5px solid var(--sailor-purple) !important; color: var(--sailor-purple) !important; gap: 10px; }
 
-        /* 4. 航班卡片：完美排布与横向滑动 */
         .flight-container { display: flex; overflow-x: auto; gap: 15px; padding: 10px 5px 20px; scrollbar-width: none; scroll-snap-type: x mandatory; }
         .flight-card { flex: 0 0 88%; background: white; border: 3px solid var(--sailor-blue); border-radius: 25px; padding: 20px; box-shadow: 8px 8px 0px var(--sailor-blue); position: relative; scroll-snap-align: center; flex-shrink: 0; }
         .d-day-badge { position: absolute; top: 15px; right: 15px; background: var(--sailor-pink); color: white; padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 900; animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
@@ -45,36 +45,43 @@
         .tag { flex: 1; padding: 6px 4px; border-radius: 8px; font-size: 10px; font-weight: 900; text-align: center; background: #F0F6FF; color: var(--high-school-blue); }
         .del-btn-round { position: absolute; top: -8px; right: -8px; background: #FF6B6B; color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; border: 2.5px solid white; z-index: 10; font-weight: bold; cursor: pointer; }
 
-        /* 5. 顶部分类与日期轴 */
         .date-bar { display: flex; gap: 10px; overflow-x: auto; padding: 10px 0 20px; scrollbar-width: none; }
         .date-item { padding: 12px 18px; background: white; border-radius: 20px; color: #999; font-weight: 900; border: 1.5px solid #EEE; flex-shrink: 0; transition: 0.3s; cursor: pointer; }
         .date-item.active { background: var(--sailor-pink); color: white; transform: scale(1.08); box-shadow: 0 5px 15px var(--glow); border-color: var(--sailor-pink); }
-
-        /* 6. 行程时间轴动效核心 */
         @keyframes lineDraw { from { height: 0; } to { height: 100%; } }
         @keyframes slideUpFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 7. 票夹 UI */
         .ticket-stub { background: white; border: 2.5px solid var(--high-school-blue); border-radius: 20px; display: flex; margin-bottom: 15px; position: relative; padding: 18px 18px 18px 30px; overflow: visible; }
         .ticket-stub::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 10px; background: var(--high-school-blue); border-radius: 18px 0 0 18px; }
         .ticket-cut { position: absolute; right: 90px; top: 10px; bottom: 10px; border-left: 2px dashed #D1E1FF; }
         .ticket-hole { position: absolute; right: 80px; width: 22px; height: 22px; background: #F0F4FF; border-radius: 50%; border: 2.5px solid var(--high-school-blue); }
         .hole-t { top: -12px; } .hole-b { bottom: -12px; }
 
-        /* 8. 抽屉与表单 */
         .drawer { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); display: none; align-items: flex-end; z-index: 5000; }
         .drawer.active { display: flex; }
         .drawer-content { background: white; width: 100%; padding: 25px; border-radius: 35px 35px 0 0; max-height: 92vh; overflow-y: auto; padding-bottom: env(safe-area-inset-bottom); animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        .pre-box { width: 75px; height: 75px; background: #F8F9FA; border: 2px dashed #DDD; border-radius: 12px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; color: #999; font-weight: bold; font-size: 12px; text-align: center; }
+        
+        .pre-box { position: relative; width: 85px; height: 85px; background: #F8F9FA; border: 2.5px dashed #DDD; border-radius: 16px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; color: #999; font-weight: bold; font-size: 12px; text-align: center; transition: 0.3s; }
+        .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sailor-pink); box-shadow: 0 0 15px var(--sailor-pink); z-index: 10; display: none; }
+        .pre-box.scanning { border-color: var(--sailor-pink); box-shadow: 0 0 20px rgba(255,153,204,0.3); }
+        .pre-box.scanning .scan-line { display: block; animation: scanAnim 1.2s infinite ease-in-out; }
+        @keyframes scanAnim { 0% { top: 0; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+
         .f-label { font-size: 13px; font-weight: 900; color: var(--brown); margin: 12px 0 6px; display: block; }
-        .f-input { width: 100%; padding: 14px; background: #F8F9FA; border: 1.5px solid #EEE; border-radius: 15px; outline: none; font-size: 14px; margin-bottom: 10px; }
+        .f-input { width: 100%; padding: 14px; background: #F8F9FA; border: 1.5px solid #EEE; border-radius: 15px; outline: none; font-size: 14px; margin-bottom: 10px; transition: 0.3s; }
+        .f-input.highlight { border-color: var(--sailor-pink); background: #FFF0F6; color: var(--deep-pink); font-weight: bold; }
+        
         .selector-group { display: flex; gap: 8px; margin-bottom: 10px; width: 100%; overflow-x: auto; scrollbar-width: none; }
         .selector-item { flex: 1; padding: 12px 15px; border: 1.5px solid #EEE; border-radius: 15px; text-align: center; font-size: 11px; cursor: pointer; font-weight: 900; background: white; flex-shrink: 0; }
         .selector-item.active { background: var(--brown); color: white; border-color: var(--brown); }
         .btn-main { background: linear-gradient(90deg, var(--sailor-pink), var(--deep-pink)); color: white; width: 100%; padding: 18px; border-radius: 40px; border: none; font-weight: 900; font-size: 16px; margin-top: 15px; cursor: pointer; box-shadow: 0 10px 25px rgba(255, 102, 153, 0.4); }
         .btn-sync { background: #FFF0F6 !important; color: var(--deep-pink) !important; border: 2.5px solid var(--sailor-pink) !important; box-shadow: none !important; margin-top: 5px; }
-        .cny-hint { font-size: 11px; color: var(--sailor-purple); margin-top: -5px; margin-bottom: 10px; font-weight: 900; }
+        .cny-hint { font-size: 11px; color: var(--sailor-purple); margin-top: -5px; margin-bottom: 10px; font-weight: 900; transition: 0.3s; }
+        
+        .backup-row { display: flex; justify-content: center; gap: 15px; margin-top: 25px; opacity: 0.7; padding-bottom: 30px; }
+        .backup-btn { font-size: 12px; color: var(--brown); font-weight: 900; background: white; padding: 10px 18px; border-radius: 20px; border: 1.5px solid #EEE; cursor: pointer; box-shadow: 0 2px 8px var(--glow); transition: 0.2s; }
+        .backup-btn:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
@@ -86,9 +93,9 @@
         <div class="dash-board">
             <div style="display:flex; justify-content:space-between; align-items:center;">
                 <span id="live-date" style="font-family:'Dancing Script'; font-size:28px; color:var(--deep-pink)">Seoul --.--</span>
-                <span id="live-rate" style="background:var(--sailor-pink); color:white; padding:5px 15px; border-radius:20px; font-size:11px; font-weight:900;">获取汇率中...</span>
+                <span id="live-rate" style="background:var(--sailor-pink); color:white; padding:5px 15px; border-radius:20px; font-size:11px; font-weight:900;">系统启动中...</span>
             </div>
-            <div class="weather-scroll" id="w-axis">正在同步魔法天气...</div>
+            <div class="weather-scroll" id="w-axis">正在连接魔法首尔...</div>
         </div>
         <div id="flight-list" class="flight-container"></div>
         <div class="nav-stack">
@@ -99,10 +106,14 @@
             </div>
             <div class="nav-btn nav-ticket-box" onclick="nav('ticket')">🎓 票夹 TICKET BOX</div>
         </div>
+        <div class="backup-row">
+            <div class="backup-btn" onclick="exportData()">📦 备份数据</div>
+            <div class="backup-btn" onclick="importData()">🔄 恢复数据</div>
+        </div>
     </div>
 
-    <div id="v-sub" class="hidden" style="padding:15px; position:fixed; inset:0; background:white; z-index:1000; overflow-y:auto; padding-top:env(safe-area-inset-top);">
-        <div style="color:var(--sailor-pink); font-weight:900; margin-bottom:20px; font-size:18px; cursor:pointer;" onclick="nav('home')">← BACK</div>
+    <div id="v-sub" class="hidden" style="padding:15px; position:fixed; inset:0; background:white; z-index:1000; overflow-y:auto; padding-top:env(safe-area-inset-top); padding-bottom:calc(env(safe-area-inset-bottom) + 80px);">
+        <div style="color:var(--sailor-pink); font-weight:900; margin-bottom:20px; font-size:18px; cursor:pointer; display:inline-block;" onclick="nav('home')">← BACK</div>
         <div id="sub-header"></div>
         <div id="ledger-extra" class="hidden">
             <div class="nav-row-half" style="margin-bottom:15px; grid-template-columns: 1fr 1fr 1fr;">
@@ -112,14 +123,15 @@
             </div>
         </div>
         <div id="list-container"></div>
-        <button class="btn-main" style="position:fixed; bottom:20px; left:15px; width:calc(100% - 30px); z-index:1001;" onclick="openEdit(curView, -1)">＋ 新增记录 ✨</button>
+        <button class="btn-main" style="position:fixed; bottom:calc(env(safe-area-inset-bottom) + 20px); left:15px; width:calc(100% - 30px); z-index:1001;" onclick="openEdit(curView, -1)">＋ 新增记录 ✨</button>
     </div>
 
     <div id="drawer" class="drawer" onclick="closeDrawer()">
         <div class="drawer-content" onclick="event.stopPropagation()">
-            <div class="pre-box" onclick="document.getElementById('file-in').click()">
-                <div id="preview-text">📸 识图/上传</div>
-                <input type="file" id="file-in" class="hidden" accept="image/*" onchange="handleFileWithCompression(this)">
+            <div id="upload-zone" class="pre-box" onclick="document.getElementById('file-in').click()">
+                <div class="scan-line"></div>
+                <div id="preview-text">📸<br>智能识图</div>
+                <input type="file" id="file-in" class="hidden" accept="image/*" onchange="handleSmartOCR(this)">
             </div>
             <div id="d-form"></div>
             <div id="sync-area"></div> 
@@ -128,19 +140,81 @@
     </div>
 
 <script>
-    // 终极清洗密匙：只要你运行这个版本，之前所有的“脏数据报错”全部会被强行格式化，回归顺滑
-    const KEY = 'SM_ULTIMATE_V5';
-    let saved = JSON.parse(localStorage.getItem(KEY)) || {
-        wallet: { Toss: 100000, Namane: 50000, TripPass: 30000 },
-        flights: [{ air: "韩亚航空", no: "OZ3625", date: "2026-04-29", t1: "10:55", t2: "14:00", c1: "A19-23", g1: "T2", s1: "12A" }],
-        store: { plan: [], ticket: [], wish: [], fin: [] }
-    };
-    let { wallet, flights, store } = saved;
+    const DB_NAME = 'SeoulMoonDatabase';
+    const STORE_NAME = 'appData';
+    const DATA_KEY = 'core_data_v3';
+    
+    let wallet, flights, store;
     let curView = 'home', curIdx = -1, curDate = '04.29', RATE = 191.0, tempImg = '', curCat = '全部';
 
-    function localCommit() { localStorage.setItem(KEY, JSON.stringify({wallet, flights, store})); }
+    const dbPromise = new Promise((resolve, reject) => {
+        const req = indexedDB.open(DB_NAME, 3);
+        req.onupgradeneeded = (e) => { 
+            if(!e.target.result.objectStoreNames.contains(STORE_NAME)) {
+                e.target.result.createObjectStore(STORE_NAME); 
+            }
+        };
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+    });
+
+    async function bootApp() {
+        try {
+            const db = await dbPromise;
+            const data = await new Promise(resolve => {
+                const tx = db.transaction(STORE_NAME, 'readonly');
+                const req = tx.objectStore(STORE_NAME).get(DATA_KEY);
+                req.onsuccess = () => resolve(req.result);
+                req.onerror = () => resolve(null);
+            });
+
+            if (data) {
+                wallet = data.wallet; flights = data.flights; store = data.store;
+            } else {
+                wallet = { Toss: 100000, Namane: 50000, TripPass: 30000 };
+                flights = [{ air: "韩亚航空", no: "OZ3625", date: "2026-04-29", t1: "10:55", t2: "14:00", c1: "A19-23", g1: "T2", s1: "12A" }];
+                store = { plan: [], ticket: [], wish: [], fin: [] };
+            }
+            initUI(); 
+        } catch(e) {
+            alert("数据库启动失败。");
+        }
+    }
+
+    async function localCommit() {
+        const db = await dbPromise;
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        tx.objectStore(STORE_NAME).put({wallet, flights, store}, DATA_KEY);
+    }
+
+    function exportData() {
+        try {
+            const dataStr = JSON.stringify({wallet, flights, store});
+            const encodedStr = btoa(encodeURIComponent(dataStr));
+            prompt("👇 你的专属数据胶囊已生成！全选复制并保存到备忘录：", encodedStr);
+        } catch(e) { alert("数据过大，生成备份码失败！"); }
+    }
+
+    async function importData() {
+        const code = prompt("📥 请粘贴你的备份码：");
+        if(!code) return;
+        try {
+            const decodedStr = decodeURIComponent(atob(code));
+            const parsed = JSON.parse(decodedStr);
+            if(parsed.wallet && parsed.flights && parsed.store) {
+                wallet = parsed.wallet; flights = parsed.flights; store = parsed.store;
+                await localCommit();
+                initUI();
+                alert("✨ 数据恢复成功，欢迎回到 Seoul Moon！");
+            } else {
+                alert("备份码格式不正确！");
+            }
+        } catch(e) {
+            alert("解析失败，请检查备份码是否复制完整！");
+        }
+    }
     
-    function init() { 
+    function initUI() { 
         const now = new Date(); document.getElementById('live-date').innerText = `Seoul ${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
         updateWeather(); updateExchangeRate(); renderFlights(); updateWalletUI(); 
     }
@@ -163,7 +237,6 @@
     
     async function updateExchangeRate() { try { const res = await fetch('https://open.er-api.com/v6/latest/CNY'); const data = await res.json(); RATE = data.rates.KRW; document.getElementById('live-rate').innerText = `¥1 ≈ ₩${RATE.toFixed(1)}`; } catch(e){} }
     
-    // 修复：添加航班按钮正式成为横向排列的一员
     function renderFlights() {
         const today = new Date(); today.setHours(0,0,0,0);
         document.getElementById('flight-list').innerHTML = flights.map((f, i) => {
@@ -185,6 +258,7 @@
         document.getElementById('v-sub').className = (v==='home'?'hidden':''); 
         document.getElementById('ledger-extra').className = (v==='fin'?'':'hidden'); 
         if(v==='home') { updateWeather(); renderFlights(); } else { renderList(); updateWalletUI(); }
+        window.scrollTo(0,0);
     }
 
     function renderList() {
@@ -192,7 +266,6 @@
         if(!box) return; box.innerHTML = ''; header.innerHTML = '';
         
         if(curView === 'plan') {
-            // ==== 真正的行程垂直时间轴 ====
             let base = ['04.29','04.30','05.01','05.02','05.03'], dates = [...new Set([...base, ...store.plan.map(it => it.date)])].sort();
             header.innerHTML = '<div class="date-bar">' + dates.map(d => `<div class="date-item ${curDate===d?'active':''}" onclick="curDate='${d}';renderList();">${d}</div>`).join('') + '</div>';
             
@@ -220,13 +293,26 @@
         } else if(curView === 'fin') {
             let base = ['04.29','04.30','05.01','05.02','05.03'], dates = [...new Set([...base, ...store.fin.map(it => it.date)])].sort();
             header.innerHTML = '<div class="date-bar">' + dates.map(d => `<div class="date-item ${curDate===d?'active':''}" onclick="curDate='${d}';renderList();">${d}</div>`).join('') + '</div>';
-            store.fin.filter(it => it.date === curDate).forEach((it) => {
+            
+            const finItems = store.fin.filter(it => it.date === curDate);
+            if(finItems.length > 0) {
+                const dailyTotal = finItems.reduce((sum, it) => sum + Number(it.price || 0), 0);
+                box.innerHTML += `<div style="background:linear-gradient(90deg, var(--sailor-pink), var(--deep-pink)); color:white; padding:18px 22px; border-radius:20px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 8px 20px rgba(255,102,153,0.3); animation: slideUpFade 0.3s backwards;">
+                    <div><div style="font-size:12px; opacity:0.9; margin-bottom:2px; font-weight:bold;">${curDate}</div><div style="font-size:16px; font-weight:900;">今日总支出</div></div>
+                    <div style="text-align:right;">
+                        <div style="font-size:24px; font-weight:900; letter-spacing:0.5px;">₩${dailyTotal.toLocaleString()}</div>
+                        <div style="font-size:12px; opacity:0.9; margin-top:2px;">≈ ¥${(dailyTotal/RATE).toFixed(1)}</div>
+                    </div>
+                </div>`;
+            }
+
+            finItems.forEach((it) => {
                 const realIdx = store.fin.indexOf(it);
-                box.innerHTML += `<div class="dash-board" style="background:white;padding:15px;display:flex;align-items:center;gap:12px;margin-bottom:12px;position:relative;" onclick="openEdit('fin', ${realIdx})"><div class="del-btn-round" onclick="delItem(event, 'fin', ${realIdx})">×</div><div class="pre-box" style="margin:0;width:55px;height:55px;border:none;">${it.img?`<img src="${it.img}" style="width:100%;height:100%;object-fit:cover">`:'💰'}</div><div style="flex:1"><div style="display:flex; justify-content:space-between"><b>${it.name}</b><b style="color:var(--deep-pink)">₩${Number(it.price).toLocaleString()}</b></div><small style="color:#999">${it.subPay||it.pay}</small></div></div>`;
+                box.innerHTML += `<div class="dash-board" style="background:white;padding:15px;display:flex;align-items:center;gap:12px;margin-bottom:12px;position:relative;" onclick="openEdit('fin', ${realIdx})"><div class="del-btn-round" onclick="delItem(event, 'fin', ${realIdx})">×</div><div class="pre-box" style="margin:0;width:55px;height:55px;border:none;">${it.img?`<img src="${it.img}" style="width:100%;height:100%;object-fit:cover">`:'💰'}</div><div style="flex:1"><div style="display:flex; justify-content:space-between"><b>${it.name}</b><b style="color:var(--deep-pink)">₩${Number(it.price).toLocaleString()}</b></div><small style="color:#999">${it.cat||'其他'} · ${it.subPay||it.pay}</small></div></div>`;
             });
         } else if(curView === 'ticket') {
             store.ticket.forEach((it, i) => { 
-                box.innerHTML += `<div class="ticket-stub" onclick="openEdit('ticket', ${i})"><div class="ticket-hole hole-t"></div><div class="ticket-hole hole-b"></div><div class="ticket-cut"></div><div class="del-btn-round" onclick="delItem(event, 'ticket', ${i})">×</div><div class="pre-box" style="margin:0 15px 0 0;width:50px;height:50px;border:none;">${it.img?`<img src="${it.img}" style="width:100%;height:100%;object-fit:cover">`:'🎓'}</div><div style="flex:1"><b style="color:var(--brown);font-size:16px;">${it.name}</b><br><small style="color:var(--high-school-blue);font-weight:900;">${it.date} ${it.venue}</small></div><div style="width:80px;text-align:center;display:flex;flex-direction:column;justify-content:center;"><b style="color:var(--high-school-blue);font-size:12px;">${it.area}区</b><b style="color:var(--high-school-blue);font-size:12px;">${it.row}排${it.num}号</b><small style="color:#999;font-size:9px;">SEAT</small></div></div>`; 
+                box.innerHTML += `<div class="ticket-stub" onclick="openEdit('ticket', ${i})"><div class="ticket-hole hole-t"></div><div class="ticket-hole hole-b"></div><div class="ticket-cut"></div><div class="del-btn-round" onclick="delItem(event, 'ticket', ${i})">×</div><div class="pre-box" style="margin:0 15px 0 0;width:50px;height:50px;border:none;">${it.img?`<img src="${it.img}" style="width:100%;height:100%;object-fit:cover">`:'🎓'}</div><div style="flex:1"><b style="color:var(--brown);font-size:16px;">${it.name}</b><br><small style="color:var(--high-school-blue);font-weight:900;">${it.date} ${it.venue}</small></div><div style="width:80px;text-align:center;display:flex;flex-direction:column;justify-content:center;"><b style="color:var(--high-school-blue);font-size:12px;">${it.area}</b><b style="color:var(--high-school-blue);font-size:12px;">${it.row?it.row+'排':''}${it.num?it.num+'号':''}</b><small style="color:#999;font-size:9px;">SEAT</small></div></div>`; 
             });
         } else {
             header.innerHTML = `<div class="date-bar">` + ['全部','Olive Young','Musinsa','药局','其他'].map(c => `<div class="date-item ${curCat===c?'active':''}" onclick="curCat='${c}';renderList()">${c}</div>`).join('') + `</div>`;
@@ -237,31 +323,76 @@
         }
     }
 
-    // 内存保护：图片压缩后存储，防止崩溃
-    function handleFileWithCompression(input) {
+    async function handleSmartOCR(input) {
         const reader = new FileReader();
         reader.onload = (e) => {
             const img = new Image();
-            img.onload = () => {
+            img.onload = async () => {
                 const canvas = document.createElement('canvas');
                 let w = img.width, h = img.height, max = 800;
                 if(w > h) { if(w > max){ h *= max/w; w = max; } } else { if(h > max){ w *= max/h; h = max; } }
                 canvas.width = w; canvas.height = h; const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, w, h);
                 tempImg = canvas.toDataURL('image/jpeg', 0.7);
+                
+                const uploadZone = document.getElementById('upload-zone');
                 document.getElementById('preview-text').innerHTML = `<img src="${tempImg}" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">`;
                 
-                if(curView === 'wish' || curView === 'fin') { 
-                    setTimeout(() => { 
-                        if(document.getElementById('f-name')) document.getElementById('f-name').value = "Layered pleats midi skirt"; 
-                        if(document.getElementById('f-price')) {
-                            document.getElementById('f-price').value = "98400"; 
-                            if(document.getElementById('c-hint')) document.getElementById('c-hint').innerText = '≈ ¥' + (98400/RATE).toFixed(1);
-                        }
-                        if(curView === 'wish') {
-                            const musinsaBtn = document.querySelectorAll('#c-sel .selector-item')[1];
-                            if(musinsaBtn) selectBtn(musinsaBtn);
-                        }
-                    }, 500);
+                uploadZone.classList.add('scanning');
+                
+                const nameInput = document.getElementById('f-name');
+                const priceInput = document.getElementById('f-price');
+                
+                if (nameInput) {
+                    nameInput.value = "AI视觉分析中...";
+                    nameInput.classList.add('highlight');
+                }
+
+                try {
+                    const result = await Tesseract.recognize(tempImg, 'eng+kor');
+                    const text = result.data.text;
+                    
+                    let parsedName = "";
+                    let parsedPrice = "";
+
+                    const priceMatches = text.match(/[0-9]{1,3}(?:,[0-9]{3})+/g);
+                    if (priceMatches) {
+                        parsedPrice = priceMatches[0].replace(/,/g, '');
+                    } else {
+                        const numbers = text.match(/\d{4,}/g);
+                        if (numbers) parsedPrice = numbers[0];
+                    }
+
+                    const cleanLines = text.split('\n')
+                        .map(l => l.trim())
+                        .filter(l => l.length > 4) 
+                        .filter(l => !l.match(/^[0-9,\.\s%원]+$/)) 
+                        .filter(l => (l.match(/[a-zA-Z가-힣]/g) || []).length >= 4) 
+                        .filter(l => (l.match(/[^a-zA-Z0-9가-힣\s]/g) || []).length <= 2); 
+                    
+                    if (cleanLines.length > 0) {
+                        parsedName = cleanLines.sort((a, b) => b.length - a.length)[0];
+                    }
+
+                    uploadZone.classList.remove('scanning');
+
+                    if (nameInput) {
+                        nameInput.value = parsedName || "未能识别商品名";
+                        setTimeout(() => nameInput.classList.remove('highlight'), 1000);
+                    }
+                    if (priceInput && parsedPrice) {
+                        priceInput.value = parsedPrice;
+                        priceInput.classList.add('highlight');
+                        if(document.getElementById('c-hint')) document.getElementById('c-hint').innerText = '≈ ¥' + (parsedPrice/RATE).toFixed(1);
+                        setTimeout(() => priceInput.classList.remove('highlight'), 1000);
+                    }
+
+                } catch (err) {
+                    console.error(err);
+                    uploadZone.classList.remove('scanning');
+                    if (nameInput) {
+                        nameInput.value = "AI识别失败";
+                        nameInput.classList.remove('highlight');
+                    }
                 }
             };
             img.src = e.target.result;
@@ -276,8 +407,10 @@
         curView = v; curIdx = idx; tempImg = ''; 
         const form = document.getElementById('d-form'); 
         const sync = document.getElementById('sync-area');
+        const uploadZone = document.getElementById('upload-zone');
         sync.innerHTML = '';
-        document.getElementById('preview-text').innerHTML = '📸 点击识图/上传凭证'; 
+        uploadZone.classList.remove('scanning');
+        document.getElementById('preview-text').innerHTML = '📸<br>智能识图'; 
         document.getElementById('drawer').classList.add('active');
         
         const it = idx > -1 ? (v==='flight'?flights[idx]:store[v][idx]) : {};
@@ -289,24 +422,26 @@
             form.innerHTML = `
                 ${lb('日期')} <input id="f-date" class="f-input" type="date" value="${dVal}">
                 ${lb('消费项目')} <input id="f-name" class="f-input" placeholder="输入名称..." value="${it.name||''}"> 
+                ${lb('消费分类')}
+                <div class="selector-group" id="f-cat-sel"><div class="selector-item ${it.cat==='餐饮'?'active':''}" onclick="selectBtn(this)">餐饮</div><div class="selector-item ${it.cat==='交通'?'active':''}" onclick="selectBtn(this)">交通</div><div class="selector-item ${it.cat==='购物'?'active':''}" onclick="selectBtn(this)">购物</div><div class="selector-item ${it.cat==='娱乐'?'active':''}" onclick="selectBtn(this)">娱乐</div><div class="selector-item ${(!it.cat||it.cat==='其他')?'active':''}" onclick="selectBtn(this)">其他</div></div>
                 ${lb('支付方式')}
-                <div class="selector-group" id="p-sel"><div class="selector-item ${(!it.pay||it.pay==='信用卡')?'active':''}" onclick="selectPay(this)">信用卡</div><div class="selector-item ${(it.pay==='现金')?'active':''}" onclick="selectPay(this)">现金</div><div class="selector-item ${(it.pay==='韩币支付')?'active':''}" onclick="selectPay(this)">韩币支付</div></div>
-                <div id="sub-pay-area" class="${(it.pay==='韩币支付')?'':'hidden'}"><div class="selector-group" id="w-sel"><div class="selector-item ${it.subPay==='Toss'?'active':''}" onclick="selectBtn(this)">Toss</div><div class="selector-item ${it.subPay==='Namane'?'active':''}" onclick="selectBtn(this)">Namane</div><div class="selector-item ${it.subPay==='TripPass'?'active':''}" onclick="selectBtn(this)">TripPass</div></div></div>
+                <div class="selector-group" id="p-sel"><div class="selector-item ${(!it.pay||it.pay==='韩币支付')?'active':''}" onclick="selectPay(this)">韩币支付</div><div class="selector-item ${it.pay==='微信'?'active':''}" onclick="selectPay(this)">微信</div><div class="selector-item ${it.pay==='信用卡'?'active':''}" onclick="selectPay(this)">信用卡</div><div class="selector-item ${(it.pay==='现金')?'active':''}" onclick="selectPay(this)">现金</div></div>
+                <div id="sub-pay-area" class="${(!it.pay||it.pay==='韩币支付')?'':'hidden'}"><div class="selector-group" id="w-sel"><div class="selector-item ${it.subPay==='Toss'?'active':''}" onclick="selectBtn(this)">Toss</div><div class="selector-item ${it.subPay==='Namane'?'active':''}" onclick="selectBtn(this)">Namane</div><div class="selector-item ${it.subPay==='TripPass'?'active':''}" onclick="selectBtn(this)">TripPass</div></div></div>
                 ${lb('消费金额 (₩)')}
                 <input id="f-price" class="f-input" type="number" placeholder="金额" value="${it.price||''}" oninput="if(document.getElementById('c-hint')) document.getElementById('c-hint').innerText='≈ ¥'+(this.value/RATE).toFixed(1)">
                 <div id="c-hint" class="cny-hint">≈ ¥${it.price?(it.price/RATE).toFixed(1):'0.0'}</div>`;
         } else if(v === 'wish') {
             form.innerHTML = `
                 ${lb('商品分类')}
-                <div class="selector-group" id="c-sel"><div class="selector-item ${it.cat==='Olive Young'?'active':''}" onclick="selectBtn(this)">Olive Young</div><div class="selector-item ${it.cat==='Musinsa'?'active':''}" onclick="selectBtn(this)">Musinsa</div><div class="selector-item ${(!it.cat||it.cat==='药局')?'active':''}" onclick="selectBtn(this)">药局</div></div>
-                ${lb('商品名称')} <input id="f-name" class="f-input" placeholder="输入名称..." value="${it.name||''}"> 
+                <div class="selector-group" id="c-sel"><div class="selector-item ${it.cat==='Olive Young'?'active':''}" onclick="selectBtn(this)">Olive Young</div><div class="selector-item ${it.cat==='Musinsa'?'active':''}" onclick="selectBtn(this)">Musinsa</div><div class="selector-item ${it.cat==='药局'?'active':''}" onclick="selectBtn(this)">药局</div><div class="selector-item ${(!it.cat||it.cat==='其他')?'active':''}" onclick="selectBtn(this)">其他</div></div>
+                ${lb('商品名称')} <input id="f-name" class="f-input" placeholder="AI 提取中..." value="${it.name||''}"> 
                 ${lb('目标价格 (₩)')}
-                <input id="f-price" class="f-input" type="number" placeholder="金额" value="${it.price||''}" oninput="if(document.getElementById('c-hint')) document.getElementById('c-hint').innerText='≈ ¥'+(this.value/RATE).toFixed(1)">
+                <input id="f-price" class="f-input" type="number" placeholder="AI 提取中..." value="${it.price||''}" oninput="if(document.getElementById('c-hint')) document.getElementById('c-hint').innerText='≈ ¥'+(this.value/RATE).toFixed(1)">
                 <div id="c-hint" class="cny-hint">≈ ¥${it.price?(it.price/RATE).toFixed(1):'0.0'}</div>`;
             if(idx > -1) sync.innerHTML = `<button class="btn-main btn-sync" onclick="syncToFin(${idx})">💸 同步至账本</button>`;
         } else if(v === 'ticket') {
             form.innerHTML = `
-                ${lb('活动名称')} <input id="f-name" class="f-input" placeholder="输入名称..." value="${it.name||''}"> 
+                ${lb('活动名称')} <input id="f-name" class="f-input" placeholder="AI 提取中..." value="${it.name||''}"> 
                 ${lb('日期 & 场馆')}
                 <div style="display:flex;gap:10px;"><input id="f-date-t" class="f-input" type="date" value="${dVal}"> <input id="f-venue" class="f-input" placeholder="场馆名" value="${it.venue||''}"></div> 
                 ${lb('座位信息')}
@@ -346,11 +481,10 @@
 
     function syncToFin(i) { 
         const it = store.wish[i]; 
-        store.fin.unshift({ name: it.name, date: curDate, price: it.price, pay: '信用卡', subPay: '', img: it.img }); 
+        store.fin.unshift({ name: it.name, date: curDate, price: it.price, pay: '信用卡', subPay: '', cat: '购物', img: it.img }); 
         localCommit(); closeDrawer(); nav('fin'); updateWalletUI(); 
     }
 
-    // 保存逻辑：强制容错，保证弹窗必定关闭
     function masterSave() {
         try {
             const d = document, getV = (id) => d.getElementById(id) ? d.getElementById(id).value : '';
@@ -368,12 +502,13 @@
                 const obj = { name:getV('f-name'), date:fmtD(getV('f-date-p')), time:getV('f-time'), note:getV('f-note'), link:getV('f-link'), img:finalImg };
                 if(curIdx > -1) store.plan[curIdx] = obj; else store.plan.push(obj);
             } else if(curView === 'fin') {
-                const payEl = d.querySelector('#p-sel .active'); const pay = payEl ? payEl.innerText : '信用卡';
+                const payEl = d.querySelector('#p-sel .active'); const pay = payEl ? payEl.innerText : '韩币支付';
                 const subEl = (pay==='韩币支付') ? d.querySelector('#w-sel .active') : null; const sub = subEl ? subEl.innerText : '';
+                const catEl = d.querySelector('#f-cat-sel .active'); const catVal = catEl ? catEl.innerText : '其他';
                 const pr = Number(getV('f-price'));
                 if(curIdx > -1 && store.fin[curIdx].subPay && wallet[store.fin[curIdx].subPay]!==undefined) wallet[store.fin[curIdx].subPay] += Number(store.fin[curIdx].price);
                 if(sub && wallet[sub] !== undefined) wallet[sub] -= pr;
-                const obj = { name:getV('f-name'), date:fmtD(getV('f-date')), price:pr, pay:pay, subPay:sub, img:finalImg };
+                const obj = { name:getV('f-name'), date:fmtD(getV('f-date')), price:pr, pay:pay, subPay:sub, cat:catVal, img:finalImg };
                 if(curIdx > -1) store.fin[curIdx] = obj; else store.fin.unshift(obj);
             } else if(curView === 'wish') {
                 const catEl = d.querySelector('#c-sel .active'); const cat = catEl ? catEl.innerText : '其他';
@@ -388,13 +523,13 @@
             updateWalletUI(); 
             closeDrawer();
         } catch(error) {
-            console.error("保存报错拦截:", error);
+            console.error("保存拦截:", error);
             alert("已强制为您保存并关闭。");
             closeDrawer();
         }
     }
 
-    init();
+    bootApp();
 </script>
 </body>
 </html>
