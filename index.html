@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     <style>
-        /* ================= 核心色彩与样式 ================= */
+        /* ================= 核心色彩与基础设定 ================= */
         :root { 
             --sailor-pink: #FF99CC; --sailor-purple: #D1B3FF; --sailor-blue: #A2D2FF; 
             --neon-pink: #FF007A; --soft-pink: #FFB6D9; --glow: rgba(255, 153, 204, 0.2); 
@@ -27,9 +27,10 @@
         }
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* ✨ 标题区 ✨ */
+        /* ================= ✨ 标题区 ✨ ================= */
         .sm-header-section { display: flex; flex-direction: column; align-items: center; margin: 15px 0 25px; position: relative; z-index: 10; }
         .sm-logo-wrap { display: inline-flex; align-items: center; justify-content: center; position: relative; }
+        
         .shooting-star { position: absolute; top: -10px; left: -20px; width: 100px; height: 1.5px; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,1), rgba(255,255,255,0)); transform: rotate(35deg); animation: shooting 6s linear infinite; opacity: 0; z-index: 15; pointer-events: none; }
         @keyframes shooting { 0% { transform: translateX(-50px) translateY(-50px) rotate(35deg); opacity: 1; } 15% { transform: translateX(350px) translateY(250px) rotate(35deg); opacity: 0; } 100% { opacity: 0; } }
         
@@ -39,14 +40,19 @@
         .sm-title { font-family: 'Dancing Script', cursive; font-size: 62px; color: #FFFFFF; position: relative; display: inline-block; padding: 0 10px; margin: 0; cursor: pointer; z-index: 2; line-height: 1.1; }
         .sm-title::before { content: attr(data-text); position: absolute; left: 13px; top: 4px; z-index: -1; background: linear-gradient(90deg, #A2D2FF, #D1BFFF, #FF99CC, #D1BFFF, #A2D2FF); background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text; animation: pastelFlow 4s linear infinite; }
         @keyframes pastelFlow { 0% { background-position: 0% 50%; } 100% { background-position: -200% 50%; } }
+        
         .sm-moon-icon { position: absolute; right: -35px; top: -5px; animation: moonFloat 4s ease-in-out infinite alternate; }
         @keyframes moonFloat { 0% { transform: translateY(0px) rotate(-10deg); } 100% { transform: translateY(-4px) rotate(-18deg); } }
         .sm-subtitle { font-size: 10px; letter-spacing: 3px; color: #B19CD9; font-weight: 900; margin-top: 5px; text-shadow: 0 1px 2px rgba(255,255,255,0.8); }
 
-        /* 🗓️ 看板区 (汇率防换行加固) */
+        /* ================= 🗓️ 看板区 (修复移动端汇率换行) ================= */
         .dash-board { background: rgba(255, 255, 255, 0.85); border: 2px solid white; border-radius: 35px; padding: 25px 22px; box-shadow: 0 12px 30px var(--glow); backdrop-filter: blur(15px); margin-bottom: 25px; position: relative; z-index: 5; }
+        
+        /* 🛡️ 强制不换行，保持水平对称 */
         .dash-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 5px; margin-bottom: 20px; overflow: hidden; }
         .date-widget { display: flex; align-items: center; gap: 8px; flex-shrink: 1; min-width: 0; }
+        
+        /* 🛡️ 日期字体响应式缩小，防拥挤 */
         .dash-date { font-family: "SF Pro Rounded", "Arial Rounded MT Bold", sans-serif; font-size: clamp(28px, 8vw, 42px); color: var(--soft-pink); font-weight: 900; letter-spacing: -1px; line-height: 1; text-shadow: 0 2px 5px rgba(255,153,204,0.15); white-space: nowrap; flex-shrink: 1; }
         .dash-day { background: #F0F6FF; color: var(--high-school-blue); padding: 5px 10px; border-radius: 14px; font-size: 11px; font-weight: 900; white-space: nowrap; flex-shrink: 0; transform: translateY(-2px); }
         .dash-rate { background: var(--sailor-pink); color: white; padding: 8px 12px; border-radius: 20px; font-size: 11px; font-weight: 900; box-shadow: 0 4px 10px rgba(255,153,204,0.3); white-space: nowrap; flex-shrink: 0; }
@@ -56,12 +62,14 @@
         .d-tab.active { color: var(--neon-pink); }
         .d-tab.active::after { content: ''; position: absolute; bottom: -14.5px; left: 50%; transform: translateX(-50%); width: 28px; height: 4px; background: var(--neon-pink); border-radius: 4px; }
 
-        /* 横向滚动与基础组件 */
+        /* 横向滚动基础 */
         .scroll-row { display: flex !important; flex-wrap: nowrap; overflow-x: auto; gap: 12px; scrollbar-width: none; width: auto; margin-left: -24px; margin-right: -24px; padding: 12px 24px; }
         .w-item { min-width: 80px; text-align: center; background: white; padding: 15px 5px; border-radius: 20px; border: 1.5px solid #FFE4E1; flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+        
         .date-item { padding: 12px 22px; background: rgba(255,255,255,0.7); border-radius: 22px; color: #999; font-weight: 900; border: 1.5px solid white; flex-shrink: 0; transition: 0.3s; cursor: pointer; }
         .date-item.active { background: var(--sailor-pink); color: white; border: none; box-shadow: 0 5px 15px rgba(255,153,204,0.4); transform: scale(1.05); }
 
+        /* ================= 📋 清单组件 ================= */
         .chk-cats { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; padding: 15px 24px 20px; margin: 0 -24px; }
         .chk-cat-btn { padding: 9px 18px; font-size: 11px; background: rgba(255,255,255,0.8); color: var(--sailor-blue); border-radius: 16px; font-weight: 900; border: 1.5px solid #F0F6FF; white-space: nowrap; flex-shrink: 0; position: relative; transition: 0.3s; cursor: pointer; }
         .chk-cat-btn.active { background: var(--sailor-blue); color: white; border-color: var(--sailor-blue); transform: scale(1.05); box-shadow: 0 4px 12px rgba(162,210,255,0.4); }
@@ -71,18 +79,20 @@
         @keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
         .chk-circle { width: 22px; height: 22px; border: 2px solid #E0E0E0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: white; cursor: pointer; flex-shrink: 0; }
 
-        /* ✈️ 航班卡片 */
+        /* ================= ✈️ 航班卡片 ================= */
         .f-card { flex: 0 0 88%; background: rgba(255,255,255,0.65); backdrop-filter: blur(12px); border: 3px solid var(--sailor-blue) !important; border-radius: 35px; padding: 25px; position: relative; flex-shrink: 0; box-shadow: 8px 8px 0px rgba(93,156,236,0.1); }
         .f-card.add-btn { border: 2.5px dashed #CCC !important; display: flex; flex-direction: column; color: #AAA; min-height: 180px; align-items: center; justify-content: center; background: transparent; box-shadow: none; cursor: pointer; }
+        
         .f-time-row { display: flex; justify-content: space-between; align-items: center; margin: 18px 0 10px; }
         .f-time-big { font-size: 36px; font-weight: 900; color: var(--brown); line-height: 1; }
         .f-tag-row { display: flex; gap: 8px; margin-top: 15px; border-top: 1.5px dashed rgba(0,0,0,0.08); padding-top: 15px; flex-wrap: wrap; }
         .f-tag { padding: 6px 12px; border-radius: 10px; font-size: 10px; font-weight: 900; background: white; color: var(--high-school-blue); border: 1.2px solid #EBF3FF; }
 
-        /* 功能列表组件 */
+        /* ================= 功能列表组件 ================= */
         #list-container { position: relative; margin-top: 10px; }
         #list-container.has-timeline { padding-left: 20px; }
         #list-container.has-timeline::before { content: ''; position: absolute; left: 10px; top: 10px; bottom: 30px; width: 3px; background: linear-gradient(to bottom, var(--sailor-pink), var(--sailor-blue)); opacity: 0.5; border-radius: 3px; }
+        
         .item-card { background: rgba(255,255,255,0.65); backdrop-filter: blur(12px); border: 1.5px solid rgba(255,255,255,0.8); padding: 20px; border-radius: 28px; display: flex; align-items: center; gap: 15px; margin-bottom: 18px; position: relative; box-shadow: 0 8px 25px rgba(0,0,0,0.03); animation: bounceIn 0.5s forwards; opacity: 0; }
         @keyframes bounceIn { from { opacity: 0; transform: translateY(15px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
         #list-container.has-timeline .item-card::before { content: ''; position: absolute; left: -16px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; background: white; border: 3px solid var(--sailor-pink); border-radius: 50%; z-index: 2; box-shadow: 0 0 8px rgba(255,153,204,0.6); }
@@ -94,11 +104,11 @@
 
         .nav-stack { display: flex; flex-direction: column; gap: 15px; position: relative; z-index: 5; }
         .nav-row-half { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .nav-btn { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(12px); border: 1.5px solid rgba(255, 255, 255, 0.8); border-radius: 28px; padding: 22px 10px; min-height: 80px; text-align: center; font-weight: 900; color: var(--brown); font-size: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.2s; cursor: pointer; box-shadow: 0 8px 25px rgba(0,0,0,0.03); text-decoration: none; }
+        .nav-btn { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(12px); border: 1.5px solid rgba(255, 255, 255, 0.8); border-radius: 28px; padding: 22px 10px; min-height: 80px; text-align: center; font-weight: 900; color: var(--brown); font-size: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.2s; cursor: pointer; box-shadow: 0 8px 25px rgba(0,0,0,0.03); }
         .nav-btn:active { transform: scale(0.96); }
         .nav-pink-bar { background: var(--sailor-pink) !important; color: white !important; border: 1.5px solid white !important; box-shadow: 0 8px 20px rgba(255, 153, 204, 0.4) !important; }
 
-        /* 🎫 终极票夹 3D UI */
+        /* ================= 🎫 终极票夹 3D UI ================= */
         .ticket-list-item { background: linear-gradient(135deg, #7A89A6, #636C80); border-radius: 20px; display: flex; align-items: stretch; margin-bottom: 18px; height: 110px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); color: white; overflow: hidden; position: relative; cursor: pointer; }
         .ticket-list-poster { width: 100px; padding: 12px; flex-shrink: 0; display: flex; position: relative; }
         .ticket-list-poster img { position: absolute; inset: 12px; width: calc(100% - 24px); height: calc(100% - 24px); object-fit: cover; border-radius: 10px; }
@@ -106,20 +116,25 @@
         .ticket-list-stub::before, .ticket-list-stub::after { content: ''; position: absolute; left: -10px; width: 20px; height: 20px; border-radius: 50%; background: #FFF5F9; }
         .ticket-list-stub::before { top: -10px; } .ticket-list-stub::after { bottom: -10px; }
 
+        /* 3D 沉浸画廊引擎 */
         .ticket-gallery-overlay { position: fixed; inset: 0; background: rgba(20,20,30,0.96); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 10000; display: none; flex-direction: column; opacity: 0; transition: 0.3s; }
         .ticket-gallery-overlay.active { display: flex; opacity: 1; }
         .gallery-viewport { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; perspective: 1500px; transform-style: preserve-3d; overflow: hidden; width: 100%; }
         
         .典藏票根 { width: 290px; height: 500px; background: #FFF; border-radius: 25px; overflow: hidden; position: absolute; box-shadow: 0 20px 50px rgba(0,0,0,0.4); display: flex; flex-direction: column; transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s, z-index 0.4s; backface-visibility: hidden; }
-        .典藏海报 { width: 100%; flex: 1; background: #EAEAEA; position: relative; display: block; border-bottom: 2px dashed rgba(0,0,0,0.1); }
-        .典藏海报 img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
-        .典藏信息 { position: relative; min-height: 200px; height: auto; background: rgba(25,25,30,0.8); backdrop-filter: blur(20px); color: #FFF; padding: 25px; display: flex; padding-bottom: 30px; }
+        
+        .典藏海报 { width: 100%; flex: 1; background: #FFF; position: relative; display: flex; align-items: center; justify-content: center; border-bottom: 2px dashed rgba(0,0,0,0.1); padding: 15px; }
+        .典藏海报 img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        
+        .典藏信息 { position: relative; min-height: 200px; height: auto; background: rgba(25,25,30,0.8); backdrop-filter: blur(20px); color: #FFF; padding: 25px; display: flex; padding-bottom: 35px; }
         .典藏打孔 { position: absolute; left: -10px; top: 0; transform: translateY(-50%); width: 20px; height: 20px; border-radius: 50%; background: #000; z-index: 5; }
 
-        /* 📸 抽屉与表单 */
+        /* ================= 📸 抽屉与表单 ================= */
         .pre-box { position: relative; width: 100%; height: 150px; background: rgba(255,255,255,0.7); border: 3px dashed #DDD; border-radius: 25px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; overflow: hidden; }
+        
         #preview-text { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; position: absolute; inset: 0; z-index: 5; padding: 10px; }
         #preview-text img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+
         .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: var(--sailor-pink); box-shadow: 0 0 20px var(--sailor-pink); display: none; z-index: 10; }
         .pre-box.scanning .scan-line { display: block; animation: scanAnim 2s infinite linear; }
         @keyframes scanAnim { 0% { top: 0%; } 100% { top: 100%; } }
@@ -290,7 +305,7 @@
     function delItem(e,t,idx) { e.stopPropagation(); showModal("彻底删除?","此操作不可撤销！",false,ok=>{if(ok){if(t==='flight') flights.splice(idx,1); else store[t].splice(idx,1); localCommit(); initUI(); if(curView!=='home')renderList();}}); }
 
     /* ================= 数据引擎 ================= */
-    const DB_NAME = 'SeoulMoon_Final_V14', STORE_NAME = 'appData', DATA_KEY = 'core_data';
+    const DB_NAME = 'SeoulMoon_Final_V13', STORE_NAME = 'appData', DATA_KEY = 'core_data';
     let wallet = { Toss: 0, Namane: 0, TripPass: 0 }, flights = [], store = { plan: [], ticket: [], wish: [], fin: [], checklist: [], chkCats: ['行李🧳', '购物🛍️', '办事📌'] };
     let curView = 'home', curIdx = -1, curDate = '04.29', RATE = 191.0, modalCallback = null, tempImg = '', dTz='上海', aTz='首尔', sTz='首尔', curCat='全部', activeChkCat='全部';
 
@@ -388,7 +403,7 @@
             </div>`;
     }
 
-    /* ================= 📋 子页面列表系统 (原生 <a> 标签唤醒 App) ================= */
+    /* ================= 📋 子页面列表系统 ================= */
     function renderList() {
         const box = document.getElementById('list-container'), header = document.getElementById('sub-header'); if(!box) return; box.innerHTML = '';
         const days = ['04.29','04.30','05.01','05.02','05.03'];
@@ -399,28 +414,17 @@
             
             const ps = store.plan.filter(it => it.date === curDate).sort((a,b)=>a.time.localeCompare(b.time));
             
-            // 🗺️ Naver Map 汇总
             const linkedPlans = ps.filter(p => p.link && p.link.trim() !== '');
             if(linkedPlans.length >= 1) {
                 header.innerHTML += `<div class="nav-btn nav-pink-bar" style="min-height:0; padding:16px; border-radius:15px; font-size:13px; margin-bottom:20px;" onclick="genNaverTodayRoute()">🗺️ 今日 Naver 地图路线汇总</div>`;
             }
 
             ps.forEach(it => { 
-                // 🛡️ 使用原生 <a> 标签替代 JS 跳转，完美触发 iOS Universal Links 唤醒 Naver Map App
-                let mapBtn = (it.link && it.link.trim() !== '') ? `<a href="${it.link}" target="_blank" style="background:var(--naver-green);color:white;padding:6px 12px;border-radius:10px;font-size:10px;font-weight:900;text-decoration:none;display:inline-block;" onclick="event.stopPropagation();">📍 Map 直达</a>` : '';
+                // 🛡️ 强制唤醒 App 的跳转协议
+                let mapBtn = (it.link && it.link.trim() !== '') ? `<div style="background:var(--naver-green);color:white;padding:6px 12px;border-radius:10px;font-size:10px;font-weight:900;cursor:pointer;" onclick="event.stopPropagation();window.location.href='${it.link}'">📍 Map 直达</div>` : '';
+                let memoBtn = (it.memo && it.memo.trim() !== '') ? `<div style="background:var(--sailor-purple);color:white;padding:6px 12px;border-radius:10px;font-size:10px;font-weight:900;cursor:pointer;" onclick="event.stopPropagation();window.location.href='${it.memo}'">🔗 预定/备注</div>` : '';
+                let btns = (mapBtn || memoBtn) ? `<div style="display:flex;gap:8px;margin-top:8px;">${mapBtn}${memoBtn}</div>` : '';
                 
-                // 📝 智能备注系统：如果是网址则变身紫色按钮，纯文字则作为便签展示
-                let memoBtn = '';
-                if(it.memo && it.memo.trim() !== '') {
-                    if(it.memo.startsWith('http')) {
-                        memoBtn = `<a href="${it.memo}" target="_blank" style="background:var(--sailor-purple);color:white;padding:6px 12px;border-radius:10px;font-size:10px;font-weight:900;text-decoration:none;display:inline-block;" onclick="event.stopPropagation();">🔗 预定/详情</a>`;
-                    } else {
-                        memoBtn = `<span style="background:#F0F0F0;color:#999;padding:6px 12px;border-radius:10px;font-size:10px;font-weight:900;display:inline-block;">📝 ${it.memo}</span>`;
-                    }
-                }
-                
-                let btns = (mapBtn || memoBtn) ? `<div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">${mapBtn}${memoBtn}</div>` : '';
-
                 box.innerHTML += `
                 <div class="item-card" onclick="openEdit('plan', ${store.plan.indexOf(it)})"> 
                     <div class="del-btn-round" onclick="event.stopPropagation(); delItem(event, 'plan', ${store.plan.indexOf(it)})">✖</div> 
@@ -441,10 +445,9 @@
                     let linkBtn = '';
                     if(it.link && it.link.trim() !== '') {
                         const urlStr = it.link.toLowerCase();
-                        // 🛡️ 使用 <a> 标签跳转
-                        if(it.cat === 'Olive Young' || urlStr.includes('oliveyoung')) linkBtn = `<a href="${it.link}" target="_blank" style="background:#A3C644;color:white;padding:6px 10px;border-radius:10px;font-size:10px;font-weight:bold;margin-top:6px;display:inline-block;text-decoration:none;" onclick="event.stopPropagation();">🌿 官网直达</a>`;
-                        else if(it.cat === 'Musinsa' || urlStr.includes('musinsa')) linkBtn = `<a href="${it.link}" target="_blank" style="background:#000;color:white;padding:6px 10px;border-radius:10px;font-size:10px;font-weight:bold;margin-top:6px;display:inline-block;text-decoration:none;" onclick="event.stopPropagation();">⬛ App直达</a>`;
-                        else linkBtn = `<a href="${it.link}" target="_blank" style="background:var(--sailor-blue);color:white;padding:6px 10px;border-radius:10px;font-size:10px;font-weight:bold;margin-top:6px;display:inline-block;text-decoration:none;" onclick="event.stopPropagation();">🔗 商品直达</a>`;
+                        if(it.cat === 'Olive Young' || urlStr.includes('oliveyoung')) linkBtn = `<div style="background:#A3C644;color:white;padding:6px 10px;border-radius:10px;font-size:10px;font-weight:bold;margin-top:6px;display:inline-block;" onclick="event.stopPropagation();window.location.href='${it.link}'">🌿 官网直达</div>`;
+                        else if(it.cat === 'Musinsa' || urlStr.includes('musinsa')) linkBtn = `<div style="background:#000;color:white;padding:6px 10px;border-radius:10px;font-size:10px;font-weight:bold;margin-top:6px;display:inline-block;" onclick="event.stopPropagation();window.location.href='${it.link}'">⬛ App直达</div>`;
+                        else linkBtn = `<div style="background:var(--sailor-blue);color:white;padding:6px 10px;border-radius:10px;font-size:10px;font-weight:bold;margin-top:6px;display:inline-block;" onclick="event.stopPropagation();window.location.href='${it.link}'">🔗 商品直达</div>`;
                     }
                     box.innerHTML += `
                     <div class="item-card" onclick="openEdit('wish', ${idx})"> 
@@ -458,6 +461,7 @@
         } else if(curView==='ticket') {
             box.className = ''; header.innerHTML = '';
             
+            // 🛡️ 绝对安全排序索引
             let sortedTickets = store.ticket.map((item, index) => ({ item, index })).sort((a, b) => {
                 const dateA = a.item.date || '9999-99-99';
                 const dateB = b.item.date || '9999-99-99';
@@ -476,7 +480,7 @@
                         <div style="flex:1; padding:20px 10px; display:flex; flex-direction:column; justify-content:center;">
                             <div style="font-size:16px; font-weight:900; line-height:1.2; text-shadow:0 1px 3px rgba(0,0,0,0.5);">${it.name || '未命名演出'}</div>
                             <div style="font-size:11px; color:rgba(255,255,255,0.7); margin-top:6px;">📍 ${it.venue}</div>
-                            ${it.link ? `<div style="margin-top:6px;"><a href="${it.link}" target="_blank" style="background:var(--sailor-blue); color:white; padding:4px 8px; border-radius:8px; font-size:10px; font-weight:bold; text-decoration:none; display:inline-block;" onclick="event.stopPropagation();">🔗 电子订单直达</a></div>` : ''}
+                            ${it.link ? `<div style="margin-top:6px;"><span style="background:var(--sailor-blue); color:white; padding:4px 8px; border-radius:8px; font-size:10px; font-weight:bold;" onclick="event.stopPropagation(); window.location.href='${it.link}'">🔗 电子订单直达</span></div>` : ''}
                         </div>
                         <div class="ticket-list-stub">
                             <div style="font-size:11px; letter-spacing:1px; color:rgba(255,255,255,0.6); font-weight:900;">${mon}</div>
@@ -490,14 +494,14 @@
         }
     }
 
-    // 🗺️ Naver Map 列表弹窗汇总 (原生 <a> 标签唤醒 App)
+    // 🗺️ Naver Map 列表弹窗汇总
     function genNaverTodayRoute() {
         const ps = store.plan.filter(it => it.date === curDate && it.link && it.link.trim() !== '').sort((a,b)=>a.time.localeCompare(b.time));
         if(ps.length === 0) return;
         
         let html = '<div style="display:flex;flex-direction:column;gap:10px;margin-top:15px;max-height:50vh;overflow-y:auto;text-align:left;padding:5px;">';
         ps.forEach(p => {
-            html += `<a href="${p.link}" target="_blank" class="nav-btn" style="min-height:50px;padding:15px;border:1.5px solid #EEE;border-radius:18px;align-items:flex-start;background:#F8F9FA;text-decoration:none;display:flex;width:100%;box-sizing:border-box;" onclick="event.stopPropagation();"><div style="display:flex;flex-direction:column;width:100%;"><b style="color:var(--brown);font-size:14px;">${p.time||'--:--'} · ${p.name}</b><small style="color:#03C75A;font-weight:900;margin-top:4px;">📍 点击唤醒 Naver Map App</small></div></a>`;
+            html += `<div class="nav-btn" style="min-height:50px;padding:15px;border:1.5px solid #EEE;border-radius:18px;align-items:flex-start;background:#F8F9FA;" onclick="window.location.href='${p.link}'"><b style="color:var(--brown);font-size:14px;">${p.time||'--:--'} · ${p.name}</b><small style="color:#03C75A;font-weight:900;margin-top:4px;">📍 点击唤醒 Naver Map</small></div>`;
         });
         html += '</div>';
 
@@ -552,7 +556,7 @@
             <input id="f-name" class="f-input" placeholder="目的地/行程" value="${it.name||''}"> 
             <input id="f-link" class="f-input" placeholder="Naver地图 URL 直达" value="${it.link||''}">
             ${lb('备注与预定')}
-            <input id="f-memo" class="f-input" placeholder="网址(生成跳转) / 备注内容" value="${it.memo||''}">`; 
+            <input id="f-memo" class="f-input" placeholder="预定链接 / 备注事项" value="${it.memo||''}">`; 
         }
         else if(v==='fin') { 
             const defSub = it.subPay || 'Toss';
@@ -575,13 +579,13 @@
             if(idx>-1) s.innerHTML = `<button class="nav-btn nav-pink-bar" style="width:100%;min-height:55px;border:none!important;margin-top:10px;" onclick="initSyncFlow(${idx})">💸 购入并同步记账</button>`; 
         }
         else if(v==='ticket') { 
-            f.innerHTML = `<input id="f-name" class="f-input" placeholder="演出名称" value="${it.name||''}"> <input id="f-venue" class="f-input" placeholder="场馆" value="${it.venue||''}"> <div style="display:flex;gap:10px"><input id="f-date" class="f-input" type="date" value="${it.date||'2026-05-01'}"> <input id="f-time" class="f-input" type="time" value="${it.time||'19:00'}"></div> <div style="display:flex;gap:10px"><input id="f-area" class="f-input" placeholder="区" value="${it.area||''}"> <input id="f-row" class="f-input" placeholder="排" value="${it.row||''}"> <input id="f-num" class="f-input" placeholder="号" value="${it.num||''}"></div> <input id="f-link" class="f-input" placeholder="电子详情页 URL" value="${it.link||''}">`; 
+            f.innerHTML = `<input id="f-name" class="f-input" placeholder="演出名称" value="${it.name||''}"> <input id="f-venue" class="f-input" placeholder="场馆" value="${it.venue||''}"> <div style="display:flex;gap:10px"><input id="f-date" class="f-input" type="date" value="${it.date||'2026-05-01'}"> <input id="f-time" class="f-input" type="time" value="${it.time||'19:00'}"></div> <div style="display:flex;gap:10px"><input id="f-area" class="f-input" placeholder="区" value="${it.area||''}"> <input id="f-row" class="f-input" placeholder="排" value="${it.row||''}"> <input id="f-num" class="f-input" placeholder="号" value="${it.num||''}"></div> <input id="f-link" class="f-input" placeholder="电子订单 URL" value="${it.link||''}">`; 
         }
     }
 
     function masterSave() {
         const getV = i => document.getElementById(i)?.value || '';
-        // 存储 memo 字段
+        // 🛡️ 新增 memo 字段保存
         const obj = { name:getV('f-name'), text:getV('f-name'), time:getV('f-time'), date:getV('f-date'), price:getV('f-price'), air:getV('f-air'), no:getV('f-no'), t1:getV('f-t1'), t2:getV('f-t2'), c1:getV('f-c1'), g1:getV('f-g1'), s1:getV('f-s1'), link:getV('f-link'), memo:getV('f-memo'), area:getV('f-area'), row:getV('f-row'), num:getV('f-num'), venue:getV('f-venue'), tz: sTz, tz1: dTz, tz2: aTz, img:tempImg || (curIdx>-1?(curView==='flight'?flights[curIdx].img:(curView==='checklist'?store.checklist[curIdx].img:store[curView][curIdx].img)):'') };
         
         if(curView==='flight') { if(curIdx>-1) flights[curIdx]=obj; else flights.push(obj); }
@@ -693,7 +697,7 @@
                         <div style="display:flex; justify-content:space-between; align-items:flex-end;">
                             <div>
                                 <b style="font-size:20px; color:var(--sailor-blue); margin-top:10px; display:block;">${it.area||''}区 ${it.row||''}排 ${it.num||''}号</b>
-                                ${it.link ? `<div style="margin-top:8px;"><a href="${it.link}" target="_blank" style="background:var(--sailor-pink); color:white; padding:6px 12px; border-radius:12px; font-size:11px; font-weight:bold; cursor:pointer; text-decoration:none; display:inline-block;" onclick="event.stopPropagation();">🔗 电子订单</a></div>` : ''}
+                                ${it.link ? `<div style="margin-top:8px; display:inline-block; background:var(--sailor-pink); color:white; padding:6px 12px; border-radius:12px; font-size:11px; font-weight:bold; cursor:pointer;" onclick="event.stopPropagation(); window.location.href='${it.link}'">🔗 电子订单直达</div>` : ''}
                             </div>
                             <button style="background:rgba(255,255,255,0.2); border:none; color:white; padding:8px 15px; border-radius:15px; font-size:12px; font-weight:bold; cursor:pointer; position:relative; z-index:50;" onclick="event.stopPropagation(); closeTicketGallery(); setTimeout(()=>openEdit('ticket', ${i}), 100)">✎ EDIT</button>
                         </div>
@@ -718,11 +722,11 @@
             if (offset === 0) {
                 card.style.transform = `translateX(0px) translateZ(0px) rotateY(0deg)`;
                 card.style.zIndex = 10; card.style.opacity = 1;
-                card.style.pointerEvents = 'auto'; // 允许点击当前卡片
+                card.style.pointerEvents = 'auto'; // 🛡️ 仅当前层允许点击
             } else if (offset > 0) {
                 card.style.transform = `translateX(${30 + (offset * 20)}px) translateZ(${offset * -150}px) rotateY(-15deg)`;
                 card.style.zIndex = 10 - offset; card.style.opacity = offset > 2 ? 0 : 0.8; 
-                card.style.pointerEvents = 'none'; // 彻底屏蔽后排点击
+                card.style.pointerEvents = 'none'; // 🛡️ 彻底屏蔽后排的空气墙点击
             } else {
                 card.style.transform = `translateX(-150%) translateZ(200px) rotateY(10deg)`;
                 card.style.opacity = 0; card.style.zIndex = 0;
