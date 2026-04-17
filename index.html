@@ -13,13 +13,12 @@
         :root { 
             --sailor-pink: #FF99CC; --sailor-purple: #D1B3FF; --sailor-blue: #A2D2FF; 
             --neon-pink: #FF007A; --soft-pink: #FFB6D9; --glow: rgba(255, 153, 204, 0.2); 
-            --brown: #4D3B3B; --high-school-blue: #5D9CEC;
+            --brown: #4D3B3B; --high-school-blue: #5D9CEC; --naver-green: #03C75A;
         }
 
         * { box-sizing: border-box; font-family: 'PingFang SC', -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; outline: none; }
         ::-webkit-scrollbar { display: none; }
 
-        /* 1. 极致对称布局：彻底告别白屏和挤压 */
         body { 
             background: linear-gradient(-45deg, #FFF5F9, #F0F4FF, #EBF0FF, #FFF5F9);
             background-size: 400% 400%; animation: gradientBG 15s ease infinite;
@@ -28,76 +27,55 @@
         }
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* 2. ✨ 星月交辉标题 ✨ */
+        /* ✨ 标题区：绝对居中修复 ✨ */
         .sm-header-section { display: flex; flex-direction: column; align-items: center; margin: 15px 0 25px; position: relative; z-index: 10; }
-        .sm-logo-wrap { display: flex; align-items: center; justify-content: center; gap: 4px; position: relative; }
+        .sm-logo-wrap { display: inline-flex; align-items: center; justify-content: center; position: relative; }
         .shooting-star { position: absolute; top: -10px; left: -20px; width: 100px; height: 1.5px; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,1), rgba(255,255,255,0)); transform: rotate(35deg); animation: shooting 6s linear infinite; opacity: 0; z-index: 15; pointer-events: none; }
         @keyframes shooting { 0% { transform: translateX(-50px) translateY(-50px) rotate(35deg); opacity: 1; } 15% { transform: translateX(350px) translateY(250px) rotate(35deg); opacity: 0; } 100% { opacity: 0; } }
-        .star-twinkle { position: absolute; color: white; filter: drop-shadow(0 0 5px rgba(255,255,255,0.9)); pointer-events: none; }
-        @keyframes twinkle { 0% { opacity: 0.2; transform: scale(0.7); } 100% { opacity: 1; transform: scale(1.1); } }
         
         .sm-title { font-family: 'Dancing Script', cursive; font-size: 62px; color: #FFFFFF; position: relative; display: inline-block; padding: 0 10px; margin: 0; cursor: pointer; z-index: 2; line-height: 1.1; }
-        .sm-title::before { content: attr(data-text); position: absolute; left: 13px; top: 4px; z-index: -1; background: linear-gradient(90deg, #A2D2FF, #D1BFFF, #FF99CC, #D1BFFF, #A2D2FF); background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text; animation: pastelFlow 4s linear infinite, strokeFlash 2.5s ease-in-out infinite alternate; }
+        .sm-title::before { content: attr(data-text); position: absolute; left: 13px; top: 4px; z-index: -1; background: linear-gradient(90deg, #A2D2FF, #D1BFFF, #FF99CC, #D1BFFF, #A2D2FF); background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text; animation: pastelFlow 4s linear infinite; }
         @keyframes pastelFlow { 0% { background-position: 0% 50%; } 100% { background-position: -200% 50%; } }
-        @keyframes strokeFlash { 0% { filter: drop-shadow(0 0 2px rgba(209,191,255,0.4)) brightness(0.95); } 100% { filter: drop-shadow(0 2px 10px rgba(255,153,204,0.7)) brightness(1.15); } }
-        .sm-moon-icon { animation: moonFloat 4s ease-in-out infinite alternate; filter: drop-shadow(0 2px 10px rgba(255, 220, 150, 0.6)); margin-top: -15px; }
+        .sm-moon-icon { position: absolute; right: -35px; top: -5px; animation: moonFloat 4s ease-in-out infinite alternate; }
         @keyframes moonFloat { 0% { transform: translateY(0px) rotate(-10deg); } 100% { transform: translateY(-4px) rotate(-18deg); } }
-        .sm-subtitle { font-size: 10px; letter-spacing: 3px; color: #B19CD9; font-weight: 900; margin-top: -2px; text-shadow: 0 1px 2px rgba(255,255,255,0.8); white-space: nowrap; }
+        .sm-subtitle { font-size: 10px; letter-spacing: 3px; color: #B19CD9; font-weight: 900; margin-top: 5px; text-shadow: 0 1px 2px rgba(255,255,255,0.8); }
 
-        .hidden { display: none !important; }
-        
-        /* 3. 🗓️ 看板区 (金三角排版) */
+        /* 🗓️ 看板区 (响应式排版修复) */
         .dash-board { background: rgba(255, 255, 255, 0.85); border: 2px solid white; border-radius: 35px; padding: 25px 22px; box-shadow: 0 12px 30px var(--glow); backdrop-filter: blur(15px); margin-bottom: 25px; position: relative; z-index: 5; }
-        .dash-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+        .dash-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
         .date-widget { display: flex; align-items: center; gap: 12px; }
-        .dash-date { font-family: "SF Pro Rounded", "Arial Rounded MT Bold", sans-serif; font-size: 48px; color: var(--soft-pink); font-weight: 900; letter-spacing: -1px; line-height: 1; text-shadow: 0 2px 5px rgba(255,153,204,0.15); }
-        .dash-day { background: #F0F6FF; color: var(--high-school-blue); padding: 5px 12px; border-radius: 14px; font-size: 11px; font-weight: 900; transform: translateY(-8px); }
-        .dash-rate { background: var(--sailor-pink); color: white; padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 900; box-shadow: 0 4px 10px rgba(255,153,204,0.4); }
+        .dash-date { font-family: "SF Pro Rounded", sans-serif; font-size: clamp(36px, 10vw, 48px); color: var(--soft-pink); font-weight: 900; letter-spacing: -1px; line-height: 1; text-shadow: 0 2px 5px rgba(255,153,204,0.15); }
+        .dash-day { background: #F0F6FF; color: var(--high-school-blue); padding: 5px 12px; border-radius: 14px; font-size: 11px; font-weight: 900; }
+        .dash-rate { background: var(--sailor-pink); color: white; padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 900; box-shadow: 0 4px 10px rgba(255,153,204,0.3); white-space: nowrap; }
         
         .dash-tabs { display: flex; gap: 20px; border-bottom: 2.5px solid #F0F0F0; padding-bottom: 12px; margin-bottom: 15px; }
         .d-tab { font-size: 15px; font-weight: 900; color: #999; cursor: pointer; position: relative; transition: 0.2s; }
         .d-tab.active { color: var(--neon-pink); }
         .d-tab.active::after { content: ''; position: absolute; bottom: -14.5px; left: 50%; transform: translateX(-50%); width: 28px; height: 4px; background: var(--neon-pink); border-radius: 4px; }
 
-        /* 4. 横向滚动与基础组件 (呼吸防裁切算法) */
-        .scroll-row { 
-            display: flex !important; flex-wrap: nowrap; overflow-x: auto; gap: 12px; scrollbar-width: none; 
-            width: auto; margin-left: -24px; margin-right: -24px; padding: 12px 24px; 
-        }
-        
-        /* 天气 UI 净化：白底粉边 */
+        /* 横向滚动与基础组件 */
+        .scroll-row { display: flex !important; flex-wrap: nowrap; overflow-x: auto; gap: 12px; scrollbar-width: none; width: auto; margin-left: -24px; margin-right: -24px; padding: 12px 24px; }
         .w-item { min-width: 80px; text-align: center; background: white; padding: 15px 5px; border-radius: 20px; border: 1.5px solid #FFE4E1; flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
-        
-        /* 药丸回归：日期切换高光 */
         .date-item { padding: 12px 22px; background: rgba(255,255,255,0.7); border-radius: 22px; color: #999; font-weight: 900; border: 1.5px solid white; flex-shrink: 0; transition: 0.3s; cursor: pointer; }
         .date-item.active { background: var(--sailor-pink); color: white; border: none; box-shadow: 0 5px 15px rgba(255,153,204,0.4); transform: scale(1.05); }
 
         .chk-cats { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; padding: 5px 24px 20px; margin: 0 -24px; }
-        .chk-cat-btn { padding: 9px 18px; font-size: 11px; background: rgba(255,255,255,0.8); color: var(--sailor-blue); border-radius: 16px; font-weight: 900; border: 1.5px solid #F0F6FF; white-space: nowrap; flex-shrink: 0; position: relative; transition: 0.3s; cursor: pointer; }
+        .chk-cat-btn { padding: 9px 18px; font-size: 11px; background: rgba(255,255,255,0.8); color: var(--sailor-blue); border-radius: 16px; font-weight: 900; border: 1.5px solid #F0F6FF; white-space: nowrap; flex-shrink: 0; position: relative; cursor: pointer; }
         .chk-cat-btn.active { background: var(--sailor-blue); color: white; border-color: var(--sailor-blue); transform: scale(1.05); box-shadow: 0 4px 12px rgba(162,210,255,0.4); }
-        .chk-cat-del { position: absolute; top: -6px; right: -6px; background: white; color: #FF4D4F; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; border: 1.5px solid #EEE; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 5; }
 
         .chk-item { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px dashed #F0F0F0; animation: slideIn 0.3s; }
         @keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
-        .chk-circle { width: 22px; height: 22px; border: 2px solid #E0E0E0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: white; cursor: pointer; }
-        .chk-text { font-size: 14px; font-weight: 600; color: var(--brown); flex: 1; }
+        .chk-circle { width: 22px; height: 22px; border: 2px solid #E0E0E0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: white; cursor: pointer; flex-shrink: 0; }
 
-        /* 5. ✈️ 航班卡片 UI (大字号、对称、高级虚线恢复) */
+        /* ✈️ 航班卡片 */
         .f-card { flex: 0 0 88%; background: rgba(255,255,255,0.65); backdrop-filter: blur(12px); border: 3px solid var(--sailor-blue) !important; border-radius: 35px; padding: 25px; position: relative; flex-shrink: 0; box-shadow: 8px 8px 0px rgba(93,156,236,0.1); }
         .f-card.add-btn { border: 2.5px dashed #CCC !important; display: flex; flex-direction: column; color: #AAA; min-height: 180px; align-items: center; justify-content: center; background: transparent; box-shadow: none; cursor: pointer; }
-        
         .f-time-row { display: flex; justify-content: space-between; align-items: center; margin: 18px 0 10px; }
         .f-time-big { font-size: 36px; font-weight: 900; color: var(--brown); line-height: 1; }
         .f-tag-row { display: flex; gap: 8px; margin-top: 15px; border-top: 1.5px dashed rgba(0,0,0,0.08); padding-top: 15px; flex-wrap: wrap; }
         .f-tag { padding: 6px 12px; border-radius: 10px; font-size: 10px; font-weight: 900; background: white; color: var(--high-school-blue); border: 1.2px solid #EBF3FF; }
 
-        /* 6. 功能卡片与主导航 */
-        .nav-stack { display: flex; flex-direction: column; gap: 15px; position: relative; z-index: 5; }
-        .nav-row-half { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .nav-btn { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(12px); border: 1.5px solid rgba(255, 255, 255, 0.8); border-radius: 28px; padding: 22px 10px; min-height: 80px; text-align: center; font-weight: 900; color: var(--brown); font-size: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.2s; cursor: pointer; box-shadow: 0 8px 25px rgba(0,0,0,0.03); }
-        .nav-btn:active { transform: scale(0.96); }
-        .nav-pink-bar { background: var(--sailor-pink) !important; color: white !important; border: 1.5px solid white !important; box-shadow: 0 8px 20px rgba(255, 153, 204, 0.4) !important; }
-
+        /* 功能列表项 */
         #list-container { position: relative; margin-top: 10px; }
         #list-container.has-timeline { padding-left: 20px; }
         #list-container.has-timeline::before { content: ''; position: absolute; left: 10px; top: 10px; bottom: 30px; width: 3px; background: linear-gradient(to bottom, var(--sailor-pink), var(--sailor-blue)); opacity: 0.5; border-radius: 3px; }
@@ -105,66 +83,66 @@
         @keyframes bounceIn { from { opacity: 0; transform: translateY(15px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
         #list-container.has-timeline .item-card::before { content: ''; position: absolute; left: -16px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; background: white; border: 3px solid var(--sailor-pink); border-radius: 50%; z-index: 2; box-shadow: 0 0 8px rgba(255,153,204,0.6); }
         
-        .icon-circle { width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: white; flex-shrink: 0; font-size: 24px; border: 1.5px solid #F0F0F0; overflow: hidden; position: relative; }
+        /* 🛡️ 列表圆形图片防拉伸钉死 */
+        .icon-circle { width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: white; flex-shrink: 0; font-size: 24px; border: 1.5px solid #F0F0F0; position: relative; overflow: hidden; }
         .icon-circle img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: inherit; } 
 
         .del-btn-round { position: absolute; top: -10px; right: -10px; background: #FF4D4F; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; border: 2.5px solid white; z-index: 20; font-weight: bold; cursor: pointer; box-shadow: 0 4px 12px rgba(255,77,79,0.4); }
 
-        /* 7. 🎫 终极：票夹 UI (外层半透明海报票 + 内层3D画廊) */
+        .nav-stack { display: flex; flex-direction: column; gap: 15px; position: relative; z-index: 5; }
+        .nav-row-half { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .nav-btn { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(12px); border: 1.5px solid rgba(255, 255, 255, 0.8); border-radius: 28px; padding: 22px 10px; min-height: 80px; text-align: center; font-weight: 900; color: var(--brown); font-size: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.2s; cursor: pointer; box-shadow: 0 8px 25px rgba(0,0,0,0.03); }
+        .nav-pink-bar { background: var(--sailor-pink) !important; color: white !important; border: 1.5px solid white !important; box-shadow: 0 8px 20px rgba(255, 153, 204, 0.4) !important; }
+
+        /* 🎫 终极 3D 画廊与票根外显 */
         .ticket-list-item { background: linear-gradient(135deg, #7A89A6, #636C80); border-radius: 20px; display: flex; align-items: stretch; margin-bottom: 18px; height: 110px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); color: white; overflow: hidden; position: relative; cursor: pointer; }
-        .ticket-list-poster { width: 100px; padding: 12px; flex-shrink: 0; display: flex; }
-        .ticket-list-poster img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; }
+        .ticket-list-poster { width: 100px; padding: 12px; flex-shrink: 0; display: flex; position: relative; }
+        .ticket-list-poster img { position: absolute; inset: 12px; width: calc(100% - 24px); height: calc(100% - 24px); object-fit: cover; border-radius: 10px; }
         .ticket-list-stub { width: 85px; border-left: 2px dashed rgba(255,255,255,0.3); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; background: rgba(0,0,0,0.1); }
         .ticket-list-stub::before, .ticket-list-stub::after { content: ''; position: absolute; left: -10px; width: 20px; height: 20px; border-radius: 50%; background: #FFF5F9; }
         .ticket-list-stub::before { top: -10px; } .ticket-list-stub::after { bottom: -10px; }
 
-        /* 3D 画廊满血引擎 */
         .ticket-gallery-overlay { position: fixed; inset: 0; background: rgba(20,20,30,0.96); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 10000; display: none; flex-direction: column; opacity: 0; transition: 0.3s; }
         .ticket-gallery-overlay.active { display: flex; opacity: 1; }
         .gallery-viewport { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; perspective: 1500px; transform-style: preserve-3d; overflow: hidden; width: 100%; }
         
-        .典藏票根 { width: 290px; height: 500px; background: #FFF; border-radius: 25px; overflow: hidden; position: absolute; box-shadow: 0 20px 50px rgba(0,0,0,0.4); display: flex; flex-direction: column; transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s, z-index 0.4s; backface-visibility: hidden; }
-        .典藏海报 { width: 100%; flex: 1; background: #EAEAEA; position: relative; border-bottom: 2px dashed rgba(0,0,0,0.1); display: block; }
-        .典藏海报 img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        .典藏票根 { width: 290px; height: 500px; background: #FFF; border-radius: 25px; overflow: hidden; position: absolute; box-shadow: 0 20px 50px rgba(0,0,0,0.4); display: flex; flex-direction: column; transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s; backface-visibility: hidden; }
         
-        .典藏信息 { position: relative; height: 200px; background: rgba(25,25,30,0.8); backdrop-filter: blur(20px); color: #FFF; padding: 25px; display: flex; }
+        /* 🛡️ 3D海报防裁切方案 */
+        .典藏海报 { width: 100%; flex: 1; background: #FFF; position: relative; display: flex; align-items: center; justify-content: center; border-bottom: 2px dashed rgba(0,0,0,0.1); padding: 15px; }
+        .典藏海报 img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        
+        /* 自适应底部高度，防止座位吞字 */
+        .典藏信息 { position: relative; min-height: 200px; height: auto; background: rgba(25,25,30,0.8); backdrop-filter: blur(20px); color: #FFF; padding: 25px; display: flex; padding-bottom: 35px; }
         .典藏打孔 { position: absolute; left: -10px; top: 0; transform: translateY(-50%); width: 20px; height: 20px; border-radius: 50%; background: #000; z-index: 5; }
 
-        /* 8. 表单 & 满血单例弹窗 (Z-index 顶层防御) */
+        /* 🛡️ 抽屉预览：无敌防拉伸居中方案 */
+        .pre-box { position: relative; width: 100%; height: 150px; background: rgba(255,255,255,0.7); border: 3px dashed #DDD; border-radius: 25px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; overflow: hidden; }
+        #preview-text { position: absolute; inset: 10px; z-index: 5; display: flex; align-items: center; justify-content: center; }
+        #preview-text img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 15px; }
+
+        .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: var(--sailor-pink); box-shadow: 0 0 20px var(--sailor-pink); display: none; z-index: 10; }
+        .pre-box.scanning .scan-line { display: block; animation: scanAnim 2s infinite linear; }
+        @keyframes scanAnim { 0% { top: 0%; } 100% { top: 100%; } }
+
+        /* 表单 & 弹窗 */
         .drawer { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); display: none; align-items: flex-end; z-index: 11000; }
         .drawer.active { display: flex; }
-        .drawer-content { background: rgba(255,255,255,0.98); backdrop-filter: blur(20px); width: 100%; padding: 30px 25px 60px; border-radius: 45px 45px 0 0; max-height: 92vh; overflow-y: auto; border-top: 2.5px solid white; animation: slideUp 0.4s; }
+        .drawer-content { background: rgba(255,255,255,0.98); width: 100%; padding: 30px 25px 60px; border-radius: 45px 45px 0 0; max-height: 92vh; overflow-y: auto; border-top: 2.5px solid white; animation: slideUp 0.4s; }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
         
-        .f-label { font-size: 13px; font-weight: 900; color: var(--brown); margin: 15px 0 8px; display: block; }
-        .f-input { width: 100%; padding: 18px; background: #F8F9FA !important; border: 1.5px solid #EEE; border-radius: 22px; font-size: 15px; margin-bottom: 12px; transition: 0.3s; }
-        .f-input:focus { border-color: var(--sailor-pink); box-shadow: 0 0 0 3px var(--glow); }
-
+        .f-input { width: 100%; padding: 18px; background: #F8F9FA !important; border: 1.5px solid #EEE; border-radius: 22px; font-size: 15px; margin-bottom: 12px; }
         .selector-group { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 10px 6px; margin: 0 -6px; }
         .selector-item { padding: 12px 20px; border: 1.5px solid white; border-radius: 18px; background: #F0F0F0; font-size: 12px; font-weight: 900; color: #999; flex-shrink: 0; transition: 0.2s; cursor: pointer; }
         .selector-item.active { background: var(--sailor-pink); color: white; transform: scale(1.05); box-shadow: 0 4px 10px var(--glow); }
-        
         .tz-pill-box { display: flex; background: rgba(255,255,255,0.5); border-radius: 20px; padding: 4px; gap: 4px; border: 1.5px solid #F0F0F0; margin-bottom: 10px; }
         .tz-pill { flex: 1; padding: 14px; border-radius: 16px; text-align: center; font-size: 12px; font-weight: 900; color: #999; cursor: pointer; transition: 0.3s; }
         .tz-pill.active { background: white; color: var(--sailor-blue); box-shadow: 0 5px 12px rgba(0,0,0,0.06); }
 
-        /* 📸 OCR 扫描区 (终极防拉伸安全布局) */
-        .pre-box { position: relative; width: 100%; height: 140px; background: rgba(255,255,255,0.7); border: 3px dashed #DDD; border-radius: 30px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; transition: 0.3s; position: relative; } 
-        .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: var(--sailor-pink); box-shadow: 0 0 20px var(--sailor-pink); display: none; z-index: 10; }
-        .pre-box.scanning .scan-line { display: block; animation: scanAnim 2s infinite linear; }
-        @keyframes scanAnim { 0% { top: 0%; } 100% { top: 100%; } }
-        
-        /* 🛡️ 抽屉预览：绝对居中，防任何浏览器拉伸 */
-        #preview-text { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; position: absolute; inset: 0; z-index: 5; padding: 10px; }
-        #preview-text img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-
-        /* 单例 Modal (最高层级) */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 20000; padding: 25px; }
         .modal-card { background: white; width: 100%; max-width: 320px; border-radius: 35px; padding: 30px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.2); animation: popScale 0.3s; }
         @keyframes popScale { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .m-btn { flex: 1; padding: 16px; border-radius: 20px; font-weight: 900; border: none; font-size: 14px; cursor: pointer; transition: 0.2s; }
-        .m-btn-cancel { background: #F0F0F0; color: #999; }
-        .m-btn-ok { background: var(--sailor-pink); color: white; box-shadow: 0 4px 10px rgba(255,153,204,0.4); }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
@@ -173,11 +151,8 @@
         <div class="sm-header-section">
             <div class="sm-logo-wrap">
                 <div class="shooting-star"></div>
-                <span class="star-twinkle" style="top:-10px; left:12%; animation-duration:2.5s; font-size:16px;">✨</span>
-                <span class="star-twinkle" style="bottom:10px; right:28%; animation-duration:3.2s; font-size:12px;">✨</span>
-                <span class="star-twinkle" style="top:12px; right:-5%; animation-duration:4.7s; font-size:20px;">✦</span>
                 <h1 class="sm-title" data-text="Seoul Moon" onclick="pop(); location.reload()">Seoul Moon</h1>
-                <svg class="sm-moon-icon" viewBox="0 0 100 100" width="48" height="48">
+                <svg class="sm-moon-icon" viewBox="0 0 100 100" width="40" height="40">
                     <defs><linearGradient id="moonGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFF2CA" /><stop offset="100%" stop-color="#FFD1DC" /></linearGradient></defs>
                     <path d="M 75 10 A 40 40 0 1 0 75 90 A 50 50 0 0 1 75 10 Z" fill="url(#moonGrad)"/>
                 </svg>
@@ -197,11 +172,9 @@
                 <div id="tab-w" class="d-tab active" onclick="switchDash('weather')">🌤️ 天气</div>
                 <div id="tab-c" class="d-tab" onclick="switchDash('checklist')">☑️ 清单</div>
             </div>
-            
             <div id="panel-w" class="scroll-row">气象精灵加载中...</div>
-            
             <div id="panel-c" class="hidden">
-                <div class="chk-cats" id="chk-cat-row"></div>
+                <div class="chk-cats scroll-row" id="chk-cat-row" style="margin-bottom:10px;"></div>
                 <div id="chk-list" style="max-height: 160px; overflow-y: auto;"></div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
                     <input type="text" id="chk-inp" class="f-input" style="margin-bottom:0; padding:12px; height:48px" placeholder="随手记一笔...">
@@ -257,11 +230,11 @@
 
     <div id="custom-modal" class="modal-overlay">
         <div class="modal-card">
-            <h3 id="modal-title" style="margin-top:0">提示</h3>
-            <div id="modal-msg" style="color:#666; font-size:14px; line-height:1.6;"></div>
+            <h3 id="modal-title" style="margin-top:0; color:var(--brown);">提示</h3>
+            <div id="modal-msg" style="color:#666; font-size:14px; line-height:1.6; margin-top:10px;"></div>
             
             <div id="modal-sync-options" class="hidden">
-                <div class="selector-group" id="sync-pay-sel" style="justify-content:center; flex-wrap:wrap; margin-top:15px; padding:0;">
+                <div class="scroll-row" id="sync-pay-sel" style="justify-content:center; flex-wrap:wrap; margin-top:15px; padding:0;">
                     <div class="selector-item active" onclick="selectSyncPay(this)">信用卡</div>
                     <div class="selector-item" onclick="selectSyncPay(this)">现金</div>
                     <div class="selector-item" onclick="selectSyncPay(this)">Toss</div>
@@ -279,30 +252,63 @@
     </div>
 
 <script>
-    /* ================= 防爆盾 JS 引擎 (零阉割) ================= */
-    const DB_NAME = 'SeoulMoon_Final_V666_Ultimate', STORE_NAME = 'appData', DATA_KEY = 'core_data';
-    let wallet = { Toss: 0, Namane: 0, TripPass: 0 }, flights = [], store = { plan: [], ticket: [], wish: [], fin: [], checklist: [], chkCats: ['行李🧳', '购物🛍️', '办事📌'] };
-    let curView = 'home', curIdx = -1, curDate = '04.29', RATE = 191.0, modalCallback = null, tempImg = '';
-    let dTz='上海', aTz='首尔', sTz='首尔', curCat='全部', activeChkCat='全部';
-
+    /* ================= 工具函数置顶 (防引用报错) ================= */
+    const lb = (text) => `<div style="font-size:13px; font-weight:900; color:var(--brown); margin:15px 0 8px; display:block;">${text}</div>`;
     const pop = () => { try { if(window.navigator.vibrate) window.navigator.vibrate(15); } catch(e){} };
-    
+    function setTz(t, v, el) { pop(); if(t === 'single') sTz = v; else if(t === 'dep') dTz = v; else aTz = v; Array.from(el.parentNode.children).forEach(b=>b.classList.remove('active')); el.classList.add('active'); }
+    function updateCnyHint(v) { const el = document.getElementById('c-hint'); if(el) el.innerText = '≈ ¥ ' + (Number(v)/RATE).toFixed(1); }
+    function selectBtn(el) { pop(); Array.from(el.parentNode.children).forEach(b=>b.classList.remove('active')); el.classList.add('active'); }
+    function selectPay(el) { selectBtn(el); document.getElementById('sub-pay-area').className = (el.innerText === '韩币' ? '' : 'hidden'); }
+    function selectSyncPay(el) { selectBtn(el); }
+    function closeDrawer() { document.getElementById('drawer').classList.remove('active'); }
+
+    /* ================= 核心单例弹窗 ================= */
+    function showModal(t,m,i,cb){ 
+        document.getElementById('modal-title').innerText=t; 
+        document.getElementById('modal-msg').innerHTML=m; 
+        if(i) document.getElementById('modal-inp').classList.remove('hidden'); 
+        else document.getElementById('modal-inp').classList.add('hidden');
+        document.getElementById('modal-inp').value='';
+        document.getElementById('custom-modal').style.display='flex'; 
+        modalCallback=cb; 
+    }
+    function closeModal(ok){ 
+        document.getElementById('custom-modal').style.display='none'; 
+        if(modalCallback) modalCallback(ok, document.getElementById('modal-inp').value); 
+    }
+    function promptWallet(t) { showModal("修改余额", "输入韩币金额:", true, (ok,v)=>{if(ok && !isNaN(v)){wallet[t]=Number(v);updateWalletUI();localCommit();}}); }
+    function updateWalletUI() { if(document.getElementById('val-Toss')){document.getElementById('val-Toss').innerText='₩'+wallet.Toss.toLocaleString();document.getElementById('val-Namane').innerText='₩'+wallet.Namane.toLocaleString();document.getElementById('val-TripPass').innerText='₩'+wallet.TripPass.toLocaleString();} }
+    function delItem(e,t,idx) { e.stopPropagation(); showModal("彻底删除?","此操作不可撤销！",false,ok=>{if(ok){if(t==='flight') flights.splice(idx,1); else store[t].splice(idx,1); localCommit(); initUI(); if(curView!=='home')renderList();}}); }
+
+    /* ================= 数据引擎 (全量容错保护) ================= */
+    const DB_NAME = 'SeoulMoon_Final_ULTRA_V10', STORE_NAME = 'appData', DATA_KEY = 'core_data';
+    let wallet = { Toss: 0, Namane: 0, TripPass: 0 }, flights = [], store = { plan: [], ticket: [], wish: [], fin: [], checklist: [], chkCats: ['行李🧳', '购物🛍️', '办事📌'] };
+    let curView = 'home', curIdx = -1, curDate = '04.29', RATE = 191.0, modalCallback = null, tempImg = '', dTz='上海', aTz='首尔', sTz='首尔', curCat='全部', activeChkCat='全部';
+
     const dbPromise = new Promise(resolve => { 
         const req = indexedDB.open(DB_NAME, 1); 
         req.onupgradeneeded = e => e.target.result.createObjectStore(STORE_NAME); 
         req.onsuccess = () => resolve(req.result); 
-        req.onerror = () => resolve(null);
+        req.onerror = () => resolve(null); 
     });
 
     async function bootApp() {
         try {
-            const db = await dbPromise; 
-            if(!db) { initUI(); return; }
+            const db = await dbPromise; if(!db) { initUI(); return; }
             const tx = db.transaction(STORE_NAME, 'readonly').objectStore(STORE_NAME).get(DATA_KEY);
             tx.onsuccess = () => { 
                 if (tx.result) { 
-                    wallet = tx.result.wallet || wallet; flights = tx.result.flights || flights; store = tx.result.store || store; 
-                    if(!store.checklist) store.checklist = []; if(!store.chkCats) store.chkCats = ['行李🧳', '购物🛍️', '办事📌'];
+                    wallet = tx.result.wallet || wallet; 
+                    flights = tx.result.flights || flights; 
+                    
+                    // 🛡️ 终极防空指针补全装甲
+                    const s = tx.result.store || {};
+                    store.plan = s.plan || [];
+                    store.ticket = s.ticket || [];
+                    store.wish = s.wish || [];
+                    store.fin = s.fin || [];
+                    store.checklist = s.checklist || [];
+                    store.chkCats = s.chkCats || ['行李🧳', '购物🛍️', '办事📌'];
                 } else { 
                     flights = [{ air: "韩亚航空", no: "OZ3625", date: "2026-04-29", t1: "10:55", t2: "14:00", tz1: "上海", tz2: "首尔", s1: "12A", c1: "A19", g1: "T2" }]; 
                 }
@@ -311,7 +317,6 @@
             tx.onerror = () => initUI();
         } catch(e) { initUI(); }
     }
-    
     async function localCommit() { const db = await dbPromise; if(db) db.transaction(STORE_NAME, 'readwrite').objectStore(STORE_NAME).put({wallet, flights, store}, DATA_KEY); }
 
     function initUI() { 
@@ -319,45 +324,28 @@
         document.getElementById('live-date').innerText = `${String(n.getMonth()+1).padStart(2,'0')}.${String(n.getDate()).padStart(2,'0')}`;
         document.getElementById('live-day').innerText = `${['日','一','二','三','四','五','六'][n.getDay()]}`;
         
-        let targetDateStr = (flights && flights.length > 0 && flights[0].date) ? flights[0].date.replace(/-/g, '/') : '2026/04/29';
-        let diff = Math.ceil((new Date(targetDateStr) - n)/86400000);
+        let dStr = (flights && flights.length > 0 && flights[0].date) ? flights[0].date.replace(/-/g, '/') : '2026/04/29';
+        let diff = Math.ceil((new Date(dStr) - n)/86400000);
         document.getElementById('sm-dday-subtitle').innerText = `· SEOUL TRIP ${diff>=0?'D-'+diff:'D+'+Math.abs(diff)} ✈️ ·`;
         
         updateWeather(); updateExchangeRate(); renderFlights(); renderChkCats(); renderChk();
     }
 
+    /* 页面导航 */
     function switchDash(v) { pop(); document.getElementById('tab-w').className = v==='weather'?'d-tab active':'d-tab'; document.getElementById('tab-c').className = v==='checklist'?'d-tab active':'d-tab'; document.getElementById('panel-w').className = v==='weather'?'scroll-row':'hidden'; document.getElementById('panel-c').className = v==='checklist'?'':'hidden'; }
     function nav(v) { pop(); curView=v; document.getElementById('v-home').className=v==='home'?'':'hidden'; document.getElementById('v-sub').className=v==='home'?'hidden':''; document.getElementById('ledger-extra').className=v==='fin'?'':'hidden'; if(v!=='home') renderList(); else initUI(); updateWalletUI(); }
-    function closeDrawer() { document.getElementById('drawer').classList.remove('active'); }
-    function selectBtn(el) { pop(); Array.from(el.parentNode.children).forEach(b=>b.classList.remove('active')); el.classList.add('active'); }
-    function selectPay(el) { selectBtn(el); document.getElementById('sub-pay-area').className = (el.innerText === '韩币' ? '' : 'hidden'); }
-    function selectSyncPay(el) { selectBtn(el); }
 
-    /* 📋 满血版清单功能 (含分类新建、编辑、删除) */
-    function renderChkCats() { 
-        const row = document.getElementById('chk-cat-row'); 
-        let h = `<div class="chk-cat-btn ${activeChkCat==='全部'?'active':''}" onclick="setChkCat('全部')">全部</div>`; 
-        store.chkCats.forEach((c, i) => { h += `<div class="chk-cat-btn ${activeChkCat===c?'active':''}" onclick="setChkCat('${c}')">${c} ${activeChkCat===c?`<span class="chk-cat-del" onclick="delChkCat(event, ${i})">✖</span>`:''}</div>`; }); 
-        row.innerHTML = h + `<div class="chk-cat-btn" style="border:1.5px dashed var(--sailor-purple);background:transparent;" onclick="addChkCat()">+ 新建</div>`; 
-    }
+    /* 📋 清单功能 (带 ✎ 按钮编辑) */
+    function renderChkCats() { const row = document.getElementById('chk-cat-row'); let h = `<div class="chk-cat-btn ${activeChkCat==='全部'?'active':''}" onclick="setChkCat('全部')">全部</div>`; store.chkCats.forEach((c, i) => { h += `<div class="chk-cat-btn ${activeChkCat===c?'active':''}" onclick="setChkCat('${c}')">${c} ${activeChkCat===c?`<span class="chk-cat-del" onclick="delChkCat(event, ${i})">✖</span>`:''}</div>`; }); row.innerHTML = h + `<div class="chk-cat-btn" style="border:1.5px dashed var(--sailor-purple);background:transparent;" onclick="addChkCat()">+ 新建</div>`; }
     function setChkCat(cat) { pop(); activeChkCat = cat; renderChkCats(); renderChk(); }
-    function addChkCat() { showModal("新建分类", "名称 (支持Emoji):", true, (ok, val) => { if(ok && val.trim() && !store.chkCats.includes(val.trim())) { store.chkCats.push(val.trim()); activeChkCat = val.trim(); localCommit(); renderChkCats(); renderChk(); } }); }
-    function delChkCat(e, idx) { e.stopPropagation(); pop(); const name = store.chkCats[idx]; showModal("确定删除分类?", `[${name}] 中的记录将移至"其他"中。`, false, (ok) => { if(ok) { store.chkCats.splice(idx, 1); store.checklist.forEach(it => { if(it.cat === name) it.cat = '其他'; }); activeChkCat = '全部'; localCommit(); renderChkCats(); renderChk(); } }); }
-
-    function renderChk() { 
-        const box = document.getElementById('chk-list'); let h = ''; 
-        store.checklist.forEach((it, i) => { 
-            if(activeChkCat==='全部' || it.cat===activeChkCat) {
-                h += `<div class="chk-item"> <div class="chk-circle" style="${it.done?'background:var(--sailor-pink);border-color:var(--sailor-pink);':''}" onclick="toggleChk(${i})">${it.done?'✓ ':''}</div> <div style="flex:1; font-weight:600; font-size:14px; ${it.done?'text-decoration:line-through;color:#ccc':''}" onclick="toggleChk(${i})">${it.text} <small style="opacity:0.4; font-size:10px; margin-left:8px;">${it.cat}</small></div> <div style="display:flex;gap:15px;align-items:center;"><div style="color:#999;font-size:18px;cursor:pointer;" onclick="openEdit('checklist', ${i})">✎</div><div style="color:var(--neon-pink); font-size:18px; font-weight:bold; cursor:pointer;" onclick="delChk(${i})">✖</div></div> </div>`; 
-            }
-        }); 
-        box.innerHTML = h || '<div style="text-align:center;padding:20px;color:#ccc">空空如也~</div>'; 
-    }
+    function addChkCat() { showModal("新建分类", "名称:", true, (ok, val) => { if(ok && val.trim() && !store.chkCats.includes(val.trim())) { store.chkCats.push(val.trim()); activeChkCat = val.trim(); localCommit(); renderChkCats(); renderChk(); } }); }
+    function delChkCat(e, idx) { e.stopPropagation(); pop(); const name = store.chkCats[idx]; showModal("删除分类?", `[${name}] 的记录将移至"其他"中。`, false, ok => { if(ok) { store.chkCats.splice(idx, 1); store.checklist.forEach(it => { if(it.cat === name) it.cat = '其他'; }); activeChkCat = '全部'; localCommit(); renderChkCats(); renderChk(); } }); }
+    function renderChk() { const box = document.getElementById('chk-list'); let h = ''; store.checklist.forEach((it, i) => { if(activeChkCat==='全部' || it.cat===activeChkCat) { h += `<div class="chk-item"> <div class="chk-circle" style="${it.done?'background:var(--sailor-pink);border-color:var(--sailor-pink);':''}" onclick="toggleChk(${i})">${it.done?'✓ ':''}</div> <div style="flex:1; font-weight:600; font-size:14px; ${it.done?'text-decoration:line-through;color:#ccc':''}" onclick="toggleChk(${i})">${it.text} <small style="opacity:0.4; font-size:10px; margin-left:8px;">${it.cat}</small></div> <div style="display:flex;gap:15px;align-items:center;"><div style="color:#999;font-size:16px;cursor:pointer;" onclick="openEdit('checklist', ${i})">✎</div><div style="color:var(--neon-pink);font-size:18px;font-weight:bold;cursor:pointer;" onclick="delChk(${i})">✖</div></div> </div>`; } }); box.innerHTML = h || '<div style="text-align:center;padding:20px;color:#ccc">空空如也~</div>'; }
     function addChk() { const inp = document.getElementById('chk-inp'), v = inp.value.trim(); if(!v) return; store.checklist.unshift({text:v, cat:(activeChkCat==='全部'?'其他':activeChkCat), done:false}); inp.value=''; renderChk(); localCommit(); }
     function toggleChk(i) { store.checklist[i].done = !store.checklist[i].done; renderChk(); localCommit(); }
     function delChk(i) { store.checklist.splice(i,1); renderChk(); localCommit(); }
 
-    /* ✈️ 航班卡片渲染 (恢复登机口、虚线边框) */
+    /* ✈️ 航班卡片 */
     function renderFlights() {
         const list = document.getElementById('flight-list'); if(!list) return;
         list.innerHTML = flights.map((f, i) => `
@@ -370,13 +358,12 @@
                     <div class="f-time-big" style="text-align:right;">${f.t2||'--:--'}<small style="font-size:11px;display:block;opacity:0.4;font-weight:bold;margin-top:4px;">${f.tz2||'首尔'}</small></div>
                 </div>
                 <div class="f-tag-row">
-                    <div class="f-tag">柜台 ${f.c1||'-'}</div><div class="f-tag">登机口 ${f.g1||'-'}</div><div class="f-tag">座位 ${f.s1||'-'}</div>
-                    <div class="f-tag" style="background:#F0F6FF; border:none; color:var(--sailor-blue)">${f.date}</div>
+                    <div class="f-tag">柜台 ${f.c1||'-'}</div><div class="f-tag">登机口 ${f.g1||'-'}</div><div class="f-tag">座位 ${f.s1||'-'}</div><div class="f-tag" style="background:#F0F6FF; border:none; color:var(--sailor-blue)">${f.date}</div>
                 </div>
             </div>`).join('') + `<div class="f-card add-btn" onclick="openEdit('flight', -1)"><div style="font-size:32px;margin-bottom:10px;">+</div>新增航班</div>`;
     }
 
-    /* 📋 子页面列表渲染 */
+    /* 📋 列表系统 (Naver 直达满血版) */
     function renderList() {
         const box = document.getElementById('list-container'), header = document.getElementById('sub-header'); if(!box) return; box.innerHTML = '';
         const days = ['04.29','04.30','05.01','05.02','05.03'];
@@ -385,33 +372,29 @@
             box.className = 'has-timeline';
             header.innerHTML = `<div class="date-bar scroll-row" style="margin-bottom:15px;">` + days.map(d => `<div class="date-item ${curDate===d?'active':''}" onclick="curDate='${d}';renderList()">${d}</div>`).join('') + `</div>`;
             
-            // 🗺️ Naver Map 弹窗式路线汇总
-            const ps = store.plan.filter(it => it.date === curDate).sort((a,b)=>a.time.localeCompare(b.time));
-            if(ps.length > 1) {
-                header.innerHTML += `<div class="nav-btn nav-pink-bar" style="min-height:0; padding:16px; border-radius:15px; font-size:13px; margin-bottom:20px;" onclick="genNaverTodayRoute()">🗺️ 一键生成 Naver 今日路线汇总</div>`;
+            // 🛡️ 防报错排序 + 1条链接触发汇总
+            const ps = store.plan.filter(it => it.date === curDate).sort((a,b) => (a.time||'').localeCompare(b.time||''));
+            const linkedPlans = ps.filter(p => p.link && p.link.trim() !== '');
+            if(linkedPlans.length >= 1) {
+                header.innerHTML += `<div class="nav-btn nav-pink-bar" style="min-height:0; padding:16px; border-radius:15px; font-size:13px; margin-bottom:20px;" onclick="genNaverTodayRoute()">🗺️ 今日 Naver 地图路线汇总</div>`;
             }
 
-            ps.forEach(it => {
-                box.innerHTML += `
-                <div class="item-card" onclick="openEdit('plan', ${store.plan.indexOf(it)})"> 
-                    <div class="del-btn-round" onclick="delItem(event, 'plan', ${store.plan.indexOf(it)})">✖</div> 
-                    <div class="icon-circle">📍</div> 
-                    <div style="flex:1"><b>${it.name}</b><br><small style="color:#999;font-weight:bold;">${it.time} · ${it.tz||'首尔'}</small></div> 
-                    ${it.link?`<div style="background:var(--naver-green);color:white;padding:8px 12px;border-radius:10px;font-size:10px;font-weight:900" onclick="event.stopPropagation();window.open('${it.link}')">Map 直达</div>`:''} 
-                </div>`;
+            ps.forEach(it => { 
+                let linkH = (it.link && it.link.trim() !== '') ? `<div style="background:var(--naver-green);color:white;padding:8px 12px;border-radius:10px;font-size:10px;font-weight:900" onclick="event.stopPropagation();window.open('${it.link}')">Map 直达</div>` : '';
+                box.innerHTML += `<div class="item-card" onclick="openEdit('plan', ${store.plan.indexOf(it)})"> <div class="del-btn-round" onclick="delItem(event, 'plan', ${store.plan.indexOf(it)})">✖</div> <div class="icon-circle">📍</div> <div style="flex:1"><b>${it.name}</b><br><small style="color:#999;font-weight:bold;">${it.time} · ${it.tz||'首尔'}</small></div> ${linkH} </div>`; 
             });
-            
         } else if(curView==='fin') {
             box.className = ''; header.innerHTML = '<div class="date-bar scroll-row">' + days.map(d => `<div class="date-item ${curDate===d?'active':''}" onclick="curDate='${d}';renderList()">${d}</div>`).join('') + '</div>';
             const Items = store.fin.filter(it => it.date === curDate);
             if(Items.length) { const total = Items.reduce((s,i)=>s+Number(i.price||0),0); box.innerHTML += `<div class="nav-btn nav-pink-bar" style="margin-bottom:20px;min-height:0;padding:20px;cursor:default"><div>今日支出</div><div style="font-size:28px;">₩${total.toLocaleString()}</div><small style="opacity:0.8;font-weight:bold;">≈ ¥ ${(total/RATE).toFixed(1)}</small></div>`; }
-            Items.forEach(it => { box.innerHTML += `<div class="item-card" onclick="openEdit('fin', ${store.fin.indexOf(it)})"> <div class="del-btn-round" onclick="delItem(event, 'fin', ${store.fin.indexOf(it)})">✖</div> <div class="icon-circle" style="overflow:hidden;">${it.img?`<img src="${it.img}">`:'💰'}</div> <div style="flex:1"><b>${it.name}</b><br><small style="color:#999;font-weight:bold;">${it.cat} · ${it.subPay||it.pay}</small></div> <b style="color:var(--neon-pink);font-size:18px;">₩${Number(it.price).toLocaleString()}</b> </div>`; });
+            Items.forEach(it => { box.innerHTML += `<div class="item-card" onclick="openEdit('fin', ${store.fin.indexOf(it)})"> <div class="del-btn-round" onclick="delItem(event, 'fin', ${store.fin.indexOf(it)})">✖</div> <div class="icon-circle">${it.img?`<img src="${it.img}">`:'💰'}</div> <div style="flex:1"><b>${it.name}</b><br><small style="color:#999;font-weight:bold;">${it.cat} · ${it.subPay||it.pay}</small></div> <b style="color:var(--neon-pink);font-size:18px;">₩${Number(it.price).toLocaleString()}</b> </div>`; });
         } else if(curView==='wish') {
             box.className = ''; header.innerHTML = `<div class="scroll-row">` + ['全部','Olive Young','Musinsa','药局','其他'].map(c => `<div class="chk-cat-btn ${curCat===c?'active':''}" onclick="curCat='${c}';renderList()">${c}</div>`).join('') + `</div>`;
             store.wish.forEach((it, idx) => {
                 if(curCat==='全部' || it.cat===curCat) {
+                    // 🛍️ AI 色彩识别
                     let linkBtn = '';
-                    if(it.link) {
+                    if(it.link && it.link.trim() !== '') {
                         const urlStr = it.link.toLowerCase();
                         if(it.cat === 'Olive Young' || urlStr.includes('oliveyoung')) linkBtn = `<div style="background:#A3C644;color:white;padding:6px 10px;border-radius:10px;font-size:10px;font-weight:bold;margin-top:6px;display:inline-block;" onclick="event.stopPropagation();window.open('${it.link}')">🌿 官网直达</div>`;
                         else if(it.cat === 'Musinsa' || urlStr.includes('musinsa')) linkBtn = `<div style="background:#000;color:white;padding:6px 10px;border-radius:10px;font-size:10px;font-weight:bold;margin-top:6px;display:inline-block;" onclick="event.stopPropagation();window.open('${it.link}')">⬛ App直达</div>`;
@@ -420,7 +403,7 @@
                     box.innerHTML += `
                     <div class="item-card" onclick="openEdit('wish', ${idx})"> 
                         <div class="del-btn-round" onclick="delItem(event, 'wish', ${idx})">✖</div> 
-                        <div class="icon-circle" style="border-radius:15px;overflow:hidden;">${it.img?`<img src="${it.img}">`:'🛍️'}</div> 
+                        <div class="icon-circle">${it.img?`<img src="${it.img}">`:'🛍️'}</div> 
                         <div style="flex:1"><b>${it.name}</b><br><small style="color:#999;font-weight:bold;">${it.cat}</small><br>${linkBtn}</div> 
                         <div style="text-align:right;"><b style="color:var(--neon-pink);font-size:18px;">₩${Number(it.price).toLocaleString()}</b><br><small style="color:#999;font-size:11px;font-weight:bold;">≈ ¥ ${(it.price/RATE).toFixed(1)}</small></div>
                     </div>`;
@@ -428,8 +411,16 @@
             });
         } else if(curView==='ticket') {
             box.className = ''; header.innerHTML = '';
-            // 🎫 外层典藏打孔票 1:1还原
-            store.ticket.forEach((it, i) => {
+            
+            // 🛡️ 带原始索引的日期排序，绝不错乱！
+            let sortedTickets = store.ticket.map((item, index) => ({ item, index })).sort((a, b) => {
+                const dateA = a.item.date || '9999-99-99';
+                const dateB = b.item.date || '9999-99-99';
+                return dateA.localeCompare(dateB);
+            });
+
+            sortedTickets.forEach((t) => {
+                const it = t.item; const i = t.index;
                 const mon = it.date ? ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'][parseInt(it.date.split('-')[1])-1] : 'DATE';
                 const day = it.date ? it.date.split('-')[2] : '--';
                 box.innerHTML += `
@@ -450,26 +441,22 @@
         }
     }
 
-    // 🗺️ Naver Map “弹窗式路线汇总”
+    // 🗺️ Naver Map 列表弹窗汇总
     function genNaverTodayRoute() {
-        const ps = store.plan.filter(it => it.date === curDate && it.link).sort((a,b)=>a.time.localeCompare(b.time));
-        if(ps.length === 0) {
-            showModal("🗺️ 今日地图", "今天还没有添加带 Naver Map 链接的行程哦~", false, null);
-            return;
-        }
+        const ps = store.plan.filter(it => it.date === curDate && it.link && it.link.trim() !== '').sort((a,b) => (a.time||'').localeCompare(b.time||''));
+        if(ps.length === 0) return;
+        
         let html = '<div style="display:flex;flex-direction:column;gap:10px;margin-top:15px;max-height:50vh;overflow-y:auto;text-align:left;padding:5px;">';
         ps.forEach(p => {
-            html += `<div class="nav-btn" style="min-height:50px;padding:15px;border:1.5px solid #EEE;border-radius:18px;align-items:flex-start;background:#F8F9FA;" onclick="window.open('${p.link}')"><b style="color:var(--brown);font-size:14px;">${p.time} · ${p.name}</b><small style="color:#03C75A;font-weight:900;margin-top:4px;">📍 点击打开 Naver Map</small></div>`;
+            html += `<div class="nav-btn" style="min-height:50px;padding:15px;border:1.5px solid #EEE;border-radius:18px;align-items:flex-start;background:#F8F9FA;" onclick="window.open('${p.link}')"><b style="color:var(--brown);font-size:14px;">${p.time||'--:--'} · ${p.name}</b><small style="color:#03C75A;font-weight:900;margin-top:4px;">📍 点击直达 Naver Map</small></div>`;
         });
         html += '</div>';
 
-        showModal("🗺️ 今日地图汇总", "", false, null);
+        showModal("🗺️ 今日路线列表", "", false, null);
         document.getElementById('modal-msg').innerHTML = html; 
     }
 
-    const lb = (t) => `<div class="f-label">${t}</div>`;
-    
-    /* ================= 📝 满血抽屉编辑表单 ================= */
+    /* 📝 满血抽屉编辑表单 */
     function openEdit(v, idx) {
         pop(); curView = v; curIdx = idx; tempImg = ''; document.getElementById('drawer').classList.add('active');
         const it = idx > -1 ? (v==='flight'?flights[idx]: (v==='checklist'?store.checklist[idx]:store[v][idx])) : {};
@@ -477,14 +464,13 @@
         
         const imgTarget = (idx > -1 && store[v] && store[v][idx] && store[v][idx].img) || (idx > -1 && v==='flight' && flights[idx].img) || (idx > -1 && v==='checklist' && store.checklist[idx].img);
         
-        // 🛡️ 修复：上传预览图绝对居中，防裁切、防拉伸
         document.getElementById('preview-text').innerHTML = imgTarget ? `<img src="${v==='flight'?flights[idx].img:(v==='checklist'?store.checklist[idx].img:store[v][idx].img)}">` : '📸<br><small style="font-weight:900">拍照识图 / 添加封图</small>';
 
         if(v==='flight') { 
             dTz = it.tz1 || '上海'; aTz = it.tz2 || '首尔';
             f.innerHTML = `
             ${lb('起降时区')}
-            <div style="display:flex; gap:10px;">
+            <div style="display:flex; gap:10px; margin-bottom:10px;">
                 <div class="tz-pill-box" style="flex:1">
                     <div class="tz-pill ${dTz==='上海'?'active':''}" onclick="setTz('dep','上海',this)">起:上海</div>
                     <div class="tz-pill ${dTz==='首尔'?'active':''}" onclick="setTz('dep','首尔',this)">起:首尔</div>
@@ -539,29 +525,26 @@
         }
     }
 
-    function setTz(t, v, el) { pop(); if(t === 'single') sTz = v; else if(t === 'dep') dTz = v; else aTz = v; Array.from(el.parentNode.children).forEach(b=>b.classList.remove('active')); el.classList.add('active'); }
-    function updateCnyHint(v) { const el = document.getElementById('c-hint'); if(el) el.innerText = '≈ ¥ ' + (Number(v)/RATE).toFixed(1); }
-
     function masterSave() {
-        const d = document, getV = id => d.getElementById(id)?.value || '';
+        const getV = i => document.getElementById(i)?.value || '';
         const obj = { name:getV('f-name'), text:getV('f-name'), time:getV('f-time'), date:getV('f-date'), price:getV('f-price'), air:getV('f-air'), no:getV('f-no'), t1:getV('f-t1'), t2:getV('f-t2'), c1:getV('f-c1'), g1:getV('f-g1'), s1:getV('f-s1'), link:getV('f-link'), area:getV('f-area'), row:getV('f-row'), num:getV('f-num'), venue:getV('f-venue'), tz: sTz, tz1: dTz, tz2: aTz, img:tempImg || (curIdx>-1?(curView==='flight'?flights[curIdx].img:(curView==='checklist'?store.checklist[curIdx].img:store[curView][curIdx].img)):'') };
         
         if(curView==='flight') { if(curIdx>-1) flights[curIdx]=obj; else flights.push(obj); }
-        else if(curView==='checklist') { obj.cat = d.querySelector('.selector-item.active')?.innerText || '其他'; if(curIdx>-1) store.checklist[curIdx]=obj; else store.checklist.push(obj); }
+        else if(curView==='checklist') { obj.cat = document.querySelector('.selector-item.active')?.innerText || '其他'; if(curIdx>-1) store.checklist[curIdx]=obj; else store.checklist.push(obj); }
         else if(curView==='plan') { obj.date=obj.date.substring(5).replace('-','.'); if(curIdx>-1) store.plan[curIdx]=obj; else store.plan.push(obj); }
         else if(curView==='fin') { 
             obj.date=curDate; 
-            obj.cat=d.querySelector('#f-cat-sel .active')?.innerText||'其他'; 
-            obj.pay=d.querySelector('#p-sel .active')?.innerText||'现金'; 
-            obj.subPay = (obj.pay === '韩币') ? (d.querySelector('#w-sel .active')?.innerText || 'Toss') : ''; 
+            obj.cat=document.querySelector('#f-cat-sel .active')?.innerText||'其他'; 
+            obj.pay=document.querySelector('#p-sel .active')?.innerText||'现金'; 
+            // 🛡️ 新建时未选中钱包的防空保护
+            obj.subPay = (obj.pay === '韩币') ? (document.querySelector('#w-sel .active')?.innerText || 'Toss') : ''; 
             
-            // 真实扣款
             if(curIdx > -1 && store.fin[curIdx].subPay) { wallet[store.fin[curIdx].subPay] += Number(store.fin[curIdx].price); }
             if(obj.subPay) { wallet[obj.subPay] -= Number(obj.price); }
             
             if(curIdx>-1) store.fin[curIdx]=obj; else store.fin.push(obj); 
         }
-        else if(curView==='wish') { obj.cat=d.querySelector('#c-sel .active')?.innerText||'其他'; if(curIdx>-1) store.wish[curIdx]=obj; else store.wish.push(obj); }
+        else if(curView==='wish') { obj.cat=document.querySelector('#c-sel .active')?.innerText||'其他'; if(curIdx>-1) store.wish[curIdx]=obj; else store.wish.push(obj); }
         else if(curView==='ticket') { if(curIdx>-1) store.ticket[curIdx]=obj; else store.ticket.push(obj); }
         
         localCommit(); closeDrawer(); initUI(); if(curView!=='home') renderList();
@@ -577,7 +560,6 @@
                 canvas.width = w; canvas.height = h; canvas.getContext('2d').drawImage(img,0,0,w,h);
                 tempImg = canvas.toDataURL('image/jpeg', 0.8);
                 
-                // 🛡️ 修复预览防拉伸
                 document.getElementById('preview-text').innerHTML = `<img src="${tempImg}">`;
                 
                 if(curView === 'ticket' || curView === 'plan' || curView === 'checklist') { document.getElementById('upload-zone').classList.remove('scanning'); return; }
@@ -595,47 +577,25 @@
     }
 
     /* 💸 心愿单 -> 记账单 数据流转 */
-    let pendingWishIdx = -1;
+    let pSyncIdx = -1;
     function initSyncFlow(idx) { 
-        pendingWishIdx = idx;
+        pSyncIdx = idx;
         document.getElementById('modal-sync-options').classList.remove('hidden');
         document.getElementById('modal-inp').classList.add('hidden');
         
-        document.getElementById('modal-title').innerText = "同步选项"; 
-        document.getElementById('modal-msg').innerHTML = "这笔钱是从哪里扣除的？"; 
-        document.getElementById('custom-modal').style.display='flex'; 
-        
-        modalCallback = (ok) => {
+        showModal("同步选项", "这笔钱是从哪里扣除的？", false, (ok) => {
             if(ok) {
                 const payMethod = document.querySelector('#sync-pay-sel .active')?.innerText || '信用卡';
-                const it = store.wish[pendingWishIdx];
+                const it = store.wish[pSyncIdx];
                 const isSub = ['Toss','Namane','TripPass'].includes(payMethod);
                 if(isSub) wallet[payMethod] -= Number(it.price);
                 store.fin.unshift({name:it.name, date:curDate, price:it.price, cat:'购物', pay: isSub?'韩币':payMethod, subPay: isSub?payMethod:'', img:it.img});
-                store.wish.splice(pendingWishIdx,1); 
+                store.wish.splice(pSyncIdx,1); 
                 localCommit(); closeDrawer(); nav('fin'); 
             }
             document.getElementById('modal-sync-options').classList.add('hidden');
-        };
+        });
     }
-
-    /* 唯一安全单例弹窗 */
-    function showModal(t,m,i,cb){ 
-        document.getElementById('modal-title').innerText=t; 
-        document.getElementById('modal-msg').innerHTML=m; 
-        if(i) document.getElementById('modal-inp').classList.remove('hidden'); else document.getElementById('modal-inp').classList.add('hidden');
-        document.getElementById('modal-inp').value='';
-        document.getElementById('custom-modal').style.display='flex'; 
-        modalCallback=cb; 
-    }
-    function closeModal(ok){ 
-        document.getElementById('custom-modal').style.display='none'; 
-        if(modalCallback) modalCallback(ok, document.getElementById('modal-inp').value); 
-    }
-
-    function promptWallet(t) { showModal("修改余额", "韩币金额:", true, (ok,v)=>{if(ok && !isNaN(v)){wallet[t]=Number(v);updateWalletUI();localCommit();}}); }
-    function updateWalletUI() { if(document.getElementById('val-Toss')){document.getElementById('val-Toss').innerText='₩'+wallet.Toss.toLocaleString();document.getElementById('val-Namane').innerText='₩'+wallet.Namane.toLocaleString();document.getElementById('val-TripPass').innerText='₩'+wallet.TripPass.toLocaleString();} }
-    function delItem(e,t,i) { e.stopPropagation(); showModal("彻底删除?", "此操作无法恢复，确定吗？", false, (ok) => { if(ok) { if(t==='flight') flights.splice(i,1); else store[t].splice(i,1); localCommit(); initUI(); if(curView!=='home')renderList(); } }); }
 
     /* ================= 🎫 3D 景深堆叠画廊引擎 ================= */
     let galleryCurrentIdx = 0;
@@ -698,11 +658,9 @@
                 card.style.transform = `translateX(0px) translateZ(0px) rotateY(0deg)`;
                 card.style.zIndex = 10; card.style.opacity = 1;
             } else if (offset > 0) {
-                // 后排倾斜堆叠
                 card.style.transform = `translateX(${30 + (offset * 20)}px) translateZ(${offset * -150}px) rotateY(-15deg)`;
                 card.style.zIndex = 10 - offset; card.style.opacity = offset > 2 ? 0 : 0.8; 
             } else {
-                // 左侧飞出
                 card.style.transform = `translateX(-150%) translateZ(200px) rotateY(10deg)`;
                 card.style.opacity = 0; card.style.zIndex = 0;
             }
@@ -721,11 +679,11 @@
     }
 
     /* API */
-    async function updateWeather() { try { const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=37.5665&longitude=126.9780&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=Asia%2FSeoul`); const d=await r.json(); document.getElementById('panel-w').innerHTML=d.daily.time.map((date,i)=>`<div class="w-item"><small>${date.slice(5).replace('-','.')}</small><br><span style="font-size:24px;">${d.daily.weathercode[i]>50?'🌧️':'⛅'}</span><br><b style="font-size:11px;color:var(--sailor-pink);">${Math.round(d.daily.temperature_2m_min[i])}/${Math.round(d.daily.temperature_2m_max[i])}°</b></div>`).join(''); } catch(e){} }
-    async function updateExchangeRate() { try { const r=await fetch('https://open.er-api.com/v6/latest/CNY'); const d=await r.json(); RATE=d.rates.KRW; document.getElementById('live-rate').innerText=`1 CNY ≈ ${RATE.toFixed(1)} ₩`; } catch(e){} }
+    async function updateWeather() { try { const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=37.5665&longitude=126.9780&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=Asia%2FSeoul`); const djson=await r.json(); document.getElementById('panel-w').innerHTML=djson.daily.time.map((date,i)=>`<div class="w-item"><small>${date.slice(5).replace('-','.')}</small><br><span style="font-size:24px;">${djson.daily.weathercode[i]>50?'🌧️':'⛅'}</span><br><b style="font-size:11px;color:var(--sailor-pink);">${Math.round(djson.daily.temperature_2m_min[i])}/${Math.round(djson.daily.temperature_2m_max[i])}°</b></div>`).join(''); } catch(e){} }
+    async function updateExchangeRate() { try { const r=await fetch('https://open.er-api.com/v6/latest/CNY'); const djson=await r.json(); RATE=djson.rates.KRW; document.getElementById('live-rate').innerText=`1 CNY ≈ ${RATE.toFixed(1)} ₩`; } catch(e){} }
     
     function exportData() { showModal("全量备份", "长按复制长码:", true, null); document.getElementById('modal-inp').value = btoa(encodeURIComponent(JSON.stringify({wallet,flights,store}))); }
-    function importData() { showModal("恢复数据", "粘贴备份长码:", true, (ok, c) => { if(ok && c){ try { const d=JSON.parse(decodeURIComponent(atob(c))); wallet=d.wallet; flights=d.flights; store=d.store; localCommit(); initUI(); showModal("成功","数据恢复完毕",false,null); } catch(e){ showModal("失败","长码无效",false,null); } } }); }
+    function importData() { showModal("恢复数据", "粘贴备份长码:", true, (ok, c) => { if(ok && c){ try { const djson=JSON.parse(decodeURIComponent(atob(c))); wallet=djson.wallet; flights=djson.flights; store=djson.store; localCommit(); initUI(); showModal("成功","数据恢复完毕",false,null); } catch(e){ showModal("失败","长码无效",false,null); } } }); }
 
     bootApp();
 </script>
