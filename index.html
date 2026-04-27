@@ -51,7 +51,6 @@
         .dash-day { background: #F0F6FF; color: var(--high-school-blue); padding: 5px 10px; border-radius: 14px; font-size: 11px; font-weight: 900; white-space: nowrap; flex-shrink: 0; transform: translateY(-2px); }
         .dash-rate { background: var(--sailor-pink); color: white; padding: 8px 12px; border-radius: 20px; font-size: 11px; font-weight: 900; box-shadow: 0 4px 10px rgba(255,153,204,0.3); white-space: nowrap; flex-shrink: 0; }
         
-        /* 🛡️ 修复：看板标签滑动防拥挤 */
         .dash-tabs { display: flex; gap: 20px; border-bottom: 2.5px solid #F0F0F0; padding-bottom: 12px; margin-bottom: 15px; overflow-x: auto; scrollbar-width: none; flex-wrap: nowrap; }
         .d-tab { font-size: 15px; font-weight: 900; color: #999; cursor: pointer; position: relative; transition: 0.2s; white-space: nowrap; flex-shrink: 0; padding-bottom: 2px;}
         .d-tab.active { color: var(--neon-pink); }
@@ -64,7 +63,7 @@
         .date-item.active { background: var(--sailor-pink); color: white; border: none; box-shadow: 0 5px 15px rgba(255,153,204,0.4); transform: scale(1.05); }
 
         .chk-cats { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; padding: 15px 24px 20px; margin: 0 -24px; }
-        .chk-cat-btn { padding: 9px 18px; font-size: 11px; background: rgba(255,255,255,0.8); color: var(--sailor-blue); border-radius: 16px; font-weight: 900; border: 1.5px solid #F0F6FF; white-space: nowrap; flex-shrink: 0; position: relative; transition: 0.3s; cursor: pointer; }
+        .chk-cat-btn { padding: 9px 18px; font-size: 11px; background: rgba(255,255,255,0.8); color: var(--sailor-blue); border-radius: 16px; font-weight: 900; border: 1.5px solid #F0F6FF; white-space: nowrap; flex-shrink: 0; position: relative; transition: 0.3s; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;}
         .chk-cat-btn.active { background: var(--sailor-blue); color: white; border-color: var(--sailor-blue); transform: scale(1.05); box-shadow: 0 4px 12px rgba(162,210,255,0.4); }
         .chk-cat-del { position: absolute; top: -6px; right: -6px; background: white; color: #666; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; border: 1.5px solid #EEE; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 5; }
 
@@ -72,23 +71,22 @@
         @keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
         .chk-circle { width: 22px; height: 22px; border: 2px solid #E0E0E0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: white; cursor: pointer; flex-shrink: 0; }
 
-        /* ================= 💬 Memo 气泡对话UI ================= */
+        /* ================= 💬 Memo & Note UI ================= */
         .memo-row { display: flex; justify-content: flex-end; align-items: flex-end; gap: 8px; margin-bottom: 12px; animation: slideIn 0.3s forwards; }
         .memo-bubble-wrapper { position: relative; max-width: 78%; }
         .memo-bubble { background: linear-gradient(135deg, var(--sailor-blue), #D1BFFF); color: white; padding: 12px 16px; border-radius: 20px 20px 4px 20px; font-size: 14px; font-weight: bold; box-shadow: 0 4px 12px rgba(162,210,255,0.4); word-wrap: break-word; line-height: 1.4; }
         .memo-time { font-size: 10px; color: #CCC; font-weight: bold; margin-bottom: 4px; text-align: right;}
         .memo-del { position: absolute; top: -6px; left: -6px; width: 20px; height: 20px; background: #FF4D4F; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 5px rgba(255,77,79,0.3); z-index: 5; transition:0.2s;}
         .memo-del:active { transform: scale(0.9); }
-
-        /* ================= 📝 随手记 UI ================= */
         textarea.f-input { font-family: inherit; line-height: 1.6; font-weight: normal; color: var(--brown); height: 180px; resize: none; margin-bottom: 0; padding: 18px; border-radius: 20px; transition: 0.3s; }
         textarea.f-input:focus { border-color: var(--sailor-pink); box-shadow: 0 0 0 3px var(--glow); background: white !important;}
 
-        /* ✈️ 航班卡片 */
-        .f-card { flex: 0 0 88%; background: rgba(255,255,255,0.65); backdrop-filter: blur(12px); border: 3px solid var(--sailor-blue) !important; border-radius: 35px; padding: 25px; position: relative; flex-shrink: 0; box-shadow: 8px 8px 0px rgba(93,156,236,0.1); }
+        /* ✈️ 航班卡片 恢复完美满血 88% 宽度 */
+        .f-card { flex: 0 0 88%; background: rgba(255,255,255,0.65); backdrop-filter: blur(12px); border: 3px solid var(--sailor-blue) !important; border-radius: 35px; padding: 25px; position: relative; flex-shrink: 0; box-shadow: 8px 8px 0px rgba(93,156,236,0.1); box-sizing: border-box; }
         .f-card.add-btn { border: 2.5px dashed #CCC !important; display: flex; flex-direction: column; color: #AAA; min-height: 180px; align-items: center; justify-content: center; background: transparent; box-shadow: none; cursor: pointer; }
         .f-time-row { display: flex; justify-content: space-between; align-items: center; margin: 18px 0 10px; }
         .f-time-big { font-size: 36px; font-weight: 900; color: var(--brown); line-height: 1; }
+        .f-time-sub { font-size: 11px; display: block; opacity: 0.4; font-weight: bold; margin-top: 4px; }
         .f-tag-row { display: flex; gap: 8px; margin-top: 15px; border-top: 1.5px dashed rgba(0,0,0,0.08); padding-top: 15px; flex-wrap: wrap; }
         .f-tag { padding: 6px 12px; border-radius: 10px; font-size: 10px; font-weight: 900; background: white; color: var(--high-school-blue); border: 1.2px solid #EBF3FF; }
 
@@ -107,8 +105,8 @@
 
         .nav-stack { display: flex; flex-direction: column; gap: 15px; position: relative; z-index: 5; }
         .nav-row-half { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .nav-btn { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(12px); border: 1.5px solid rgba(255, 255, 255, 0.8); border-radius: 28px; padding: 22px 10px; min-height: 80px; text-align: center; font-weight: 900; color: var(--brown); font-size: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.2s; cursor: pointer; box-shadow: 0 8px 25px rgba(0,0,0,0.03); text-decoration: none; }
-        .nav-btn:active { transform: scale(0.96); }
+        .nav-btn { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(12px); border: 1.5px solid rgba(255, 255, 255, 0.8); border-radius: 28px; padding: 22px 10px; min-height: 80px; text-align: center; font-weight: 900; color: var(--brown); font-size: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.2s; cursor: pointer; box-shadow: 0 8px 25px rgba(0,0,0,0.03); text-decoration: none; box-sizing: border-box; }
+        .nav-btn:active { transform: scale(0.98); }
         .nav-pink-bar { background: var(--sailor-pink) !important; color: white !important; border: 1.5px solid white !important; box-shadow: 0 8px 20px rgba(255, 153, 204, 0.4) !important; }
 
         /* 🎫 终极票夹 3D UI */
@@ -130,20 +128,20 @@
         .典藏打孔 { position: absolute; left: -10px; top: 0; transform: translateY(-50%); width: 20px; height: 20px; border-radius: 50%; background: #000; z-index: 5; }
 
         /* 📸 抽屉与表单 */
+        .drawer { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); display: none; align-items: flex-end; z-index: 11000; cursor: pointer; }
+        .drawer.active { display: flex; }
+        .drawer-content { background: rgba(255,255,255,0.98); backdrop-filter: blur(20px); width: 100%; padding: 30px 25px 60px; border-radius: 45px 45px 0 0; max-height: 92vh; overflow-y: auto; border-top: 2.5px solid white; animation: slideUp 0.4s; cursor: default; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        
         .pre-box { position: relative; width: 100%; height: 150px; background: rgba(255,255,255,0.7); border: 3px dashed #DDD; border-radius: 25px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; overflow: hidden; }
         #preview-text { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; position: absolute; inset: 0; z-index: 5; padding: 10px; }
         #preview-text img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: var(--sailor-pink); box-shadow: 0 0 20px var(--sailor-pink); display: none; z-index: 10; }
         .pre-box.scanning .scan-line { display: block; animation: scanAnim 2s infinite linear; }
         @keyframes scanAnim { 0% { top: 0%; } 100% { top: 100%; } }
-
-        .drawer { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); display: none; align-items: flex-end; z-index: 11000; }
-        .drawer.active { display: flex; }
-        .drawer-content { background: rgba(255,255,255,0.98); backdrop-filter: blur(20px); width: 100%; padding: 30px 25px 60px; border-radius: 45px 45px 0 0; max-height: 92vh; overflow-y: auto; border-top: 2.5px solid white; animation: slideUp 0.4s; }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
         
         .f-label { font-size: 13px; font-weight: 900; color: var(--brown); margin: 15px 0 8px; display: block; }
-        .f-input { width: 100%; padding: 18px; background: #F8F9FA !important; border: 1.5px solid #EEE; border-radius: 22px; font-size: 15px; margin-bottom: 12px; transition: 0.3s; }
+        .f-input { width: 100%; padding: 18px; background: #F8F9FA !important; border: 1.5px solid #EEE; border-radius: 22px; font-size: 15px; margin-bottom: 12px; transition: 0.3s; box-sizing: border-box;}
         .f-input:focus { border-color: var(--sailor-pink); box-shadow: 0 0 0 3px var(--glow); }
 
         .selector-group { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 10px 6px; margin: 0 -6px; }
@@ -155,7 +153,7 @@
         .tz-pill.active { background: white; color: var(--sailor-blue); box-shadow: 0 5px 12px rgba(0,0,0,0.06); }
 
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 20000; padding: 25px; }
-        .modal-card { background: white; width: 100%; max-width: 320px; border-radius: 35px; padding: 30px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.2); animation: popScale 0.3s; }
+        .modal-card { background: white; width: 100%; max-width: 320px; border-radius: 35px; padding: 30px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.2); animation: popScale 0.3s; box-sizing: border-box;}
         @keyframes popScale { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .hidden { display: none !important; }
     </style>
@@ -210,7 +208,7 @@
             <div id="panel-m" class="hidden">
                 <div id="memo-list" style="max-height: 180px; overflow-y: auto; padding: 10px 5px 0;"></div>
                 <div style="display:flex; gap:8px; margin-top:10px;">
-                    <input type="text" id="memo-inp" class="f-input" style="margin-bottom:0; padding:12px 18px; height:48px;" placeholder="发送 Memo...">
+                    <input type="text" id="memo-inp" class="f-input" style="margin-bottom:0; padding:12px 18px; height:48px;" placeholder="发送 Memo ...">
                     <button class="nav-btn" style="min-height:0; width:65px; border-radius:18px; padding:0; font-size:14px; background:var(--sailor-blue); color:white; border:none;" onclick="addMemo()">发送</button>
                 </div>
             </div>
@@ -235,13 +233,11 @@
     <div id="v-sub" class="hidden" style="position:fixed; inset:0; background:linear-gradient(-45deg, #FFF5F9, #F0F4FF, #EBF0FF, #FFF5F9); z-index:1000; padding:24px; overflow-y:auto; padding-top:env(safe-area-inset-top); padding-bottom:120px;">
         <div style="color:var(--neon-pink); font-weight:900; margin-bottom:20px; font-size:18px; cursor:pointer;" onclick="nav('home')">← BACK</div>
         <div id="sub-header"></div>
+        
         <div id="ledger-extra" class="hidden" style="margin-bottom:20px;">
-            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:10px;">
-                <div class="nav-btn" style="padding:10px; min-height:65px; border-radius:20px;" onclick="promptWallet('Toss')"><small style="color:#999;">Toss</small><div id="val-Toss" style="font-size:13px;font-weight:900;">₩0</div></div>
-                <div class="nav-btn" style="padding:10px; min-height:65px; border-radius:20px;" onclick="promptWallet('Namane')"><small style="color:#999;">Namane</small><div id="val-Namane" style="font-size:13px;font-weight:900;">₩0</div></div>
-                <div class="nav-btn" style="padding:10px; min-height:65px; border-radius:20px;" onclick="promptWallet('TripPass')"><small style="color:#999;">TripPass</small><div id="val-TripPass" style="font-size:13px;font-weight:900;">₩0</div></div>
-            </div>
+            <div id="wallet-container" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:10px;"></div>
         </div>
+        
         <div id="list-container"></div>
         <button class="nav-btn nav-pink-bar" style="position:fixed; bottom:30px; left:24px; width:calc(100% - 48px); padding:22px; border-radius:45px; z-index:1001;" onclick="openEdit(curView, -1)">＋ 新增记录 ✨</button>
     </div>
@@ -271,25 +267,19 @@
             <div id="modal-msg" style="color:#666; font-size:14px; line-height:1.6; margin-top:10px;"></div>
             
             <div id="modal-sync-options" class="hidden">
-                <div class="scroll-row" id="sync-pay-sel" style="justify-content:center; flex-wrap:wrap; margin-top:15px; padding:0;">
-                    <div class="selector-item active" onclick="selectSyncPay(this)">信用卡</div>
-                    <div class="selector-item" onclick="selectSyncPay(this)">现金</div>
-                    <div class="selector-item" onclick="selectSyncPay(this)">Toss</div>
-                    <div class="selector-item" onclick="selectSyncPay(this)">Namane</div>
-                    <div class="selector-item" onclick="selectSyncPay(this)">TripPass</div>
-                </div>
+                <div class="scroll-row" id="sync-pay-sel" style="justify-content:center; margin-top:15px; padding:0;"></div>
             </div>
 
             <input type="text" id="modal-inp" class="f-input hidden" style="margin-top:10px;">
             <div style="display:flex; gap:10px; margin-top:25px;">
-                <button class="nav-btn m-btn-cancel" style="flex:1; min-height:50px; border:none; padding:0" onclick="closeModal(false)">取消</button>
-                <button class="nav-btn m-btn-ok" style="flex:1; min-height:50px; border:none; padding:0" onclick="closeModal(true)">确定</button>
+                <button class="nav-btn m-btn-cancel" style="flex:1; min-height:50px; border:none; padding:0; background:#EEE;" onclick="closeModal(false)">取消</button>
+                <button class="nav-btn m-btn-ok nav-pink-bar" style="flex:1; min-height:50px; border:none; padding:0;" onclick="closeModal(true)">确定</button>
             </div>
         </div>
     </div>
 
 <script>
-    /* ================= 工具函数置顶 ================= */
+    /* ================= 工具函数 ================= */
     const lb = (text) => `<div class="f-label" style="font-size:13px; font-weight:900; color:var(--brown); margin:15px 0 8px; display:block;">${text}</div>`;
     const pop = () => { try { if(window.navigator.vibrate) window.navigator.vibrate(15); } catch(e){} };
     function setTz(t, v, el) { pop(); if(t === 'single') sTz = v; else if(t === 'dep') dTz = v; else aTz = v; Array.from(el.parentNode.children).forEach(b=>b.classList.remove('active')); el.classList.add('active'); }
@@ -299,34 +289,31 @@
     function selectSyncPay(el) { selectBtn(el); }
     function closeDrawer() { document.getElementById('drawer').classList.remove('active'); }
 
-    function showModal(t,m,i,cb){ 
-        document.getElementById('modal-title').innerText=t; 
-        document.getElementById('modal-msg').innerHTML=m; 
-        if(i) document.getElementById('modal-inp').classList.remove('hidden'); 
-        else document.getElementById('modal-inp').classList.add('hidden');
-        document.getElementById('modal-inp').value='';
-        document.getElementById('custom-modal').style.display='flex'; 
-        modalCallback=cb; 
+    function showModal(t,m,i,cb){ document.getElementById('modal-title').innerText=t; document.getElementById('modal-msg').innerHTML=m; if(i) document.getElementById('modal-inp').classList.remove('hidden'); else document.getElementById('modal-inp').classList.add('hidden'); document.getElementById('modal-inp').value=''; document.getElementById('custom-modal').style.display='flex'; modalCallback=cb; }
+    function closeModal(ok){ document.getElementById('custom-modal').style.display='none'; if(modalCallback) modalCallback(ok, document.getElementById('modal-inp').value); }
+
+    // 🛡️ 钱包系统
+    function updateWalletUI() {
+        const wc = document.getElementById('wallet-container');
+        if(!wc) return;
+        let totalVal = 0; Object.keys(wallet).forEach(k => { totalVal += wallet[k]; });
+        let h = `<div style="grid-column: 1 / -1; font-size:15px; font-weight:900; color:var(--brown); display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;"><span>资金总览</span><span style="color:var(--neon-pink); font-size:22px;">₩${totalVal.toLocaleString()}</span></div>`;
+        Object.keys(wallet).forEach(k => { h += `<div class="nav-btn" style="padding:10px; min-height:65px; border-radius:20px; position:relative;" onclick="promptWallet('${k}')"><div class="chk-cat-del" style="top:-8px;right:-8px; background:#FF4D4F; color:white; font-size:12px; border:1px solid white;" onclick="event.stopPropagation(); delWallet('${k}')">✖</div><small style="color:#999; font-size:11px;">${k}</small><div style="font-size:13px;font-weight:900;">₩${wallet[k].toLocaleString()}</div></div>`; });
+        h += `<div class="nav-btn" style="padding:10px; min-height:65px; border-radius:20px; border:1.5px dashed #CCC!important; background:transparent; box-shadow:none; color:#999;" onclick="addWallet()"><div style="font-size:24px;line-height:1;margin-bottom:2px;">+</div><small style="font-size:10px;">新增钱包</small></div>`;
+        wc.innerHTML = h;
     }
-    function closeModal(ok){ 
-        document.getElementById('custom-modal').style.display='none'; 
-        if(modalCallback) modalCallback(ok, document.getElementById('modal-inp').value); 
-    }
-    function promptWallet(t) { showModal("修改余额", "输入韩币金额:", true, (ok,v)=>{if(ok && !isNaN(v)){wallet[t]=Number(v);updateWalletUI();localCommit();}}); }
-    function updateWalletUI() { if(document.getElementById('val-Toss')){document.getElementById('val-Toss').innerText='₩'+wallet.Toss.toLocaleString();document.getElementById('val-Namane').innerText='₩'+wallet.Namane.toLocaleString();document.getElementById('val-TripPass').innerText='₩'+wallet.TripPass.toLocaleString();} }
+    function addWallet() { showModal("新增钱包", "给新钱包起个名字:", true, (ok, val) => { val = val.trim(); if(ok && val) { if(wallet[val] !== undefined) { alert('钱包已存在！'); return; } wallet[val] = 0; localCommit(); updateWalletUI(); } }); }
+    function promptWallet(k) { showModal(`修改 [${k}] 余额`, "输入韩币金额:", true, (ok,v)=>{ if(ok && !isNaN(v)){ wallet[k]=Number(v); updateWalletUI(); localCommit(); } }); }
+    function delWallet(k) { showModal("删除钱包?", `确定移除 [${k}] 吗？<br><small style="color:#999;">历史账单上带有此钱包的记录会被保留。</small>`, false, ok => { if(ok) { delete wallet[k]; localCommit(); updateWalletUI(); if(curView==='fin') renderList(); } }); }
     function delItem(e,t,idx) { e.stopPropagation(); showModal("彻底删除?","此操作不可撤销！",false,ok=>{if(ok){if(t==='flight') flights.splice(idx,1); else store[t].splice(idx,1); localCommit(); initUI(); if(curView!=='home')renderList();}}); }
 
     /* ================= 数据引擎 ================= */
-    const DB_NAME = 'SeoulMoon_Final_V15', STORE_NAME = 'appData', DATA_KEY = 'core_data';
-    let wallet = { Toss: 0, Namane: 0, TripPass: 0 }, flights = [], store = { plan: [], ticket: [], wish: [], fin: [], checklist: [], chkCats: ['行李🧳', '购物🛍️', '办事📌'], memos: [], quickNote: '' };
+    const DB_NAME = 'SeoulMoon_Final_V18', STORE_NAME = 'appData', DATA_KEY = 'core_data';
+    let wallet = { Toss: 0, Namane: 0, TripPass: 0 };
+    let flights = [], store = { plan: [], ticket: [], wish: [], fin: [], checklist: [], chkCats: ['行李🧳', '购物🛍️', '办事📌'], wishCats: ['Olive Young', 'Musinsa', '药局', '其他'], memos: [], quickNote: '' };
     let curView = 'home', curIdx = -1, curDate = '04.29', RATE = 191.0, modalCallback = null, tempImg = '', dTz='上海', aTz='首尔', sTz='首尔', curCat='全部', activeChkCat='全部';
 
-    const dbPromise = new Promise(resolve => { 
-        const req = indexedDB.open(DB_NAME, 1); 
-        req.onupgradeneeded = e => e.target.result.createObjectStore(STORE_NAME); 
-        req.onsuccess = () => resolve(req.result); 
-        req.onerror = () => resolve(null); 
-    });
+    const dbPromise = new Promise(resolve => { const req = indexedDB.open(DB_NAME, 1); req.onupgradeneeded = e => e.target.result.createObjectStore(STORE_NAME); req.onsuccess = () => resolve(req.result); req.onerror = () => resolve(null); });
 
     async function bootApp() {
         try {
@@ -334,21 +321,13 @@
             const tx = db.transaction(STORE_NAME, 'readonly').objectStore(STORE_NAME).get(DATA_KEY);
             tx.onsuccess = () => { 
                 if (tx.result) { 
-                    wallet = tx.result.wallet || wallet; 
+                    wallet = tx.result.wallet || { Toss: 0, Namane: 0, TripPass: 0 }; 
                     flights = tx.result.flights || flights; 
-                    
                     const s = tx.result.store || {};
-                    store.plan = s.plan || [];
-                    store.ticket = s.ticket || [];
-                    store.wish = s.wish || [];
-                    store.fin = s.fin || [];
-                    store.checklist = s.checklist || [];
-                    store.chkCats = s.chkCats || ['行李🧳', '购物🛍️', '办事📌'];
-                    
-                    // 🛡️ 新增气泡引擎数据注入
-                    store.memos = s.memos || [];
-                    store.quickNote = s.quickNote || '';
-
+                    store.plan = s.plan || []; store.ticket = s.ticket || []; store.wish = s.wish || []; store.fin = s.fin || []; 
+                    store.checklist = s.checklist || []; store.chkCats = s.chkCats || ['行李🧳', '购物🛍️', '办事📌']; 
+                    store.wishCats = s.wishCats || ['Olive Young', 'Musinsa', '药局', '其他'];
+                    store.memos = s.memos || []; store.quickNote = s.quickNote || '';
                     if(store.ticket) store.ticket.sort((a,b) => (a.date||'9999-99-99').localeCompare(b.date||'9999-99-99'));
                 } else { 
                     flights = [{ air: "韩亚航空", no: "OZ3625", date: "2026-04-29", t1: "10:55", t2: "14:00", tz1: "上海", tz2: "首尔", s1: "12A", c1: "A19", g1: "T2" }]; 
@@ -373,7 +352,6 @@
         updateWeather(); updateExchangeRate(); renderFlights(); renderChkCats(); renderChk();
     }
 
-    // 🛡️ 核心修复：支持四个 Tab 的丝滑切换
     function switchDash(v) { 
         pop(); 
         ['weather', 'checklist', 'memo', 'note'].forEach(tab => {
@@ -382,74 +360,30 @@
             if(elTab) elTab.className = (v === tab) ? 'd-tab active' : 'd-tab';
             if(elPanel) elPanel.className = (v === tab) ? (tab === 'weather' ? 'scroll-row' : '') : 'hidden';
         });
-        
-        // 如果切到 Memo，就渲染气泡
         if(v === 'memo') renderMemo();
-        // 如果切到随手记，就拉取存好的文本
         if(v === 'note') document.getElementById('note-area').value = store.quickNote || '';
     }
 
     function nav(v) { pop(); curView=v; document.getElementById('v-home').className=v==='home'?'':'hidden'; document.getElementById('v-sub').className=v==='home'?'hidden':''; document.getElementById('ledger-extra').className=v==='fin'?'':'hidden'; if(v!=='home') renderList(); else initUI(); updateWalletUI(); }
 
-    /* ================= 💬 Memo 气泡对话引擎 ================= */
+    /* ================= 💬 Memo & Note ================= */
     function renderMemo() {
-        const box = document.getElementById('memo-list');
-        let h = '';
-        if(!store.memos || store.memos.length === 0) {
-            h = '<div style="text-align:center;padding:20px;color:#ccc;font-size:12px;font-weight:bold;">还没有备忘，快发一条吧~</div>';
-        } else {
-            store.memos.forEach((m, i) => {
-                h += `
-                <div class="memo-row">
-                    <div class="memo-time">${m.time}</div>
-                    <div class="memo-bubble-wrapper">
-                        <div class="memo-del" onclick="delMemo(${i})">✖</div>
-                        <div class="memo-bubble">${m.text}</div>
-                    </div>
-                </div>`;
-            });
-        }
-        box.innerHTML = h;
-        // 自动滚动到最新一条消息
-        setTimeout(() => { box.scrollTop = box.scrollHeight; }, 50);
+        const box = document.getElementById('memo-list'); let h = '';
+        if(!store.memos || store.memos.length === 0) h = '<div style="text-align:center;padding:20px;color:#ccc;font-size:12px;font-weight:bold;">还没有备忘，快发一条吧~</div>';
+        else store.memos.forEach((m, i) => { h += `<div class="memo-row"><div class="memo-time">${m.time}</div><div class="memo-bubble-wrapper"><div class="memo-del" onclick="delMemo(${i})">✖</div><div class="memo-bubble">${m.text}</div></div></div>`; });
+        box.innerHTML = h; setTimeout(() => { box.scrollTop = box.scrollHeight; }, 50);
     }
-
-    function addMemo() {
-        const inp = document.getElementById('memo-inp');
-        const v = inp.value.trim();
-        if(!v) return;
-        const n = new Date();
-        const timeStr = String(n.getHours()).padStart(2, '0') + ':' + String(n.getMinutes()).padStart(2, '0');
-        if(!store.memos) store.memos = [];
-        store.memos.push({ text: v, time: timeStr });
-        inp.value = '';
-        renderMemo();
-        localCommit();
-    }
-
-    function delMemo(i) {
-        pop();
-        showModal("删除 Memo?", "确定要删除这条消息吗？", false, (ok) => {
-            if(ok) {
-                store.memos.splice(i, 1);
-                renderMemo();
-                localCommit();
-            }
-        });
-    }
-
-    /* ================= 📝 随手记：防抖无痕静默保存 ================= */
-    let saveNoteTimeout;
-    function saveNote(val) {
-        store.quickNote = val;
-        // 500ms 防抖，停笔半秒才写入数据库，极致顺滑不卡顿
-        clearTimeout(saveNoteTimeout);
-        saveNoteTimeout = setTimeout(() => { localCommit(); }, 500);
-    }
-
+    function addMemo() { const inp = document.getElementById('memo-inp'); const v = inp.value.trim(); if(!v) return; const n = new Date(); const timeStr = String(n.getHours()).padStart(2, '0') + ':' + String(n.getMinutes()).padStart(2, '0'); if(!store.memos) store.memos = []; store.memos.push({ text: v, time: timeStr }); inp.value = ''; renderMemo(); localCommit(); }
+    function delMemo(i) { pop(); showModal("删除 Memo?", "确定要删除这条消息吗？", false, (ok) => { if(ok) { store.memos.splice(i, 1); renderMemo(); localCommit(); } }); }
+    let saveNoteTimeout; function saveNote(val) { store.quickNote = val; clearTimeout(saveNoteTimeout); saveNoteTimeout = setTimeout(() => { localCommit(); }, 500); }
 
     /* ================= 📋 清单系统 ================= */
-    function renderChkCats() { const row = document.getElementById('chk-cat-row'); let h = `<div class="chk-cat-btn ${activeChkCat==='全部'?'active':''}" onclick="setChkCat('全部')">全部</div>`; store.chkCats.forEach((c, i) => { h += `<div class="chk-cat-btn ${activeChkCat===c?'active':''}" onclick="setChkCat('${c}')">${c} ${activeChkCat===c?`<span class="chk-cat-del" onclick="delChkCat(event, ${i})">✖</span>`:''}</div>`; }); row.innerHTML = h + `<div class="chk-cat-btn" style="border:1.5px dashed var(--sailor-purple);background:transparent;" onclick="addChkCat()">+ 新建</div>`; }
+    function renderChkCats() { 
+        const row = document.getElementById('chk-cat-row'); 
+        let h = `<div class="chk-cat-btn ${activeChkCat==='全部'?'active':''}" onclick="setChkCat('全部')">全部</div>`; 
+        store.chkCats.forEach((c, i) => { h += `<div class="chk-cat-btn ${activeChkCat===c?'active':''}" onclick="setChkCat('${c}')">${c} ${activeChkCat===c?`<span class="chk-cat-del" onclick="delChkCat(event, ${i})">✖</span>`:''}</div>`; }); 
+        row.innerHTML = h + `<div class="chk-cat-btn" style="border:1.5px dashed var(--sailor-purple);background:transparent;" onclick="addChkCat()">+ 新建</div>`; 
+    }
     function setChkCat(cat) { pop(); activeChkCat = cat; renderChkCats(); renderChk(); }
     function addChkCat() { showModal("新建分类", "名称 (支持Emoji):", true, (ok, val) => { if(ok && val.trim() && !store.chkCats.includes(val.trim())) { store.chkCats.push(val.trim()); activeChkCat = val.trim(); localCommit(); renderChkCats(); renderChk(); } }); }
     function delChkCat(e, idx) { e.stopPropagation(); pop(); const name = store.chkCats[idx]; showModal("删除分类?", `[${name}] 的记录将移至"其他"中。`, false, ok => { if(ok) { store.chkCats.splice(idx, 1); store.checklist.forEach(it => { if(it.cat === name) it.cat = '其他'; }); activeChkCat = '全部'; localCommit(); renderChkCats(); renderChk(); } }); }
@@ -467,75 +401,65 @@
     function toggleChk(i) { store.checklist[i].done = !store.checklist[i].done; renderChk(); localCommit(); }
     function delChk(i) { store.checklist.splice(i,1); renderChk(); localCommit(); }
 
-    /* ================= ✈️ 航班卡片 ================= */
+    /* ================= ✈️ 航班卡片 完美修复 ================= */
     function renderFlights() {
         const list = document.getElementById('flight-list'); if(!list) return;
         list.innerHTML = flights.map((f, i) => `
             <div class="f-card" onclick="openEdit('flight', ${i})">
                 <div class="del-btn-round" onclick="event.stopPropagation(); delItem(event, 'flight', ${i})">✖</div>
                 <div style="font-weight:900;color:var(--sailor-blue);font-size:16px;">✈️ ${f.air||'--'} <span style="color:#999;font-size:12px;">${f.no||''}</span></div>
-                <div class="f-time-row">
-                    <div class="f-time-big">${f.t1||'--:--'}<small style="font-size:11px;display:block;opacity:0.4;font-weight:bold;margin-top:4px;">${f.tz1||'上海'}</small></div>
-                    <div style="font-size:24px;opacity:0.1">✈️</div>
-                    <div class="f-time-big" style="text-align:right;">${f.t2||'--:--'}<small style="font-size:11px;display:block;opacity:0.4;font-weight:bold;margin-top:4px;">${f.tz2||'首尔'}</small></div>
-                </div>
-                <div class="f-tag-row">
-                    <div class="f-tag">柜台 ${f.c1||'-'}</div>
-                    <div class="f-tag">登机口 ${f.g1||'-'}</div>
-                    <div class="f-tag">座位 ${f.s1||'-'}</div>
-                    <div class="f-tag" style="background:#F0F6FF; border:none; color:var(--sailor-blue)">${f.date}</div>
-                </div>
-            </div>`).join('') + `
-            <div class="f-card add-btn" onclick="openEdit('flight', -1)">
-                <div style="font-size:32px;margin-bottom:10px;">+</div>新增航班
-            </div>`;
+                <div class="f-time-row"><div class="f-time-big">${f.t1||'--:--'}<small class="f-time-sub">${f.tz1||'上海'}</small></div><div style="font-size:24px;opacity:0.1">✈️</div><div class="f-time-big" style="text-align:right;">${f.t2||'--:--'}<small class="f-time-sub">${f.tz2||'首尔'}</small></div></div>
+                <div class="f-tag-row"><div class="f-tag">柜台 ${f.c1||'-'}</div><div class="f-tag">登机口 ${f.g1||'-'}</div><div class="f-tag">座位 ${f.s1||'-'}</div><div class="f-tag" style="background:#F0F6FF; border:none; color:var(--sailor-blue)">${f.date}</div></div>
+            </div>`).join('') + `<div class="f-card add-btn" onclick="openEdit('flight', -1)"><div style="font-size:32px;margin-bottom:10px;">+</div>新增航班</div>`;
     }
 
-    /* ================= 📋 子页面列表系统 (原生 <a> 标签唤醒 App) ================= */
+    function getDynamicDays() {
+        let s = new Set(['04.29','04.30','05.01','05.02','05.03']);
+        if(store.plan) store.plan.forEach(p => p.date && s.add(p.date));
+        if(store.fin) store.fin.forEach(f => f.date && s.add(f.date));
+        return Array.from(s).sort();
+    }
+
+    /* ================= 🛍️ 心愿单平台引擎 ================= */
+    function addWishCat() { showModal("新建购物平台", "名称:", true, (ok, val) => { val = val.trim(); if(ok && val && !store.wishCats.includes(val)) { store.wishCats.push(val); curCat = val; localCommit(); renderList(); } }); }
+    function delWishCat(idx) { pop(); const name = store.wishCats[idx]; showModal("删除平台?", `[${name}] 的商品将归为"其他"中。`, false, ok => { if(ok) { store.wishCats.splice(idx, 1); if(!store.wishCats.includes('其他')) store.wishCats.push('其他'); store.wish.forEach(it => { if(it.cat === name) it.cat = '其他'; }); curCat = '全部'; localCommit(); renderList(); } }); }
+
+    /* ================= 📋 子页面列表系统 ================= */
     function renderList() {
         const box = document.getElementById('list-container'), header = document.getElementById('sub-header'); if(!box) return; box.innerHTML = '';
-        const days = ['04.29','04.30','05.01','05.02','05.03'];
+        const days = getDynamicDays();
         
         if(curView==='plan') {
             box.className = 'has-timeline';
             header.innerHTML = `<div class="date-bar scroll-row" style="margin-bottom:15px;">` + days.map(d => `<div class="date-item ${curDate===d?'active':''}" onclick="curDate='${d}';renderList()">${d}</div>`).join('') + `</div>`;
-            
             const ps = store.plan.filter(it => it.date === curDate).sort((a,b)=>a.time.localeCompare(b.time));
-            
-            const linkedPlans = ps.filter(p => p.link && p.link.trim() !== '');
-            if(linkedPlans.length >= 1) {
-                header.innerHTML += `<div class="nav-btn nav-pink-bar" style="min-height:0; padding:16px; border-radius:15px; font-size:13px; margin-bottom:20px;" onclick="genNaverTodayRoute()">🗺️ 今日 Naver 地图路线汇总</div>`;
-            }
-
+            if(ps.filter(p => p.link && p.link.trim() !== '').length >= 1) header.innerHTML += `<div class="nav-btn nav-pink-bar" style="min-height:0; padding:16px; border-radius:15px; font-size:13px; margin-bottom:20px;" onclick="genNaverTodayRoute()">🗺️ 今日 Naver 地图路线汇总</div>`;
             ps.forEach(it => { 
                 let mapBtn = (it.link && it.link.trim() !== '') ? `<a href="${it.link}" target="_blank" style="background:var(--naver-green);color:white;padding:6px 12px;border-radius:10px;font-size:10px;font-weight:900;text-decoration:none;display:inline-block;" onclick="event.stopPropagation();">📍 Map 直达</a>` : '';
-                
                 let memoBtn = '';
                 if(it.memo && it.memo.trim() !== '') {
-                    if(it.memo.startsWith('http')) {
-                        memoBtn = `<a href="${it.memo}" target="_blank" style="background:var(--sailor-purple);color:white;padding:6px 12px;border-radius:10px;font-size:10px;font-weight:900;text-decoration:none;display:inline-block;" onclick="event.stopPropagation();">🔗 预定/详情</a>`;
-                    } else {
-                        memoBtn = `<span style="background:#F0F0F0;color:#999;padding:6px 12px;border-radius:10px;font-size:10px;font-weight:900;display:inline-block;">📝 ${it.memo}</span>`;
-                    }
+                    if(it.memo.startsWith('http')) memoBtn = `<a href="${it.memo}" target="_blank" style="background:var(--sailor-purple);color:white;padding:6px 12px;border-radius:10px;font-size:10px;font-weight:900;text-decoration:none;display:inline-block;" onclick="event.stopPropagation();">🔗 预定/详情</a>`;
+                    else memoBtn = `<span style="background:#F0F0F0;color:#999;padding:6px 12px;border-radius:10px;font-size:10px;font-weight:900;display:inline-block;">📝 ${it.memo}</span>`;
                 }
-                
                 let btns = (mapBtn || memoBtn) ? `<div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">${mapBtn}${memoBtn}</div>` : '';
-
-                box.innerHTML += `
-                <div class="item-card" onclick="openEdit('plan', ${store.plan.indexOf(it)})"> 
-                    <div class="del-btn-round" onclick="event.stopPropagation(); delItem(event, 'plan', ${store.plan.indexOf(it)})">✖</div> 
-                    <div class="icon-circle">📍</div> 
-                    <div style="flex:1"><b>${it.name}</b><br><small style="color:#999;font-weight:bold;">${it.time} · ${it.tz||'首尔'}</small>${btns}</div> 
-                </div>`; 
+                box.innerHTML += `<div class="item-card" onclick="openEdit('plan', ${store.plan.indexOf(it)})"><div class="del-btn-round" onclick="event.stopPropagation(); delItem(event, 'plan', ${store.plan.indexOf(it)})">✖</div><div class="icon-circle">📍</div><div style="flex:1"><b>${it.name}</b><br><small style="color:#999;font-weight:bold;">${it.time} · ${it.tz||'首尔'}</small>${btns}</div></div>`; 
             });
             
         } else if(curView==='fin') {
-            box.className = ''; header.innerHTML = '<div class="date-bar scroll-row">' + days.map(d => `<div class="date-item ${curDate===d?'active':''}" onclick="curDate='${d}';renderList()">${d}</div>`).join('') + '</div>';
+            box.className = ''; 
+            header.innerHTML = `<div class="date-bar scroll-row">` + days.map(d => `<div class="date-item ${curDate===d?'active':''}" onclick="curDate='${d}';renderList()">${d}</div>`).join('') + `</div>`;
             const Items = store.fin.filter(it => it.date === curDate);
             if(Items.length) { const total = Items.reduce((s,i)=>s+Number(i.price||0),0); box.innerHTML += `<div class="nav-btn nav-pink-bar" style="margin-bottom:20px;min-height:0;padding:20px;cursor:default"><div>今日支出</div><div style="font-size:28px;">₩${total.toLocaleString()}</div><small style="opacity:0.8;font-weight:bold;">≈ ¥ ${(total/RATE).toFixed(1)}</small></div>`; }
             Items.forEach(it => { box.innerHTML += `<div class="item-card" onclick="openEdit('fin', ${store.fin.indexOf(it)})"> <div class="del-btn-round" onclick="event.stopPropagation(); delItem(event, 'fin', ${store.fin.indexOf(it)})">✖</div> <div class="icon-circle" style="overflow:hidden;">${it.img?`<img src="${it.img}">`:'💰'}</div> <div style="flex:1"><b>${it.name}</b><br><small style="color:#999;font-weight:bold;">${it.cat} · ${it.subPay||it.pay}</small></div> <b style="color:var(--neon-pink);font-size:18px;">₩${Number(it.price).toLocaleString()}</b> </div>`; });
         } else if(curView==='wish') {
-            box.className = ''; header.innerHTML = `<div class="scroll-row">` + ['全部','Olive Young','Musinsa','药局','其他'].map(c => `<div class="chk-cat-btn ${curCat===c?'active':''}" onclick="curCat='${c}';renderList()">${c}</div>`).join('') + `</div>`;
+            box.className = ''; 
+            let catHTML = `<div class="chk-cat-btn ${curCat==='全部'?'active':''}" onclick="curCat='全部';renderList()">全部</div>`;
+            store.wishCats.forEach((c, i) => {
+                catHTML += `<div class="chk-cat-btn ${curCat===c?'active':''}" onclick="curCat='${c}';renderList()">${c} ${curCat===c && c!=='其他'?`<span class="chk-cat-del" style="top:-6px;right:-6px;background:#FF4D4F;color:white;border:1px solid white;" onclick="event.stopPropagation(); delWishCat(${i})">✖</span>`:''}</div>`;
+            });
+            catHTML += `<div class="chk-cat-btn" style="border:1.5px dashed var(--sailor-purple); background:transparent;" onclick="addWishCat()">+ 新建</div>`;
+            header.innerHTML = `<div class="scroll-row">${catHTML}</div>`;
+            
             store.wish.forEach((it, idx) => {
                 if(curCat==='全部' || it.cat===curCat) {
                     let linkBtn = '';
@@ -545,45 +469,19 @@
                         else if(it.cat === 'Musinsa' || urlStr.includes('musinsa')) linkBtn = `<a href="${it.link}" target="_blank" style="background:#000;color:white;padding:6px 10px;border-radius:10px;font-size:10px;font-weight:bold;margin-top:6px;display:inline-block;text-decoration:none;" onclick="event.stopPropagation();">⬛ App直达</a>`;
                         else linkBtn = `<a href="${it.link}" target="_blank" style="background:var(--sailor-blue);color:white;padding:6px 10px;border-radius:10px;font-size:10px;font-weight:bold;margin-top:6px;display:inline-block;text-decoration:none;" onclick="event.stopPropagation();">🔗 商品直达</a>`;
                     }
-                    box.innerHTML += `
-                    <div class="item-card" onclick="openEdit('wish', ${idx})"> 
-                        <div class="del-btn-round" onclick="event.stopPropagation(); delItem(event, 'wish', ${idx})">✖</div> 
-                        <div class="icon-circle" style="border-radius:15px;overflow:hidden;">${it.img?`<img src="${it.img}">`:'🛍️'}</div> 
-                        <div style="flex:1"><b>${it.name}</b><br><small style="color:#999;font-weight:bold;">${it.cat}</small><br>${linkBtn}</div> 
-                        <div style="text-align:right;"><b style="color:var(--neon-pink);font-size:18px;">₩${Number(it.price).toLocaleString()}</b><br><small style="color:#999;font-size:11px;font-weight:bold;">≈ ¥ ${(it.price/RATE).toFixed(1)}</small></div>
-                    </div>`;
+                    box.innerHTML += `<div class="item-card" onclick="openEdit('wish', ${idx})"><div class="del-btn-round" onclick="event.stopPropagation(); delItem(event, 'wish', ${idx})">✖</div><div class="icon-circle" style="border-radius:15px;overflow:hidden;">${it.img?`<img src="${it.img}">`:'🛍️'}</div><div style="flex:1"><b>${it.name}</b><br><small style="color:#999;font-weight:bold;">${it.cat}</small><br>${linkBtn}</div><div style="text-align:right;"><b style="color:var(--neon-pink);font-size:18px;">₩${Number(it.price).toLocaleString()}</b><br><small style="color:#999;font-size:11px;font-weight:bold;">≈ ¥ ${(it.price/RATE).toFixed(1)}</small></div></div>`;
                 }
             });
         } else if(curView==='ticket') {
             box.className = ''; header.innerHTML = '';
             let sortedTickets = store.ticket.map((item, index) => ({ item, index })).sort((a, b) => {
-                const dateA = a.item.date || '9999-99-99';
-                const dateB = b.item.date || '9999-99-99';
-                return dateA.localeCompare(dateB);
+                const dateA = a.item.date || '9999-99-99'; const dateB = b.item.date || '9999-99-99'; return dateA.localeCompare(dateB);
             });
-
             sortedTickets.forEach((t) => {
                 const it = t.item; const i = t.index;
                 const mon = it.date ? ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'][parseInt(it.date.split('-')[1])-1] : 'DATE';
                 const day = it.date ? it.date.split('-')[2] : '--';
-                
-                box.innerHTML += `
-                <div style="position:relative; margin-bottom:18px;">
-                    <div class="ticket-list-item" onclick="openTicketGallery(${i})">
-                        <div class="ticket-list-poster">${it.img ? `<img src="${it.img}">` : '<div style="width:100%;height:100%;background:rgba(255,255,255,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;">🎟️</div>'}</div>
-                        <div style="flex:1; padding:20px 10px; display:flex; flex-direction:column; justify-content:center;">
-                            <div style="font-size:16px; font-weight:900; line-height:1.2; text-shadow:0 1px 3px rgba(0,0,0,0.5);">${it.name || '未命名演出'}</div>
-                            <div style="font-size:11px; color:rgba(255,255,255,0.7); margin-top:6px;">📍 ${it.venue}</div>
-                            ${it.link ? `<div style="margin-top:6px;"><a href="${it.link}" target="_blank" style="background:var(--sailor-blue); color:white; padding:4px 8px; border-radius:8px; font-size:10px; font-weight:bold; text-decoration:none; display:inline-block;" onclick="event.stopPropagation();">🔗 电子订单直达</a></div>` : ''}
-                        </div>
-                        <div class="ticket-list-stub">
-                            <div style="font-size:11px; letter-spacing:1px; color:rgba(255,255,255,0.6); font-weight:900;">${mon}</div>
-                            <div style="font-size:32px; font-weight:900; line-height:1; margin-top:2px;">${day}</div>
-                            <div style="background:rgba(0,0,0,0.2); border-radius:10px; padding:2px 8px; font-size:9px; margin-top:6px; font-weight:bold;">${it.area||'VIP'}区</div>
-                        </div>
-                    </div>
-                    <div class="del-btn-round" onclick="event.stopPropagation(); delItem(event, 'ticket', ${i})">✖</div>
-                </div>`;
+                box.innerHTML += `<div style="position:relative; margin-bottom:18px;"><div class="ticket-list-item" onclick="openTicketGallery(${i})"><div class="ticket-list-poster">${it.img ? `<img src="${it.img}">` : '<div style="width:100%;height:100%;background:rgba(255,255,255,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;">🎟️</div>'}</div><div style="flex:1; padding:20px 10px; display:flex; flex-direction:column; justify-content:center;"><div style="font-size:16px; font-weight:900; line-height:1.2; text-shadow:0 1px 3px rgba(0,0,0,0.5);">${it.name || '未命名演出'}</div><div style="font-size:11px; color:rgba(255,255,255,0.7); margin-top:6px;">📍 ${it.venue}</div>${it.link ? `<div style="margin-top:6px;"><a href="${it.link}" target="_blank" style="background:var(--sailor-blue); color:white; padding:4px 8px; border-radius:8px; font-size:10px; font-weight:bold; text-decoration:none; display:inline-block;" onclick="event.stopPropagation();">🔗 电子订单直达</a></div>` : ''}</div><div class="ticket-list-stub"><div style="font-size:11px; letter-spacing:1px; color:rgba(255,255,255,0.6); font-weight:900;">${mon}</div><div style="font-size:32px; font-weight:900; line-height:1; margin-top:2px;">${day}</div><div style="background:rgba(0,0,0,0.2); border-radius:10px; padding:2px 8px; font-size:9px; margin-top:6px; font-weight:bold;">${it.area||'VIP'}区</div></div></div><div class="del-btn-round" onclick="event.stopPropagation(); delItem(event, 'ticket', ${i})">✖</div></div>`;
             });
         }
     }
@@ -591,20 +489,15 @@
     function genNaverTodayRoute() {
         const ps = store.plan.filter(it => it.date === curDate && it.link && it.link.trim() !== '').sort((a,b)=>a.time.localeCompare(b.time));
         if(ps.length === 0) return;
-        
         let html = '<div style="display:flex;flex-direction:column;gap:10px;margin-top:15px;max-height:50vh;overflow-y:auto;text-align:left;padding:5px;">';
-        ps.forEach(p => {
-            html += `<a href="${p.link}" target="_blank" class="nav-btn" style="min-height:50px;padding:15px;border:1.5px solid #EEE;border-radius:18px;align-items:flex-start;background:#F8F9FA;text-decoration:none;display:flex;width:100%;box-sizing:border-box;" onclick="event.stopPropagation();"><div style="display:flex;flex-direction:column;width:100%;"><b style="color:var(--brown);font-size:14px;">${p.time||'--:--'} · ${p.name}</b><small style="color:#03C75A;font-weight:900;margin-top:4px;">📍 点击唤醒 Naver Map App</small></div></a>`;
-        });
-        html += '</div>';
-
-        showModal("🗺️ 今日路线列表", "", false, null);
-        document.getElementById('modal-msg').innerHTML = html; 
+        ps.forEach(p => { html += `<a href="${p.link}" target="_blank" class="nav-btn" style="min-height:50px;padding:15px;border:1.5px solid #EEE;border-radius:18px;align-items:flex-start;background:#F8F9FA;text-decoration:none;display:flex;width:100%;box-sizing:border-box;" onclick="event.stopPropagation();"><div style="display:flex;flex-direction:column;width:100%;"><b style="color:var(--brown);font-size:14px;">${p.time||'--:--'} · ${p.name}</b><small style="color:#03C75A;font-weight:900;margin-top:4px;">📍 点击唤醒 Naver Map App</small></div></a>`; });
+        html += '</div>'; showModal("🗺️ 今日路线列表", "", false, null); document.getElementById('modal-msg').innerHTML = html; 
     }
 
     /* ================= 📝 满血抽屉编辑表单 ================= */
     function openEdit(v, idx) {
         pop(); curView = v; curIdx = idx; tempImg = ''; document.getElementById('drawer').classList.add('active');
+        
         const it = idx > -1 ? (v==='flight'?flights[idx]: (v==='checklist'?store.checklist[idx]:store[v][idx])) : {};
         let f = document.getElementById('d-form'), s = document.getElementById('sync-area'); s.innerHTML = '';
         
@@ -613,61 +506,27 @@
 
         if(v==='flight') { 
             dTz = it.tz1 || '上海'; aTz = it.tz2 || '首尔';
-            f.innerHTML = `
-            ${lb('起降时区')}
-            <div style="display:flex; gap:10px; margin-bottom:10px;">
-                <div class="tz-pill-box" style="flex:1">
-                    <div class="tz-pill ${dTz==='上海'?'active':''}" onclick="setTz('dep','上海',this)">起:上海</div>
-                    <div class="tz-pill ${dTz==='首尔'?'active':''}" onclick="setTz('dep','首尔',this)">起:首尔</div>
-                </div>
-                <div class="tz-pill-box" style="flex:1">
-                    <div class="tz-pill ${aTz==='上海'?'active':''}" onclick="setTz('arr','上海',this)">降:上海</div>
-                    <div class="tz-pill ${aTz==='首尔'?'active':''}" onclick="setTz('arr','首尔',this)">降:首尔</div>
-                </div>
-            </div>
-            ${lb('航班信息')}
-            <div style="display:flex;gap:10px"><input id="f-air" class="f-input" placeholder="航司" value="${it.air||''}"> <input id="f-no" class="f-input" placeholder="航班号" value="${it.no||''}"></div>
-            <input id="f-date" class="f-input" type="date" value="${it.date||'2026-04-29'}">
-            <div style="display:flex;gap:10px"><input id="f-t1" class="f-input" type="time" value="${it.t1||''}"> <input id="f-t2" class="f-input" type="time" value="${it.t2||''}"></div>
-            ${lb('登机详情')}
-            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px"><input id="f-c1" class="f-input" placeholder="柜台" value="${it.c1||''}"> <input id="f-g1" class="f-input" placeholder="登机口" value="${it.g1||''}"> <input id="f-s1" class="f-input" placeholder="座位" value="${it.s1||''}"></div>`; 
+            f.innerHTML = `${lb('起降时区')}<div style="display:flex; gap:10px; margin-bottom:10px;"><div class="tz-pill-box" style="flex:1"><div class="tz-pill ${dTz==='上海'?'active':''}" onclick="setTz('dep','上海',this)">起:上海</div><div class="tz-pill ${dTz==='首尔'?'active':''}" onclick="setTz('dep','首尔',this)">起:首尔</div></div><div class="tz-pill-box" style="flex:1"><div class="tz-pill ${aTz==='上海'?'active':''}" onclick="setTz('arr','上海',this)">降:上海</div><div class="tz-pill ${aTz==='首尔'?'active':''}" onclick="setTz('arr','首尔',this)">降:首尔</div></div></div>${lb('航班信息')}<div style="display:flex;gap:10px"><input id="f-air" class="f-input" placeholder="航司" value="${it.air||''}"> <input id="f-no" class="f-input" placeholder="航班号" value="${it.no||''}"></div><input id="f-date" class="f-input" type="date" value="${it.date||'2026-04-29'}"><div style="display:flex;gap:10px"><input id="f-t1" class="f-input" type="time" value="${it.t1||''}"> <input id="f-t2" class="f-input" type="time" value="${it.t2||''}"></div>${lb('登机详情')}<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px"><input id="f-c1" class="f-input" placeholder="柜台" value="${it.c1||''}"> <input id="f-g1" class="f-input" placeholder="登机口" value="${it.g1||''}"> <input id="f-s1" class="f-input" placeholder="座位" value="${it.s1||''}"></div>`; 
         }
         else if(v==='checklist') {
             f.innerHTML = `${lb('修改清单与分类')}<div class="selector-group" style="margin-bottom:15px;">${store.chkCats.map(c=>`<div class="selector-item ${it.cat===c?'active':''}" onclick="selectBtn(this)">${c}</div>`).join('')}</div><input id="f-name" class="f-input" placeholder="输入内容" value="${it.text||''}">`;
         }
         else if(v==='plan') { 
             sTz = it.tz || '首尔';
-            f.innerHTML = `
-            ${lb('行程时区')}
-            <div class="tz-pill-box" style="width:70%;">
-                <div class="tz-pill ${sTz==='上海'?'active':''}" onclick="setTz('single','上海',this)">上海</div>
-                <div class="tz-pill ${sTz==='首尔'?'active':''}" onclick="setTz('single','首尔',this)">首尔</div>
-            </div>
-            <div style="display:flex;gap:10px;"><input id="f-date" class="f-input" type="date" value="${it.date?'2026-'+it.date.replace('.','-'):'2026-'+curDate.replace('.','-')}"><input id="f-time" class="f-input" type="time" value="${it.time||'12:00'}"></div>
-            ${lb('目的地与路线')}
-            <input id="f-name" class="f-input" placeholder="目的地/行程" value="${it.name||''}"> 
-            <input id="f-link" class="f-input" placeholder="Naver地图 URL 直达" value="${it.link||''}">
-            ${lb('备注与预定')}
-            <input id="f-memo" class="f-input" placeholder="网址(生成跳转) / 备注内容" value="${it.memo||''}">`; 
+            f.innerHTML = `${lb('行程时区')}<div class="tz-pill-box" style="width:70%;"><div class="tz-pill ${sTz==='上海'?'active':''}" onclick="setTz('single','上海',this)">上海</div><div class="tz-pill ${sTz==='首尔'?'active':''}" onclick="setTz('single','首尔',this)">首尔</div></div>${lb('日期与时间')}<div style="display:flex;gap:10px;"><input id="f-date" class="f-input" type="date" value="${it.date?'2026-'+it.date.replace('.','-'):'2026-'+curDate.replace('.','-')}"><input id="f-time" class="f-input" type="time" value="${it.time||'12:00'}"></div>${lb('目的地与路线')}<input id="f-name" class="f-input" placeholder="目的地/行程" value="${it.name||''}"> <input id="f-link" class="f-input" placeholder="Naver地图 URL 直达" value="${it.link||''}">${lb('备注与预定')}<input id="f-memo" class="f-input" placeholder="网址(生成跳转) / 备注内容" value="${it.memo||''}">`; 
         }
         else if(v==='fin') { 
-            const defSub = it.subPay || 'Toss';
-            f.innerHTML = `
-            ${lb('分类')}
-            <div class="selector-group" id="f-cat-sel">${['餐饮','购物','交通','娱乐','其他'].map(c=>`<div class="selector-item ${it.cat===c?'active':''}" onclick="selectBtn(this)">${c}</div>`).join('')}</div> 
-            ${lb('支付')}
-            <div class="selector-group" id="p-sel">${['韩币','微信','信用卡','现金'].map(p=>`<div class="selector-item ${(!it.pay&&p==='韩币')||it.pay===p?'active':''}" onclick="selectPay(this)">${p}</div>`).join('')}</div> 
-            <div id="sub-pay-area" class="${(!it.pay||it.pay==='韩币')?'':'hidden'}">
-                <div class="selector-group" id="w-sel">${['Toss','Namane','TripPass'].map(w=>`<div class="selector-item ${defSub===w?'active':''}" onclick="selectBtn(this)">${w}</div>`).join('')}</div>
-            </div>
-            <input id="f-name" class="f-input" placeholder="支出明细" value="${it.name||''}"> 
-            <input id="f-price" class="f-input" type="number" placeholder="金额 ₩" value="${it.price||''}" oninput="updateCnyHint(this.value)">
-            <div id="c-hint" style="font-size:12px;color:var(--sailor-purple);margin:-8px 0 15px 5px;font-weight:bold;">≈ ¥ ${(it.price? (it.price/RATE).toFixed(1) : '0.0')}</div>`; 
+            const activeWallets = Object.keys(wallet);
+            let defSub = it.subPay || (activeWallets.length > 0 ? activeWallets[0] : '');
+            if(it.subPay && !activeWallets.includes(it.subPay)) activeWallets.push(it.subPay);
+
+            f.innerHTML = `${lb('日期')}<input id="f-date" class="f-input" type="date" value="${it.date?'2026-'+it.date.replace('.','-'):'2026-'+curDate.replace('.','-')}">${lb('分类')}<div class="selector-group" id="f-cat-sel">${['餐饮','购物','交通','娱乐','其他'].map(c=>`<div class="selector-item ${it.cat===c?'active':''}" onclick="selectBtn(this)">${c}</div>`).join('')}</div>${lb('支付')}<div class="selector-group" id="p-sel">${['韩币','微信','信用卡','现金'].map(p=>`<div class="selector-item ${(!it.pay&&p==='韩币')||it.pay===p?'active':''}" onclick="selectPay(this)">${p}</div>`).join('')}</div><div id="sub-pay-area" class="${(!it.pay||it.pay==='韩币')?'':'hidden'}"><div class="selector-group" id="w-sel">${activeWallets.map(w=>`<div class="selector-item ${defSub===w?'active':''}" onclick="selectBtn(this)">${w}</div>`).join('')}${activeWallets.length === 0 ? '<small style="color:#ccc; line-height:38px;">请先在记账本顶部新增钱包</small>' : ''}</div></div><input id="f-name" class="f-input" placeholder="支出明细" value="${it.name||''}"> <input id="f-price" class="f-input" type="number" placeholder="金额 ₩" value="${it.price||''}" oninput="updateCnyHint(this.value)"><div id="c-hint" style="font-size:12px;color:var(--sailor-purple);margin:-8px 0 15px 5px;font-weight:bold;">≈ ¥ ${(it.price? (it.price/RATE).toFixed(1) : '0.0')}</div>`; 
         }
         else if(v==='wish') { 
-            f.innerHTML = `${lb('平台')}<div class="selector-group" id="c-sel">${['Olive Young','Musinsa','药局','其他'].map(c=>`<div class="selector-item ${it.cat===c?'active':''}" onclick="selectBtn(this)">${c}</div>`).join('')}</div> <input id="f-name" class="f-input" placeholder="想要买什么？" value="${it.name||''}"> <input id="f-link" class="f-input" placeholder="商品直达 URL" value="${it.link||''}"> 
-            <input id="f-price" class="f-input" type="number" placeholder="预算 ₩" value="${it.price||''}" oninput="updateCnyHint(this.value)">
-            <div id="c-hint" style="font-size:12px;color:var(--sailor-purple);margin:-8px 0 15px 5px;font-weight:bold;">≈ ¥ ${(it.price? (it.price/RATE).toFixed(1) : '0.0')}</div>`; 
+            let defCat = it.cat || (store.wishCats.length > 0 ? store.wishCats[0] : '其他');
+            if(it.cat && !store.wishCats.includes(it.cat)) store.wishCats.push(it.cat);
+
+            f.innerHTML = `${lb('平台')}<div class="selector-group" id="c-sel">${store.wishCats.map(c=>`<div class="selector-item ${defCat===c?'active':''}" onclick="selectBtn(this)">${c}</div>`).join('')}</div> <input id="f-name" class="f-input" placeholder="想要买什么？" value="${it.name||''}"> <input id="f-link" class="f-input" placeholder="商品直达 URL" value="${it.link||''}"> <input id="f-price" class="f-input" type="number" placeholder="预算 ₩" value="${it.price||''}" oninput="updateCnyHint(this.value)"><div id="c-hint" style="font-size:12px;color:var(--sailor-purple);margin:-8px 0 15px 5px;font-weight:bold;">≈ ¥ ${(it.price? (it.price/RATE).toFixed(1) : '0.0')}</div>`; 
             if(idx>-1) s.innerHTML = `<button class="nav-btn nav-pink-bar" style="width:100%;min-height:55px;border:none!important;margin-top:10px;" onclick="initSyncFlow(${idx})">💸 购入并同步记账</button>`; 
         }
         else if(v==='ticket') { 
@@ -681,17 +540,22 @@
         
         if(curView==='flight') { if(curIdx>-1) flights[curIdx]=obj; else flights.push(obj); }
         else if(curView==='checklist') { obj.cat = document.querySelector('.selector-item.active')?.innerText || '其他'; if(curIdx>-1) store.checklist[curIdx]=obj; else store.checklist.push(obj); }
-        else if(curView==='plan') { obj.date=obj.date.substring(5).replace('-','.'); if(curIdx>-1) store.plan[curIdx]=obj; else store.plan.push(obj); }
+        else if(curView==='plan') { 
+            let inputDate = getV('f-date'); obj.date = inputDate ? inputDate.substring(5).replace('-', '.') : curDate; curDate = obj.date;
+            if(curIdx>-1) store.plan[curIdx]=obj; else store.plan.push(obj); 
+        }
         else if(curView==='fin') { 
-            obj.date=curDate; 
-            obj.cat=document.querySelector('#f-cat-sel .active')?.innerText||'其他'; 
-            obj.pay=document.querySelector('#p-sel .active')?.innerText||'现金'; 
-            obj.subPay = (obj.pay === '韩币') ? (document.querySelector('#w-sel .active')?.innerText || 'Toss') : ''; 
-            if(curIdx > -1 && store.fin[curIdx].subPay) { wallet[store.fin[curIdx].subPay] += Number(store.fin[curIdx].price); }
-            if(obj.subPay) { wallet[obj.subPay] -= Number(obj.price); }
+            let inputDate = getV('f-date'); obj.date = inputDate ? inputDate.substring(5).replace('-', '.') : curDate; curDate = obj.date;
+            obj.cat=document.querySelector('#f-cat-sel .active')?.innerText||'其他'; obj.pay=document.querySelector('#p-sel .active')?.innerText||'现金'; obj.subPay = (obj.pay === '韩币') ? (document.querySelector('#w-sel .active')?.innerText || '') : ''; 
+            
+            if(curIdx > -1 && store.fin[curIdx].subPay && wallet.hasOwnProperty(store.fin[curIdx].subPay)) { wallet[store.fin[curIdx].subPay] += Number(store.fin[curIdx].price); }
+            if(obj.subPay && wallet.hasOwnProperty(obj.subPay)) { wallet[obj.subPay] -= Number(obj.price); }
             if(curIdx>-1) store.fin[curIdx]=obj; else store.fin.push(obj); 
         }
-        else if(curView==='wish') { obj.cat=document.querySelector('#c-sel .active')?.innerText||'其他'; if(curIdx>-1) store.wish[curIdx]=obj; else store.wish.push(obj); }
+        else if(curView==='wish') { 
+            obj.cat=document.querySelector('#c-sel .active')?.innerText||'其他'; 
+            if(curIdx>-1) store.wish[curIdx]=obj; else store.wish.push(obj); 
+        }
         else if(curView==='ticket') { 
             if(curIdx>-1) store.ticket[curIdx]=obj; else store.ticket.push(obj); 
             store.ticket.sort((a,b) => (a.date||'9999-99-99').localeCompare(b.date||'9999-99-99'));
@@ -726,12 +590,17 @@
         pSyncIdx = idx;
         document.getElementById('modal-sync-options').classList.remove('hidden');
         document.getElementById('modal-inp').classList.add('hidden');
+        
+        const opts = ['信用卡', '现金', ...Object.keys(wallet)];
+        const optHTML = opts.map((item, i) => `<div class="selector-item ${i===0?'active':''}" onclick="selectSyncPay(this)">${item}</div>`).join('');
+        document.getElementById('sync-pay-sel').innerHTML = optHTML;
+
         showModal("同步选项", "这笔钱是从哪里扣除的？", false, (ok) => {
             if(ok) {
                 const payMethod = document.querySelector('#sync-pay-sel .active')?.innerText || '信用卡';
                 const it = store.wish[pSyncIdx];
-                const isSub = ['Toss','Namane','TripPass'].includes(payMethod);
-                if(isSub) wallet[payMethod] -= Number(it.price);
+                const isSub = Object.keys(wallet).includes(payMethod);
+                if(isSub && wallet.hasOwnProperty(payMethod)) wallet[payMethod] -= Number(it.price);
                 store.fin.unshift({name:it.name, date:curDate, price:it.price, cat:'购物', pay: isSub?'韩币':payMethod, subPay: isSub?payMethod:'', img:it.img});
                 store.wish.splice(pSyncIdx,1); 
                 localCommit(); closeDrawer(); nav('fin'); 
