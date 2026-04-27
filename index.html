@@ -43,7 +43,7 @@
         @keyframes moonFloat { 0% { transform: translateY(0px) rotate(-10deg); } 100% { transform: translateY(-4px) rotate(-18deg); } }
         .sm-subtitle { font-size: 10px; letter-spacing: 3px; color: #B19CD9; font-weight: 900; margin-top: 5px; text-shadow: 0 1px 2px rgba(255,255,255,0.8); }
 
-        /* 🗓️ 看板区 (汇率防换行加固) */
+        /* 🗓️ 看板区 */
         .dash-board { background: rgba(255, 255, 255, 0.85); border: 2px solid white; border-radius: 35px; padding: 25px 22px; box-shadow: 0 12px 30px var(--glow); backdrop-filter: blur(15px); margin-bottom: 25px; position: relative; z-index: 5; }
         .dash-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 5px; margin-bottom: 20px; overflow: hidden; }
         .date-widget { display: flex; align-items: center; gap: 8px; flex-shrink: 1; min-width: 0; }
@@ -51,8 +51,9 @@
         .dash-day { background: #F0F6FF; color: var(--high-school-blue); padding: 5px 10px; border-radius: 14px; font-size: 11px; font-weight: 900; white-space: nowrap; flex-shrink: 0; transform: translateY(-2px); }
         .dash-rate { background: var(--sailor-pink); color: white; padding: 8px 12px; border-radius: 20px; font-size: 11px; font-weight: 900; box-shadow: 0 4px 10px rgba(255,153,204,0.3); white-space: nowrap; flex-shrink: 0; }
         
-        .dash-tabs { display: flex; gap: 20px; border-bottom: 2.5px solid #F0F0F0; padding-bottom: 12px; margin-bottom: 15px; }
-        .d-tab { font-size: 15px; font-weight: 900; color: #999; cursor: pointer; position: relative; transition: 0.2s; }
+        /* 🛡️ 修复：看板标签滑动防拥挤 */
+        .dash-tabs { display: flex; gap: 20px; border-bottom: 2.5px solid #F0F0F0; padding-bottom: 12px; margin-bottom: 15px; overflow-x: auto; scrollbar-width: none; flex-wrap: nowrap; }
+        .d-tab { font-size: 15px; font-weight: 900; color: #999; cursor: pointer; position: relative; transition: 0.2s; white-space: nowrap; flex-shrink: 0; padding-bottom: 2px;}
         .d-tab.active { color: var(--neon-pink); }
         .d-tab.active::after { content: ''; position: absolute; bottom: -14.5px; left: 50%; transform: translateX(-50%); width: 28px; height: 4px; background: var(--neon-pink); border-radius: 4px; }
 
@@ -70,6 +71,18 @@
         .chk-item { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px dashed #F0F0F0; animation: slideIn 0.3s; }
         @keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
         .chk-circle { width: 22px; height: 22px; border: 2px solid #E0E0E0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: white; cursor: pointer; flex-shrink: 0; }
+
+        /* ================= 💬 Memo 气泡对话UI ================= */
+        .memo-row { display: flex; justify-content: flex-end; align-items: flex-end; gap: 8px; margin-bottom: 12px; animation: slideIn 0.3s forwards; }
+        .memo-bubble-wrapper { position: relative; max-width: 78%; }
+        .memo-bubble { background: linear-gradient(135deg, var(--sailor-blue), #D1BFFF); color: white; padding: 12px 16px; border-radius: 20px 20px 4px 20px; font-size: 14px; font-weight: bold; box-shadow: 0 4px 12px rgba(162,210,255,0.4); word-wrap: break-word; line-height: 1.4; }
+        .memo-time { font-size: 10px; color: #CCC; font-weight: bold; margin-bottom: 4px; text-align: right;}
+        .memo-del { position: absolute; top: -6px; left: -6px; width: 20px; height: 20px; background: #FF4D4F; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 5px rgba(255,77,79,0.3); z-index: 5; transition:0.2s;}
+        .memo-del:active { transform: scale(0.9); }
+
+        /* ================= 📝 随手记 UI ================= */
+        textarea.f-input { font-family: inherit; line-height: 1.6; font-weight: normal; color: var(--brown); height: 180px; resize: none; margin-bottom: 0; padding: 18px; border-radius: 20px; transition: 0.3s; }
+        textarea.f-input:focus { border-color: var(--sailor-pink); box-shadow: 0 0 0 3px var(--glow); background: white !important;}
 
         /* ✈️ 航班卡片 */
         .f-card { flex: 0 0 88%; background: rgba(255,255,255,0.65); backdrop-filter: blur(12px); border: 3px solid var(--sailor-blue) !important; border-radius: 35px; padding: 25px; position: relative; flex-shrink: 0; box-shadow: 8px 8px 0px rgba(93,156,236,0.1); }
@@ -175,9 +188,12 @@
                 </div>
                 <span id="live-rate" class="dash-rate">1 CNY ≈ -- ₩</span>
             </div>
+            
             <div class="dash-tabs">
                 <div id="tab-w" class="d-tab active" onclick="switchDash('weather')">🌤️ 天气</div>
                 <div id="tab-c" class="d-tab" onclick="switchDash('checklist')">☑️ 清单</div>
+                <div id="tab-m" class="d-tab" onclick="switchDash('memo')">💬 Memo</div>
+                <div id="tab-n" class="d-tab" onclick="switchDash('note')">📝 随手记</div>
             </div>
             
             <div id="panel-w" class="scroll-row">气象精灵加载中...</div>
@@ -189,6 +205,18 @@
                     <input type="text" id="chk-inp" class="f-input" style="margin-bottom:0; padding:12px; height:48px" placeholder="随手记一笔...">
                     <button class="nav-btn nav-pink-bar" style="min-height:0; width:55px; border-radius:18px; padding:0; font-size:24px;" onclick="addChk()">+</button>
                 </div>
+            </div>
+
+            <div id="panel-m" class="hidden">
+                <div id="memo-list" style="max-height: 180px; overflow-y: auto; padding: 10px 5px 0;"></div>
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                    <input type="text" id="memo-inp" class="f-input" style="margin-bottom:0; padding:12px 18px; height:48px;" placeholder="发送 Memo...">
+                    <button class="nav-btn" style="min-height:0; width:65px; border-radius:18px; padding:0; font-size:14px; background:var(--sailor-blue); color:white; border:none;" onclick="addMemo()">发送</button>
+                </div>
+            </div>
+
+            <div id="panel-n" class="hidden">
+                <textarea id="note-area" class="f-input" placeholder="灵感随手记... (停笔自动保存)" oninput="saveNote(this.value)"></textarea>
             </div>
         </div>
 
@@ -254,8 +282,8 @@
 
             <input type="text" id="modal-inp" class="f-input hidden" style="margin-top:10px;">
             <div style="display:flex; gap:10px; margin-top:25px;">
-                <button class="nav-btn" style="flex:1; min-height:50px; background:#EEE; border:none; padding:0" onclick="closeModal(false)">取消</button>
-                <button class="nav-btn nav-pink-bar" style="flex:1; min-height:50px; border:none; padding:0" onclick="closeModal(true)">确定</button>
+                <button class="nav-btn m-btn-cancel" style="flex:1; min-height:50px; border:none; padding:0" onclick="closeModal(false)">取消</button>
+                <button class="nav-btn m-btn-ok" style="flex:1; min-height:50px; border:none; padding:0" onclick="closeModal(true)">确定</button>
             </div>
         </div>
     </div>
@@ -271,7 +299,6 @@
     function selectSyncPay(el) { selectBtn(el); }
     function closeDrawer() { document.getElementById('drawer').classList.remove('active'); }
 
-    /* ================= 核心单例弹窗 ================= */
     function showModal(t,m,i,cb){ 
         document.getElementById('modal-title').innerText=t; 
         document.getElementById('modal-msg').innerHTML=m; 
@@ -290,8 +317,8 @@
     function delItem(e,t,idx) { e.stopPropagation(); showModal("彻底删除?","此操作不可撤销！",false,ok=>{if(ok){if(t==='flight') flights.splice(idx,1); else store[t].splice(idx,1); localCommit(); initUI(); if(curView!=='home')renderList();}}); }
 
     /* ================= 数据引擎 ================= */
-    const DB_NAME = 'SeoulMoon_Final_V14', STORE_NAME = 'appData', DATA_KEY = 'core_data';
-    let wallet = { Toss: 0, Namane: 0, TripPass: 0 }, flights = [], store = { plan: [], ticket: [], wish: [], fin: [], checklist: [], chkCats: ['行李🧳', '购物🛍️', '办事📌'] };
+    const DB_NAME = 'SeoulMoon_Final_V15', STORE_NAME = 'appData', DATA_KEY = 'core_data';
+    let wallet = { Toss: 0, Namane: 0, TripPass: 0 }, flights = [], store = { plan: [], ticket: [], wish: [], fin: [], checklist: [], chkCats: ['行李🧳', '购物🛍️', '办事📌'], memos: [], quickNote: '' };
     let curView = 'home', curIdx = -1, curDate = '04.29', RATE = 191.0, modalCallback = null, tempImg = '', dTz='上海', aTz='首尔', sTz='首尔', curCat='全部', activeChkCat='全部';
 
     const dbPromise = new Promise(resolve => { 
@@ -317,6 +344,10 @@
                     store.fin = s.fin || [];
                     store.checklist = s.checklist || [];
                     store.chkCats = s.chkCats || ['行李🧳', '购物🛍️', '办事📌'];
+                    
+                    // 🛡️ 新增气泡引擎数据注入
+                    store.memos = s.memos || [];
+                    store.quickNote = s.quickNote || '';
 
                     if(store.ticket) store.ticket.sort((a,b) => (a.date||'9999-99-99').localeCompare(b.date||'9999-99-99'));
                 } else { 
@@ -342,8 +373,80 @@
         updateWeather(); updateExchangeRate(); renderFlights(); renderChkCats(); renderChk();
     }
 
-    function switchDash(v) { pop(); document.getElementById('tab-w').className = v==='weather'?'d-tab active':'d-tab'; document.getElementById('tab-c').className = v==='checklist'?'d-tab active':'d-tab'; document.getElementById('panel-w').className = v==='weather'?'scroll-row':'hidden'; document.getElementById('panel-c').className = v==='checklist'?'':'hidden'; }
+    // 🛡️ 核心修复：支持四个 Tab 的丝滑切换
+    function switchDash(v) { 
+        pop(); 
+        ['weather', 'checklist', 'memo', 'note'].forEach(tab => {
+            const elTab = document.getElementById('tab-' + tab[0]);
+            const elPanel = document.getElementById('panel-' + tab[0]);
+            if(elTab) elTab.className = (v === tab) ? 'd-tab active' : 'd-tab';
+            if(elPanel) elPanel.className = (v === tab) ? (tab === 'weather' ? 'scroll-row' : '') : 'hidden';
+        });
+        
+        // 如果切到 Memo，就渲染气泡
+        if(v === 'memo') renderMemo();
+        // 如果切到随手记，就拉取存好的文本
+        if(v === 'note') document.getElementById('note-area').value = store.quickNote || '';
+    }
+
     function nav(v) { pop(); curView=v; document.getElementById('v-home').className=v==='home'?'':'hidden'; document.getElementById('v-sub').className=v==='home'?'hidden':''; document.getElementById('ledger-extra').className=v==='fin'?'':'hidden'; if(v!=='home') renderList(); else initUI(); updateWalletUI(); }
+
+    /* ================= 💬 Memo 气泡对话引擎 ================= */
+    function renderMemo() {
+        const box = document.getElementById('memo-list');
+        let h = '';
+        if(!store.memos || store.memos.length === 0) {
+            h = '<div style="text-align:center;padding:20px;color:#ccc;font-size:12px;font-weight:bold;">还没有备忘，快发一条吧~</div>';
+        } else {
+            store.memos.forEach((m, i) => {
+                h += `
+                <div class="memo-row">
+                    <div class="memo-time">${m.time}</div>
+                    <div class="memo-bubble-wrapper">
+                        <div class="memo-del" onclick="delMemo(${i})">✖</div>
+                        <div class="memo-bubble">${m.text}</div>
+                    </div>
+                </div>`;
+            });
+        }
+        box.innerHTML = h;
+        // 自动滚动到最新一条消息
+        setTimeout(() => { box.scrollTop = box.scrollHeight; }, 50);
+    }
+
+    function addMemo() {
+        const inp = document.getElementById('memo-inp');
+        const v = inp.value.trim();
+        if(!v) return;
+        const n = new Date();
+        const timeStr = String(n.getHours()).padStart(2, '0') + ':' + String(n.getMinutes()).padStart(2, '0');
+        if(!store.memos) store.memos = [];
+        store.memos.push({ text: v, time: timeStr });
+        inp.value = '';
+        renderMemo();
+        localCommit();
+    }
+
+    function delMemo(i) {
+        pop();
+        showModal("删除 Memo?", "确定要删除这条消息吗？", false, (ok) => {
+            if(ok) {
+                store.memos.splice(i, 1);
+                renderMemo();
+                localCommit();
+            }
+        });
+    }
+
+    /* ================= 📝 随手记：防抖无痕静默保存 ================= */
+    let saveNoteTimeout;
+    function saveNote(val) {
+        store.quickNote = val;
+        // 500ms 防抖，停笔半秒才写入数据库，极致顺滑不卡顿
+        clearTimeout(saveNoteTimeout);
+        saveNoteTimeout = setTimeout(() => { localCommit(); }, 500);
+    }
+
 
     /* ================= 📋 清单系统 ================= */
     function renderChkCats() { const row = document.getElementById('chk-cat-row'); let h = `<div class="chk-cat-btn ${activeChkCat==='全部'?'active':''}" onclick="setChkCat('全部')">全部</div>`; store.chkCats.forEach((c, i) => { h += `<div class="chk-cat-btn ${activeChkCat===c?'active':''}" onclick="setChkCat('${c}')">${c} ${activeChkCat===c?`<span class="chk-cat-del" onclick="delChkCat(event, ${i})">✖</span>`:''}</div>`; }); row.innerHTML = h + `<div class="chk-cat-btn" style="border:1.5px dashed var(--sailor-purple);background:transparent;" onclick="addChkCat()">+ 新建</div>`; }
@@ -399,17 +502,14 @@
             
             const ps = store.plan.filter(it => it.date === curDate).sort((a,b)=>a.time.localeCompare(b.time));
             
-            // 🗺️ Naver Map 汇总
             const linkedPlans = ps.filter(p => p.link && p.link.trim() !== '');
             if(linkedPlans.length >= 1) {
                 header.innerHTML += `<div class="nav-btn nav-pink-bar" style="min-height:0; padding:16px; border-radius:15px; font-size:13px; margin-bottom:20px;" onclick="genNaverTodayRoute()">🗺️ 今日 Naver 地图路线汇总</div>`;
             }
 
             ps.forEach(it => { 
-                // 🛡️ 使用原生 <a> 标签替代 JS 跳转，完美触发 iOS Universal Links 唤醒 Naver Map App
                 let mapBtn = (it.link && it.link.trim() !== '') ? `<a href="${it.link}" target="_blank" style="background:var(--naver-green);color:white;padding:6px 12px;border-radius:10px;font-size:10px;font-weight:900;text-decoration:none;display:inline-block;" onclick="event.stopPropagation();">📍 Map 直达</a>` : '';
                 
-                // 📝 智能备注系统：如果是网址则变身紫色按钮，纯文字则作为便签展示
                 let memoBtn = '';
                 if(it.memo && it.memo.trim() !== '') {
                     if(it.memo.startsWith('http')) {
@@ -441,7 +541,6 @@
                     let linkBtn = '';
                     if(it.link && it.link.trim() !== '') {
                         const urlStr = it.link.toLowerCase();
-                        // 🛡️ 使用 <a> 标签跳转
                         if(it.cat === 'Olive Young' || urlStr.includes('oliveyoung')) linkBtn = `<a href="${it.link}" target="_blank" style="background:#A3C644;color:white;padding:6px 10px;border-radius:10px;font-size:10px;font-weight:bold;margin-top:6px;display:inline-block;text-decoration:none;" onclick="event.stopPropagation();">🌿 官网直达</a>`;
                         else if(it.cat === 'Musinsa' || urlStr.includes('musinsa')) linkBtn = `<a href="${it.link}" target="_blank" style="background:#000;color:white;padding:6px 10px;border-radius:10px;font-size:10px;font-weight:bold;margin-top:6px;display:inline-block;text-decoration:none;" onclick="event.stopPropagation();">⬛ App直达</a>`;
                         else linkBtn = `<a href="${it.link}" target="_blank" style="background:var(--sailor-blue);color:white;padding:6px 10px;border-radius:10px;font-size:10px;font-weight:bold;margin-top:6px;display:inline-block;text-decoration:none;" onclick="event.stopPropagation();">🔗 商品直达</a>`;
@@ -457,7 +556,6 @@
             });
         } else if(curView==='ticket') {
             box.className = ''; header.innerHTML = '';
-            
             let sortedTickets = store.ticket.map((item, index) => ({ item, index })).sort((a, b) => {
                 const dateA = a.item.date || '9999-99-99';
                 const dateB = b.item.date || '9999-99-99';
@@ -490,7 +588,6 @@
         }
     }
 
-    // 🗺️ Naver Map 列表弹窗汇总 (原生 <a> 标签唤醒 App)
     function genNaverTodayRoute() {
         const ps = store.plan.filter(it => it.date === curDate && it.link && it.link.trim() !== '').sort((a,b)=>a.time.localeCompare(b.time));
         if(ps.length === 0) return;
@@ -512,7 +609,6 @@
         let f = document.getElementById('d-form'), s = document.getElementById('sync-area'); s.innerHTML = '';
         
         const imgTarget = (idx > -1 && store[v] && store[v][idx] && store[v][idx].img) || (idx > -1 && v==='flight' && flights[idx].img) || (idx > -1 && v==='checklist' && store.checklist[idx].img);
-        
         document.getElementById('preview-text').innerHTML = imgTarget ? `<img src="${v==='flight'?flights[idx].img:(v==='checklist'?store.checklist[idx].img:store[v][idx].img)}">` : '📸<br><small style="font-weight:900">拍照识图 / 添加封图</small>';
 
         if(v==='flight') { 
@@ -581,7 +677,6 @@
 
     function masterSave() {
         const getV = i => document.getElementById(i)?.value || '';
-        // 存储 memo 字段
         const obj = { name:getV('f-name'), text:getV('f-name'), time:getV('f-time'), date:getV('f-date'), price:getV('f-price'), air:getV('f-air'), no:getV('f-no'), t1:getV('f-t1'), t2:getV('f-t2'), c1:getV('f-c1'), g1:getV('f-g1'), s1:getV('f-s1'), link:getV('f-link'), memo:getV('f-memo'), area:getV('f-area'), row:getV('f-row'), num:getV('f-num'), venue:getV('f-venue'), tz: sTz, tz1: dTz, tz2: aTz, img:tempImg || (curIdx>-1?(curView==='flight'?flights[curIdx].img:(curView==='checklist'?store.checklist[curIdx].img:store[curView][curIdx].img)):'') };
         
         if(curView==='flight') { if(curIdx>-1) flights[curIdx]=obj; else flights.push(obj); }
@@ -592,23 +687,18 @@
             obj.cat=document.querySelector('#f-cat-sel .active')?.innerText||'其他'; 
             obj.pay=document.querySelector('#p-sel .active')?.innerText||'现金'; 
             obj.subPay = (obj.pay === '韩币') ? (document.querySelector('#w-sel .active')?.innerText || 'Toss') : ''; 
-            
             if(curIdx > -1 && store.fin[curIdx].subPay) { wallet[store.fin[curIdx].subPay] += Number(store.fin[curIdx].price); }
             if(obj.subPay) { wallet[obj.subPay] -= Number(obj.price); }
-            
             if(curIdx>-1) store.fin[curIdx]=obj; else store.fin.push(obj); 
         }
         else if(curView==='wish') { obj.cat=document.querySelector('#c-sel .active')?.innerText||'其他'; if(curIdx>-1) store.wish[curIdx]=obj; else store.wish.push(obj); }
         else if(curView==='ticket') { 
-            if(curIdx>-1) store.ticket[curIdx]=obj; 
-            else store.ticket.push(obj); 
+            if(curIdx>-1) store.ticket[curIdx]=obj; else store.ticket.push(obj); 
             store.ticket.sort((a,b) => (a.date||'9999-99-99').localeCompare(b.date||'9999-99-99'));
         }
-        
         localCommit(); closeDrawer(); initUI(); if(curView!=='home') renderList();
     }
 
-    /* 📸 OCR 与封图逻辑 */
     async function handleSmartUpload(input) {
         pop(); const r = new FileReader(); document.getElementById('upload-zone').classList.add('scanning');
         r.onload = (e) => {
@@ -617,11 +707,8 @@
                 if(w>h){ if(w>max){ h*=max/w; w=max; } }else{ if(h>max){ w*=max/h; h=max; } }
                 canvas.width = w; canvas.height = h; canvas.getContext('2d').drawImage(img,0,0,w,h);
                 tempImg = canvas.toDataURL('image/jpeg', 0.8);
-                
                 document.getElementById('preview-text').innerHTML = `<img src="${tempImg}">`;
-                
                 if(curView === 'ticket' || curView === 'plan' || curView === 'checklist') { document.getElementById('upload-zone').classList.remove('scanning'); return; }
-                
                 try {
                     const res = await Tesseract.recognize(tempImg, 'eng+kor');
                     const pr = (res.data.text.match(/[0-9]{1,3}(?:,[0-9]{3})+/g) || [res.data.text.match(/\d{4,}/g)])[0]?.toString().replace(/,/g,'') || "";
@@ -634,13 +721,11 @@
         }; r.readAsDataURL(input.files[0]);
     }
 
-    /* 💸 心愿单 -> 记账单 数据流转 */
     let pSyncIdx = -1;
     function initSyncFlow(idx) { 
         pSyncIdx = idx;
         document.getElementById('modal-sync-options').classList.remove('hidden');
         document.getElementById('modal-inp').classList.add('hidden');
-        
         showModal("同步选项", "这笔钱是从哪里扣除的？", false, (ok) => {
             if(ok) {
                 const payMethod = document.querySelector('#sync-pay-sel .active')?.innerText || '信用卡';
@@ -718,11 +803,11 @@
             if (offset === 0) {
                 card.style.transform = `translateX(0px) translateZ(0px) rotateY(0deg)`;
                 card.style.zIndex = 10; card.style.opacity = 1;
-                card.style.pointerEvents = 'auto'; // 允许点击当前卡片
+                card.style.pointerEvents = 'auto';
             } else if (offset > 0) {
                 card.style.transform = `translateX(${30 + (offset * 20)}px) translateZ(${offset * -150}px) rotateY(-15deg)`;
                 card.style.zIndex = 10 - offset; card.style.opacity = offset > 2 ? 0 : 0.8; 
-                card.style.pointerEvents = 'none'; // 彻底屏蔽后排点击
+                card.style.pointerEvents = 'none'; 
             } else {
                 card.style.transform = `translateX(-150%) translateZ(200px) rotateY(10deg)`;
                 card.style.opacity = 0; card.style.zIndex = 0;
@@ -742,7 +827,6 @@
         };
     }
 
-    /* API */
     async function updateWeather() { try { const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=37.5665&longitude=126.9780&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=Asia%2FSeoul`); const djson=await r.json(); document.getElementById('panel-w').innerHTML=djson.daily.time.map((date,i)=>`<div class="w-item"><small>${date.slice(5).replace('-','.')}</small><br><span style="font-size:24px;">${djson.daily.weathercode[i]>50?'🌧️':'⛅'}</span><br><b style="font-size:11px;color:var(--sailor-pink);">${Math.round(djson.daily.temperature_2m_min[i])}/${Math.round(djson.daily.temperature_2m_max[i])}°</b></div>`).join(''); } catch(e){} }
     async function updateExchangeRate() { try { const r=await fetch('https://open.er-api.com/v6/latest/CNY'); const djson=await r.json(); RATE=djson.rates.KRW; document.getElementById('live-rate').innerText=`1 CNY ≈ ${RATE.toFixed(1)} ₩`; } catch(e){} }
     
